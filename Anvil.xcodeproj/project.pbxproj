@@ -1,0 +1,301 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
+		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
+		4FBFA36715C6F85800BA8209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36615C6F85800BA8209 /* main.m */; };
+		4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36915C6F85800BA8209 /* Credits.rtf */; };
+		4FBFA36E15C6F85800BA8209 /* NVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */; };
+		4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36F15C6F85800BA8209 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4FBFA35D15C6F85800BA8209 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4FBFA35E15C6F85800BA8209 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4FBFA35F15C6F85800BA8209 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4FBFA36215C6F85800BA8209 /* Anvil-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Anvil-Info.plist"; sourceTree = "<group>"; };
+		4FBFA36415C6F85800BA8209 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4FBFA36615C6F85800BA8209 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4FBFA36815C6F85800BA8209 /* Anvil-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Anvil-Prefix.pch"; sourceTree = "<group>"; };
+		4FBFA36A15C6F85800BA8209 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		4FBFA36C15C6F85800BA8209 /* NVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NVAppDelegate.h; sourceTree = "<group>"; };
+		4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NVAppDelegate.m; sourceTree = "<group>"; };
+		4FBFA37015C6F85800BA8209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4FBFA35315C6F85800BA8209 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4FBFA34B15C6F85800BA8209 = {
+			isa = PBXGroup;
+			children = (
+				4FBFA36015C6F85800BA8209 /* Anvil */,
+				4FBFA35915C6F85800BA8209 /* Frameworks */,
+				4FBFA35715C6F85800BA8209 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4FBFA35715C6F85800BA8209 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA35615C6F85800BA8209 /* Anvil.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FBFA35915C6F85800BA8209 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA35A15C6F85800BA8209 /* Cocoa.framework */,
+				4FBFA35C15C6F85800BA8209 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4FBFA35C15C6F85800BA8209 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA35D15C6F85800BA8209 /* AppKit.framework */,
+				4FBFA35E15C6F85800BA8209 /* CoreData.framework */,
+				4FBFA35F15C6F85800BA8209 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		4FBFA36015C6F85800BA8209 /* Anvil */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA36C15C6F85800BA8209 /* NVAppDelegate.h */,
+				4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */,
+				4FBFA36F15C6F85800BA8209 /* MainMenu.xib */,
+				4FBFA36115C6F85800BA8209 /* Supporting Files */,
+			);
+			path = Anvil;
+			sourceTree = "<group>";
+		};
+		4FBFA36115C6F85800BA8209 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA36215C6F85800BA8209 /* Anvil-Info.plist */,
+				4FBFA36315C6F85800BA8209 /* InfoPlist.strings */,
+				4FBFA36615C6F85800BA8209 /* main.m */,
+				4FBFA36815C6F85800BA8209 /* Anvil-Prefix.pch */,
+				4FBFA36915C6F85800BA8209 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4FBFA35515C6F85800BA8209 /* Anvil */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FBFA37415C6F85800BA8209 /* Build configuration list for PBXNativeTarget "Anvil" */;
+			buildPhases = (
+				4FBFA35215C6F85800BA8209 /* Sources */,
+				4FBFA35315C6F85800BA8209 /* Frameworks */,
+				4FBFA35415C6F85800BA8209 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Anvil;
+			productName = Anvil;
+			productReference = 4FBFA35615C6F85800BA8209 /* Anvil.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4FBFA34D15C6F85800BA8209 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = NV;
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = Riot;
+			};
+			buildConfigurationList = 4FBFA35015C6F85800BA8209 /* Build configuration list for PBXProject "Anvil" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4FBFA34B15C6F85800BA8209;
+			productRefGroup = 4FBFA35715C6F85800BA8209 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4FBFA35515C6F85800BA8209 /* Anvil */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4FBFA35415C6F85800BA8209 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */,
+				4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */,
+				4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4FBFA35215C6F85800BA8209 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FBFA36715C6F85800BA8209 /* main.m in Sources */,
+				4FBFA36E15C6F85800BA8209 /* NVAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4FBFA36315C6F85800BA8209 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FBFA36415C6F85800BA8209 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4FBFA36915C6F85800BA8209 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FBFA36A15C6F85800BA8209 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		4FBFA36F15C6F85800BA8209 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FBFA37015C6F85800BA8209 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4FBFA37215C6F85800BA8209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4FBFA37315C6F85800BA8209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4FBFA37515C6F85800BA8209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
+				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4FBFA37615C6F85800BA8209 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
+				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4FBFA35015C6F85800BA8209 /* Build configuration list for PBXProject "Anvil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FBFA37215C6F85800BA8209 /* Debug */,
+				4FBFA37315C6F85800BA8209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4FBFA37415C6F85800BA8209 /* Build configuration list for PBXNativeTarget "Anvil" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FBFA37515C6F85800BA8209 /* Debug */,
+				4FBFA37615C6F85800BA8209 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4FBFA34D15C6F85800BA8209 /* Project object */;
+}
