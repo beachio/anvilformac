@@ -13,6 +13,14 @@
 		4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36915C6F85800BA8209 /* Credits.rtf */; };
 		4FBFA36E15C6F85800BA8209 /* NVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */; };
 		4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36F15C6F85800BA8209 /* MainMenu.xib */; };
+		4FBFA38015C6F8D500BA8209 /* NVMenubarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA37F15C6F8D500BA8209 /* NVMenubarController.m */; };
+		4FBFA38315C6F94900BA8209 /* NVPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38215C6F94900BA8209 /* NVPanelController.m */; };
+		4FBFA38A15C6F9F400BA8209 /* NVStatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */; };
+		4FBFA38D15C6FA7E00BA8209 /* NVBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */; };
+		4FBFA39015C6FC0C00BA8209 /* Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA38E15C6FC0C00BA8209 /* Status.png */; };
+		4FBFA39115C6FC0C00BA8209 /* StatusHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */; };
+		4FBFA39815C6FE7F00BA8209 /* NVPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA39715C6FE7F00BA8209 /* NVPanel.m */; };
+		4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA39915C7006A00BA8209 /* Panel.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +37,19 @@
 		4FBFA36C15C6F85800BA8209 /* NVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NVAppDelegate.h; sourceTree = "<group>"; };
 		4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NVAppDelegate.m; sourceTree = "<group>"; };
 		4FBFA37015C6F85800BA8209 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4FBFA37E15C6F8D500BA8209 /* NVMenubarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVMenubarController.h; sourceTree = "<group>"; };
+		4FBFA37F15C6F8D500BA8209 /* NVMenubarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVMenubarController.m; sourceTree = "<group>"; };
+		4FBFA38115C6F94900BA8209 /* NVPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPanelController.h; sourceTree = "<group>"; };
+		4FBFA38215C6F94900BA8209 /* NVPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPanelController.m; sourceTree = "<group>"; };
+		4FBFA38815C6F9F400BA8209 /* NVStatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStatusItemView.h; sourceTree = "<group>"; };
+		4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStatusItemView.m; sourceTree = "<group>"; };
+		4FBFA38B15C6FA7E00BA8209 /* NVBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVBackgroundView.h; sourceTree = "<group>"; };
+		4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVBackgroundView.m; sourceTree = "<group>"; };
+		4FBFA38E15C6FC0C00BA8209 /* Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Status.png; sourceTree = "<group>"; };
+		4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusHighlighted.png; sourceTree = "<group>"; };
+		4FBFA39615C6FE7E00BA8209 /* NVPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPanel.h; sourceTree = "<group>"; };
+		4FBFA39715C6FE7F00BA8209 /* NVPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPanel.m; sourceTree = "<group>"; };
+		4FBFA39915C7006A00BA8209 /* Panel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Panel.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +103,22 @@
 		4FBFA36015C6F85800BA8209 /* Anvil */ = {
 			isa = PBXGroup;
 			children = (
+				4FBFA38E15C6FC0C00BA8209 /* Status.png */,
+				4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */,
 				4FBFA36C15C6F85800BA8209 /* NVAppDelegate.h */,
 				4FBFA36D15C6F85800BA8209 /* NVAppDelegate.m */,
+				4FBFA38115C6F94900BA8209 /* NVPanelController.h */,
+				4FBFA38215C6F94900BA8209 /* NVPanelController.m */,
+				4FBFA38B15C6FA7E00BA8209 /* NVBackgroundView.h */,
+				4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */,
 				4FBFA36F15C6F85800BA8209 /* MainMenu.xib */,
+				4FBFA39915C7006A00BA8209 /* Panel.xib */,
+				4FBFA39615C6FE7E00BA8209 /* NVPanel.h */,
+				4FBFA39715C6FE7F00BA8209 /* NVPanel.m */,
+				4FBFA37E15C6F8D500BA8209 /* NVMenubarController.h */,
+				4FBFA37F15C6F8D500BA8209 /* NVMenubarController.m */,
+				4FBFA38815C6F9F400BA8209 /* NVStatusItemView.h */,
+				4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */,
 				4FBFA36115C6F85800BA8209 /* Supporting Files */,
 			);
 			path = Anvil;
@@ -157,6 +191,9 @@
 				4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */,
 				4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */,
 				4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */,
+				4FBFA39015C6FC0C00BA8209 /* Status.png in Resources */,
+				4FBFA39115C6FC0C00BA8209 /* StatusHighlighted.png in Resources */,
+				4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +206,11 @@
 			files = (
 				4FBFA36715C6F85800BA8209 /* main.m in Sources */,
 				4FBFA36E15C6F85800BA8209 /* NVAppDelegate.m in Sources */,
+				4FBFA38015C6F8D500BA8209 /* NVMenubarController.m in Sources */,
+				4FBFA38315C6F94900BA8209 /* NVPanelController.m in Sources */,
+				4FBFA38A15C6F9F400BA8209 /* NVStatusItemView.m in Sources */,
+				4FBFA38D15C6FA7E00BA8209 /* NVBackgroundView.m in Sources */,
+				4FBFA39815C6FE7F00BA8209 /* NVPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

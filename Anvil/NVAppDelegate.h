@@ -1,15 +1,11 @@
-//
-//  NVAppDelegate.h
-//  Anvil
-//
-//  Created by Elliott Kember on 30/07/2012.
-//  Copyright (c) 2012 Riot. All rights reserved.
-//
+#import "NVMenubarController.h"
+#import "NVPanelController.h"
 
-#import <Cocoa/Cocoa.h>
+@interface NVAppDelegate : NSObject <NSApplicationDelegate, NVPanelControllerDelegate>
 
-@interface NVAppDelegate : NSObject <NSApplicationDelegate>
+@property (nonatomic, strong) NVMenubarController *menubarController;
+@property (nonatomic, strong, readonly) NVPanelController *panelController;
 
-@property (assign) IBOutlet NSWindow *window;
+- (IBAction)togglePanel:(id)sender;
 
 @end
