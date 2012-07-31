@@ -3,10 +3,10 @@
 #import "NVStatusItemView.h"
 #import "NVMenubarController.h"
 
+#define SEARCH_INSET 15
+
 #define OPEN_DURATION .15
 #define CLOSE_DURATION .1
-
-#define SEARCH_INSET 17
 
 #define POPUP_HEIGHT 122
 #define PANEL_WIDTH 280
@@ -20,11 +20,11 @@
 @synthesize delegate = _delegate;
 @synthesize searchField = _searchField;
 @synthesize textField = _textField;
+@synthesize appListTableView;
 
 #pragma mark -
 
-- (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate
-{
+- (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
     self = [super initWithWindowNibName:@"Panel"];
     if (self != nil)
     {
@@ -33,8 +33,7 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSControlTextDidChangeNotification object:self.searchField];
 }
 
@@ -105,25 +104,10 @@
     
     self.backgroundView.arrowX = panelX;
     
-    NSRect searchRect = [self.searchField frame];
-    searchRect.size.width = NSWidth([self.backgroundView bounds]) - SEARCH_INSET * 2;
-    searchRect.origin.x = SEARCH_INSET;
-    searchRect.origin.y = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT - SEARCH_INSET - NSHeight(searchRect);
-    
-    if (NSIsEmptyRect(searchRect))
-    {
-        [self.searchField setHidden:YES];
-    }
-    else
-    {
-        [self.searchField setFrame:searchRect];
-        [self.searchField setHidden:NO];
-    }
-    
     NSRect textRect = [self.textField frame];
-    textRect.size.width = NSWidth([self.backgroundView bounds]) - SEARCH_INSET * 2;
+    textRect.size.width = NSWidth([self.backgroundView bounds]);
     textRect.origin.x = SEARCH_INSET;
-    textRect.size.height = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT - SEARCH_INSET * 3 - NSHeight(searchRect);
+    textRect.size.height = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT;
     textRect.origin.y = SEARCH_INSET;
     
     if (NSIsEmptyRect(textRect))
