@@ -187,20 +187,13 @@
 		4FBFA3A015C7ED5300BA8209 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4FBFA3AC15C7EE9100BA8209 /* NVSiteTableCellView.h */,
-				4FBFA3AD15C7EE9100BA8209 /* NVSiteTableCellView.m */,
-				4FBFA38B15C6FA7E00BA8209 /* NVBackgroundView.h */,
-				4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */,
-				4FBFA38815C6F9F400BA8209 /* NVStatusItemView.h */,
-				4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */,
-				4FBFA39615C6FE7E00BA8209 /* NVPanel.h */,
-				4FBFA39715C6FE7F00BA8209 /* NVPanel.m */,
-				4FBFA3A315C7EE4F00BA8209 /* NVSiteTableView.h */,
-				4FBFA3A415C7EE4F00BA8209 /* NVSiteTableView.m */,
-				4FBFA3A915C7EE8400BA8209 /* NVSiteTableRowView.h */,
-				4FBFA3AA15C7EE8400BA8209 /* NVSiteTableRowView.m */,
-				4FBFA3B415C7F16300BA8209 /* NVLayeredImageView.h */,
-				4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */,
+				4FBFA3BD15C7F4E300BA8209 /* NVPanel */,
+				4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */,
+				4FBFA3BB15C7F4D900BA8209 /* NVSiteTableCellView */,
+				4FBFA3BE15C7F4F100BA8209 /* NVStatusItemView */,
+				4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */,
+				4FBFA3C015C7F4FD00BA8209 /* NVSiteTableRowView */,
+				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -212,6 +205,69 @@
 				4FBFA3B815C7F49200BA8209 /* NVDataSource.m */,
 			);
 			name = DataSource;
+			sourceTree = "<group>";
+		};
+		4FBFA3BB15C7F4D900BA8209 /* NVSiteTableCellView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA3AC15C7EE9100BA8209 /* NVSiteTableCellView.h */,
+				4FBFA3AD15C7EE9100BA8209 /* NVSiteTableCellView.m */,
+			);
+			name = NVSiteTableCellView;
+			sourceTree = "<group>";
+		};
+		4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA38B15C6FA7E00BA8209 /* NVBackgroundView.h */,
+				4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */,
+			);
+			name = NVBackgroundView;
+			sourceTree = "<group>";
+		};
+		4FBFA3BD15C7F4E300BA8209 /* NVPanel */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA39615C6FE7E00BA8209 /* NVPanel.h */,
+				4FBFA39715C6FE7F00BA8209 /* NVPanel.m */,
+			);
+			name = NVPanel;
+			sourceTree = "<group>";
+		};
+		4FBFA3BE15C7F4F100BA8209 /* NVStatusItemView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA38815C6F9F400BA8209 /* NVStatusItemView.h */,
+				4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */,
+			);
+			name = NVStatusItemView;
+			sourceTree = "<group>";
+		};
+		4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA3A315C7EE4F00BA8209 /* NVSiteTableView.h */,
+				4FBFA3A415C7EE4F00BA8209 /* NVSiteTableView.m */,
+			);
+			name = NVSiteTableView;
+			sourceTree = "<group>";
+		};
+		4FBFA3C015C7F4FD00BA8209 /* NVSiteTableRowView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA3A915C7EE8400BA8209 /* NVSiteTableRowView.h */,
+				4FBFA3AA15C7EE8400BA8209 /* NVSiteTableRowView.m */,
+			);
+			name = NVSiteTableRowView;
+			sourceTree = "<group>";
+		};
+		4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA3B415C7F16300BA8209 /* NVLayeredImageView.h */,
+				4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */,
+			);
+			name = NVLayeredImageVivew;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
