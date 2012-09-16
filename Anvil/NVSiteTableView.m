@@ -10,14 +10,28 @@
 
 @implementation NVSiteTableView
 
+- (id)init {
+    
+//    NSLog(@"asdf");
+    self = [super init];
+    return self;
+}
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+//        NSLog(@"asdf");
+//        NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
     }
     
     return self;
+}
+
+- (void)awakeFromNib {
+    
+    NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
 }
 
 - (void)drawRect:(NSRect)dirtyRect

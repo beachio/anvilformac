@@ -25,6 +25,7 @@
 #pragma mark -
 
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
+    
     self = [super initWithWindowNibName:@"Panel"];
     if (self != nil)
     {
@@ -54,9 +55,9 @@
     NSRect panelRect = [[self window] frame];
     panelRect.size.height = POPUP_HEIGHT;
     [[self window] setFrame:panelRect display:NO];
-    
-    // Follow search string
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runSearch) name:NSControlTextDidChangeNotification object:self.searchField];
+
+//    Follow search string
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runSearch) name:NSControlTextDidChangeNotification object:self.searchField];
 }
 
 #pragma mark - Public accessors
@@ -222,6 +223,40 @@
         
         [self.window orderOut:nil];
     });
+}
+
+#pragma mark - Table View Delegate
+
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
+    
+    return [[[NVDataSource sharedDataSource] apps] count];
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    return [[NSView alloc] init];
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
+    
+    NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:rowIndex];
+    
+    
+    return app;
+}
+
+- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
+    
+    NSTableRowView *rowView = [[NSTableRowView alloc] init];
+    
+    //    HMTableRowView *rowView = (HMTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
+    //    if (rowView == nil) {
+    //
+    //        rowView = [[HMTableRowView alloc] init];
+    //        rowView.identifier = kAppListTableRowIdentifier;
+    //    }
+    //    
+    return rowView;
 }
 
 @end

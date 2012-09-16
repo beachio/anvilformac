@@ -1,3 +1,4 @@
+#import "NVDataSource.h"
 #import "NVMenubarController.h"
 #import "NVPanelController.h"
 

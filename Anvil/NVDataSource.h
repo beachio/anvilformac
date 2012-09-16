@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NVApp.h"
 
 @interface NVDataSource : NSObject
+
+@property (strong, readonly, nonatomic) NSArray *apps;
+
+- (void)readInSavedAppDataFromDisk;
++ (NVDataSource *)sharedDataSource;
 
 @end

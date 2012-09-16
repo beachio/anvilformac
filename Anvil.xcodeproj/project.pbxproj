@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
+		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
+		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
 		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
 		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
 		4FBFA36715C6F85800BA8209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36615C6F85800BA8209 /* main.m */; };
@@ -30,6 +33,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FB9E80B1605FEBE005B50A4 /* NVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVApp.h; sourceTree = "<group>"; };
+		4FB9E80C1605FEBE005B50A4 /* NVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVApp.m; sourceTree = "<group>"; };
+		4FB9E81016061096005B50A4 /* NVTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableRowView.h; sourceTree = "<group>"; };
+		4FB9E81116061096005B50A4 /* NVTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableRowView.m; sourceTree = "<group>"; };
+		4FB9E813160610A1005B50A4 /* NVTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableCellView.h; sourceTree = "<group>"; };
+		4FB9E814160610A1005B50A4 /* NVTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableCellView.m; sourceTree = "<group>"; };
 		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4FBFA35D15C6F85800BA8209 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -82,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FB9E80F1605FEC2005B50A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4FB9E80B1605FEBE005B50A4 /* NVApp.h */,
+				4FB9E80C1605FEBE005B50A4 /* NVApp.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		4FBFA34B15C6F85800BA8209 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +146,7 @@
 				4FBFA3A015C7ED5300BA8209 /* Views */,
 				4FBFA39B15C7ED0F00BA8209 /* Nibs */,
 				4FBFA36115C6F85800BA8209 /* Supporting Files */,
+				4FB9E80F1605FEC2005B50A4 /* Model */,
 			);
 			path = Anvil;
 			sourceTree = "<group>";
@@ -194,6 +213,10 @@
 				4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */,
 				4FBFA3C015C7F4FD00BA8209 /* NVSiteTableRowView */,
 				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
+				4FB9E81016061096005B50A4 /* NVTableRowView.h */,
+				4FB9E81116061096005B50A4 /* NVTableRowView.m */,
+				4FB9E813160610A1005B50A4 /* NVTableCellView.h */,
+				4FB9E814160610A1005B50A4 /* NVTableCellView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -351,6 +374,9 @@
 				4FBFA3B215C7F0DE00BA8209 /* NVSiteTableController.m in Sources */,
 				4FBFA3B615C7F16300BA8209 /* NVLayeredImageView.m in Sources */,
 				4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */,
+				4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */,
+				4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */,
+				4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +502,7 @@
 				4FBFA37615C6F85800BA8209 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

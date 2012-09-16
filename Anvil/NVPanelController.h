@@ -1,5 +1,6 @@
 #import "NVBackgroundView.h"
 #import "NVStatusItemView.h"
+#import "NVDataSource.h"
 
 @class NVPanelController;
 
@@ -13,7 +14,7 @@
 
 #pragma mark -
 
-@interface NVPanelController : NSWindowController <NSWindowDelegate> {
+@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate> {
     BOOL _hasActivePanel;
     __unsafe_unretained NVBackgroundView *_backgroundView;
     __unsafe_unretained id<NVPanelControllerDelegate> _delegate;

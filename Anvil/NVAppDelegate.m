@@ -1,9 +1,16 @@
 #import "NVAppDelegate.h"
 
+@interface NVAppDelegate ()
+
+@property (strong, readwrite) NVDataSource *dataSource;
+
+@end
+
 @implementation NVAppDelegate
 
 @synthesize panelController = _panelController;
 @synthesize menubarController = _menubarController;
+
 
 #pragma mark -
 
@@ -29,6 +36,14 @@ void *kContextActivePanel = &kContextActivePanel;
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];
+    [self panelController];
+
+    [self.dataSource readInSavedAppDataFromDisk];
+}
+
+- (NVDataSource *)dataSource {
+    
+    return [NVDataSource sharedDataSource];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
@@ -47,6 +62,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - Public accessors
 
 - (NVPanelController *)panelController {
+    
     if (_panelController == nil) {
         _panelController = [[NVPanelController alloc] initWithDelegate:self];
         [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
