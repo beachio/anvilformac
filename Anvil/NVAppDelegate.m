@@ -2,8 +2,6 @@
 
 @interface NVAppDelegate ()
 
-@property (strong, readwrite) NVDataSource *dataSource;
-
 @end
 
 @implementation NVAppDelegate

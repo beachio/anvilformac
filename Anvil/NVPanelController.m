@@ -2,6 +2,8 @@
 #import "NVBackgroundView.h"
 #import "NVStatusItemView.h"
 #import "NVMenubarController.h"
+#import "NVTableRowView.h"
+#import "NVTableCellView.h"
 
 #define SEARCH_INSET 15
 
@@ -21,6 +23,8 @@
 @synthesize searchField = _searchField;
 @synthesize textField = _textField;
 @synthesize appListTableView;
+
+static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
 
 #pragma mark -
 
@@ -54,10 +58,10 @@
     // Resize panel
     NSRect panelRect = [[self window] frame];
     panelRect.size.height = POPUP_HEIGHT;
+    
+    panelRect.size.height = self.appListTableView.frame.size.height + 20;
+    
     [[self window] setFrame:panelRect display:NO];
-
-//    Follow search string
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runSearch) name:NSControlTextDidChangeNotification object:self.searchField];
 }
 
 #pragma mark - Public accessors
@@ -234,29 +238,44 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    return [[NSView alloc] init];
-}
-
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
+    NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
-    NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:rowIndex];
+    NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
     
+    cellView.textField.stringValue = [app directoryName];
     
-    return app;
+    NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
+    cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:faviconImage withSize:NSMakeSize(16, 16)];
+    
+//    cellView.faviconImageView.foregroundImage = [[NSImage alloc] initWithContentsOfFile:app.faviconURL.absoluteString];
+    return cellView;
 }
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
-    NSTableRowView *rowView = [[NSTableRowView alloc] init];
+    NSString *kAppListTableRowIdentifier = @"appListTableRowIdentifier";
     
-    //    HMTableRowView *rowView = (HMTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
-    //    if (rowView == nil) {
-    //
-    //        rowView = [[HMTableRowView alloc] init];
-    //        rowView.identifier = kAppListTableRowIdentifier;
-    //    }
-    //    
+    NSTableRowView *rowView = (NSTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
+    if (rowView == nil) {
+        
+        rowView = [[NSTableRowView alloc] init];
+        rowView.identifier = kAppListTableRowIdentifier;
+    }
+    
     return rowView;
+}
+
+- (NSImage *)imageRepresentationOfImage:(NSImage *)image withSize:(NSSize)size {
+    
+    NSImage *requestedRepresentationImage = nil;
+    for (NSBitmapImageRep *representation in image.representations) {
+        
+        if (CGSizeEqualToSize(representation.size, size)) {
+            requestedRepresentationImage = [[NSImage alloc] initWithData:[representation TIFFRepresentation]];
+        }
+    }
+    
+    return requestedRepresentationImage;
 }
 
 @end

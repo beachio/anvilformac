@@ -7,6 +7,7 @@
 //
 #import "NVMenubarController.h"
 #import "NVStatusItemView.h"
+#import "NVDataSource.h"
 
 @implementation NVMenubarController
 
@@ -19,6 +20,7 @@
     if (self != nil) {
         NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:STATUS_ITEM_VIEW_WIDTH];
         _statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
+        _statusItemView.delegate = self;
         _statusItemView.image = [NSImage imageNamed:@"Status"];
         _statusItemView.alternateImage = [NSImage imageNamed:@"StatusHighlighted"];
         _statusItemView.action = @selector(togglePanel:);
@@ -45,6 +47,17 @@
 
 - (void)setHasActiveIcon:(BOOL)flag {
     self.statusItemView.isHighlighted = flag;
+}
+
+
+
+- (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL {
+    return YES;
+}
+
+- (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL {
+    
+    [[NVDataSource sharedDataSource] addSiteURL:dropURL];
 }
 
 @end

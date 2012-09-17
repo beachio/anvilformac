@@ -10,4 +10,8 @@
 
 @interface NVLayeredImageView : NSView
 
+@property (strong, nonatomic) NSImage *backgroundImage;
+@property (strong, nonatomic) NSImage *foregroundImage;
+@property (assign, nonatomic) NSSize foregroundImageSize;
+
 @end

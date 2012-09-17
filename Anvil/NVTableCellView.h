@@ -7,7 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NVLayeredImageView.h"
+#import "NVLabel.h"
 
 @interface NVTableCellView : NSTableCellView
+
+@property (weak, nonatomic) IBOutlet NVLabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NVLayeredImageView *faviconImageView;
 
 @end

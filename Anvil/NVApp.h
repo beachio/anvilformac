@@ -12,7 +12,11 @@
 
 @property (copy, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) NSURL *sourceURL;
 
 - (id)initWithURL:(NSURL *)url;
+- (NSString *)directoryName;
+- (NSURL *)faviconURL;
+- (void)createSymlink;
 
 @end

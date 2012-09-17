@@ -1,14 +1,14 @@
 //
-//  NVSiteTableRowView.m
+//  NVSiteTableCellView.m
 //  Anvil
 //
 //  Created by Elliott Kember on 31/07/2012.
 //  Copyright (c) 2012 Riot. All rights reserved.
 //
 
-#import "NVSiteTableRowView.h"
+#import "NVSiteTableCellView.h"
 
-@implementation NVSiteTableRowView
+@implementation NVSiteTableCellView
 
 - (id)initWithFrame:(NSRect)frame
 {

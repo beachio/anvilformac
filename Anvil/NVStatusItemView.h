@@ -17,5 +17,12 @@
 @property (nonatomic, readonly) NSRect globalRect;
 @property (nonatomic) SEL action;
 @property (nonatomic, unsafe_unretained) id target;
+@property (nonatomic, unsafe_unretained) id delegate;
 
+@end
+
+@protocol NVStatusItemViewDelegate <NSObject>
+@optional
+- (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL;
+- (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL;
 @end

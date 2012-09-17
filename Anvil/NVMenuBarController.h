@@ -13,4 +13,6 @@
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, strong, readonly) NVStatusItemView *statusItemView;
 
+- (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL;
+
 @end

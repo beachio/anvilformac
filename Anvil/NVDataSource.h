@@ -15,5 +15,6 @@
 
 - (void)readInSavedAppDataFromDisk;
 + (NVDataSource *)sharedDataSource;
+- (void)addSiteURL:(NSURL *)url;
 
 @end

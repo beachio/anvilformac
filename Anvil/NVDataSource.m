@@ -56,12 +56,23 @@
     NSArray *dirContents = [fm contentsOfDirectoryAtPath:path error:nil];
     
     for (NSString* name in dirContents) {
-        NSURL *url = [NSURL URLWithString:@""];
-        NVApp *thisApp = [[NVApp alloc] initWithURL:url];
-        [appsArray addObject:thisApp];
+        
+        if([name isNotEqualTo:@".DS_Store"]) {
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"~/.pow/%@", name]];
+            NVApp *thisApp = [[NVApp alloc] initWithURL:url];
+            [appsArray addObject:thisApp];
+        }
     }
     
     self.apps = [NSArray arrayWithArray:appsArray];
+}
+
+- (void)addSiteURL:(NSURL *)url {
+    
+    NVApp *newApp = [[NVApp alloc] init];
+    newApp.name = [url lastPathComponent];
+    newApp.url = [NSURL URLWithString:url.path];
+    [newApp createSymlink];
 }
 
 

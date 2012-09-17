@@ -1,5 +1,5 @@
 //
-//  NVSiteTableRowView.h
+//  NVSiteTableCellView.h
 //  Anvil
 //
 //  Created by Elliott Kember on 31/07/2012.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface NVSiteTableRowView : NSTableRowView
+@interface NVSiteTableCellView : NSTableCellView
 
 @end
