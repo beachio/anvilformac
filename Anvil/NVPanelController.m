@@ -313,7 +313,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 
 - (void)didClickRename:(id)sender {
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
     [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
     NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
