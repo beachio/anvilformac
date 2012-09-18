@@ -12,7 +12,8 @@
 
 @interface NVTableCellView : NSTableCellView
 
-@property (weak, nonatomic) IBOutlet NVLabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NVLabel *textField;
+@property (weak, nonatomic) IBOutlet NVLabel *localLabel;
 @property (weak, nonatomic) IBOutlet NVLayeredImageView *faviconImageView;
 
 @end

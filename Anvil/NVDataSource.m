@@ -14,6 +14,15 @@
 
 @end
 
+// Path components
+static NSString *const kAppDataDirectoryURLPathComponent = @"AppData";
+static NSString *const kRiotDirectoryURLPathComponent = @"Riot";
+static NSString *const kHammerDirectoryURLPathComponent = @"Anvil";
+static NSString *const kAppDataFileName = @"Apps.plist";
+
+
+// Keys
+static NSString *const kAppsKey = @"apps";
 
 @implementation NVDataSource
 
@@ -26,7 +35,7 @@
         
         self.apps = [[NSArray alloc] init];
         
-//        [self addObserver:self forKeyPath:kAppsKey options:0 context:nil];
+        [self addObserver:self forKeyPath:kAppsKey options:0 context:nil];
     }
     
     return self;
@@ -64,16 +73,34 @@
         }
     }
     
+    
     self.apps = [NSArray arrayWithArray:appsArray];
 }
 
-- (void)addSiteURL:(NSURL *)url {
+- (void)addAppWithURL:(NSURL *)url {
     
     NVApp *newApp = [[NVApp alloc] init];
     newApp.name = [url lastPathComponent];
     newApp.url = [NSURL URLWithString:url.path];
     [newApp createSymlink];
+    
+    [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
 }
+
+
+- (void)removeApp:(NVApp *)appToRemove {
+    
+    [appToRemove destroySymlink];
+    [[self mutableArrayValueForKey:kAppsKey] removeObject:appToRemove];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+//    if ([keyPath isEqualToString:kAppsKey]) {
+//        [self writeOutAppDataToDisk];
+//    }
+}
+
 
 
 @end

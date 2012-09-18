@@ -14,7 +14,7 @@
 
 #pragma mark -
 
-@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate> {
+@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate> {
     BOOL _hasActivePanel;
     __unsafe_unretained NVBackgroundView *_backgroundView;
     __unsafe_unretained id<NVPanelControllerDelegate> _delegate;
@@ -26,6 +26,7 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NVBackgroundView *backgroundView;
 @property (nonatomic, unsafe_unretained) IBOutlet NSSearchField *searchField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextField *textField;
+@property (nonatomic, unsafe_unretained) IBOutlet NSScrollView *appListTableScrollView;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;

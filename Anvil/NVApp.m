@@ -14,15 +14,18 @@
    
     self = [super  init];
     if(self) {
-        self.url = url;
+        
+        NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.absoluteString stringByExpandingTildeInPath]];
+        NSURL *realURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
+        
+        
+        self.url = realURL;
+        self.name = [url lastPathComponent];
     }
     return self;
 }
 
-- (NSString *)directoryName {
-    
-    return [self.url lastPathComponent];
-}
+#pragma mark - URLs
 
 - (NSURL *)realURL {
     
@@ -34,18 +37,17 @@
 
 - (NSURL *)faviconURL {
     
-    NSURL *faviconURL = [[self realURL] URLByAppendingPathComponent:@"public/favicon.ico"];
-    
-    NSBundle* myBundle = [NSBundle mainBundle];
-    NSString* myImage = [myBundle pathForResource:@"ContextualReveal" ofType:@"png"];
+    NSURL *faviconURL = [self.url URLByAppendingPathComponent:@"public/favicon.ico"];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if( [fileManager fileExistsAtPath:faviconURL.path] ){
+    NSDictionary *attrs = [fileManager attributesOfItemAtPath:faviconURL.path error:NULL];
+    
+    if( [fileManager fileExistsAtPath:faviconURL.path] && [attrs fileSize] > 0){
         
         return faviconURL;
     } else {
         
-        return [NSURL fileURLWithPath:myImage];
+        return nil;
     }
 }
 
@@ -55,14 +57,68 @@
     return [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", powPath, self.name]];
 }
 
-- (void)createSymlink {
+- (NSURL *)browserURL {
     
-    NSError *error = nil;
-    
-    NSLog(@"%@ -> %@", [self symlinkURL], [self realURL].absoluteString);
-    
-    [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:[self realURL] error:&error];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@.dev", self.name]];
 }
 
+#pragma mark - Actions
+
+- (void)createSymlink {
+    
+    BOOL isRailsApp = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config/environment.rb"].path isDirectory:nil];
+    BOOL hasBuildFolder = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"Build"].path isDirectory:nil];
+    
+    if (isRailsApp) {
+        
+            [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
+    } else {
+        if (hasBuildFolder) {
+            
+            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
+            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
+            NSURL *realBuildURL = [self.url URLByAppendingPathComponent:@"Build"];
+            [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:realBuildURL error:nil];
+        } else {
+            
+            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
+            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
+            [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
+        }
+    }
+}
+
+- (void)destroySymlink {
+    
+    NSError *error = nil;    
+    [[NSFileManager defaultManager] removeItemAtURL:[self symlinkURL] error:&error];
+}
+
+- (void)restart {
+    
+    NSURL *url = [self.url URLByAppendingPathComponent:@"tmp/restart.txt"];
+    
+    NSError *error = nil;
+    NSDictionary *revisionDict = [NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate];
+    
+    [[NSFileManager defaultManager] setAttributes:revisionDict ofItemAtPath:url.path error:&error];
+}
+
+- (void)renameTo:(NSString *)newName {
+    
+    NSURL *oldSymlinkURL = [self symlinkURL];
+    self.name = newName;
+    NSURL *newSymlinkURL = [self symlinkURL];
+    
+    [[NSFileManager defaultManager] moveItemAtURL:oldSymlinkURL toURL:newSymlinkURL error:nil];
+}
+
+#pragma mark - What can it be?
+
+// Is it a Rails app?
+- (BOOL)canBeRestarted {
+    
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config/environment.rb"].path isDirectory:nil];
+}
 
 @end

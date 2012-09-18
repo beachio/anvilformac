@@ -74,6 +74,7 @@
         [attributedString setAttributes:existingAttributes range:NSMakeRange(0, [[self attributedStringValue] length])];
         [self setAttributedStringValue:attributedString];
     }
+    
     [self setWidth];
 }
 

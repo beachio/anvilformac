@@ -49,15 +49,13 @@
     self.statusItemView.isHighlighted = flag;
 }
 
-
-
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL {
     return YES;
 }
 
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL {
     
-    [[NVDataSource sharedDataSource] addSiteURL:dropURL];
+    [[NVDataSource sharedDataSource] addAppWithURL:dropURL];
 }
 
 @end

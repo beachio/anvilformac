@@ -55,13 +55,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [panel setOpaque:NO];
     [panel setBackgroundColor:[NSColor clearColor]];
     
-    // Resize panel
-    NSRect panelRect = [[self window] frame];
-    panelRect.size.height = POPUP_HEIGHT;
-    
-    panelRect.size.height = self.appListTableView.frame.size.height + 20;
-    
-    [[self window] setFrame:panelRect display:NO];
+    self.appListTableView.menu = [self menuForTableView];
+    [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
 }
 
 #pragma mark - Public accessors
@@ -103,27 +98,11 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSWindow *panel = [self window];
     NSRect statusRect = [self statusRectForWindow:panel];
     NSRect panelRect = [panel frame];
-    
+
     CGFloat statusX = roundf(NSMidX(statusRect));
     CGFloat panelX = statusX - NSMinX(panelRect);
-    
+
     self.backgroundView.arrowX = panelX;
-    
-    NSRect textRect = [self.textField frame];
-    textRect.size.width = NSWidth([self.backgroundView bounds]);
-    textRect.origin.x = SEARCH_INSET;
-    textRect.size.height = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT;
-    textRect.origin.y = SEARCH_INSET;
-    
-    if (NSIsEmptyRect(textRect))
-    {
-        [self.textField setHidden:YES];
-    }
-    else
-    {
-        [self.textField setFrame:textRect];
-        [self.textField setHidden:NO];
-    }
 }
 
 #pragma mark - Keyboard
@@ -132,20 +111,10 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     self.hasActivePanel = NO;
 }
 
-- (void)runSearch {
-    NSString *searchFormat = @"";
-    NSString *searchString = [self.searchField stringValue];
-    if ([searchString length] > 0)
-    {
-        searchFormat = NSLocalizedString(@"Search for ‘%@’…", @"Format for search request");
-    }
-    NSString *searchRequest = [NSString stringWithFormat:searchFormat, searchString];
-    [self.textField setStringValue:searchRequest];
-}
-
 #pragma mark - Public methods
 
 - (NSRect)statusRectForWindow:(NSWindow *)window {
+    
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     NSRect statusRect = NSZeroRect;
     
@@ -170,6 +139,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 }
 
 - (void)openPanel {
+    
+    [[self appListTableView] reloadData];
         
     NSWindow *panel = [self window];
     
@@ -178,6 +149,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     NSRect panelRect = [panel frame];
     panelRect.size.width = PANEL_WIDTH;
+    
+//    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
     
@@ -189,31 +162,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [panel setFrame:statusRect display:YES];
     [panel makeKeyAndOrderFront:nil];
     
-    NSTimeInterval openDuration = OPEN_DURATION;
-    
-    NSEvent *currentEvent = [NSApp currentEvent];
-    if ([currentEvent type] == NSLeftMouseDown)
-    {
-        NSUInteger clearFlags = ([currentEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-        BOOL shiftPressed = (clearFlags == NSShiftKeyMask);
-        BOOL shiftOptionPressed = (clearFlags == (NSShiftKeyMask | NSAlternateKeyMask));
-        if (shiftPressed || shiftOptionPressed)
-        {
-            openDuration *= 10;
-            
-            if (shiftOptionPressed)
-                NSLog(@"Icon is at %@\n\tMenu is on screen %@\n\tWill be animated to %@",
-                      NSStringFromRect(statusRect), NSStringFromRect(screenRect), NSStringFromRect(panelRect));
-        }
-    }
-    
     [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:openDuration];
-    [[panel animator] setFrame:panelRect display:YES];
-    [[panel animator] setAlphaValue:1];
+    [panel setFrame:panelRect display:YES];
+    [panel setAlphaValue:1];
     [NSAnimationContext endGrouping];
     
-    [panel performSelector:@selector(makeFirstResponder:) withObject:self.searchField afterDelay:openDuration];
+    [panel performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
+    
+    [self updatePanelHeight];
 }
 
 - (void)closePanel
@@ -241,13 +197,21 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
+    cellView.textField.stringValue = app.name;
+    [cellView.textField sizeToFit];
+    cellView.textField.delegate = self;
+    [cellView.textField setWidth];
     
-    cellView.textField.stringValue = [app directoryName];
+    if (app.faviconURL) {
     
-    NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
-    cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:faviconImage withSize:NSMakeSize(16, 16)];
-    
-//    cellView.faviconImageView.foregroundImage = [[NSImage alloc] initWithContentsOfFile:app.faviconURL.absoluteString];
+        NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
+        cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:faviconImage
+                                                                            withSize:NSMakeSize(16, 16)];
+    } else {
+        
+        cellView.faviconImageView.foregroundImage = [NSImage imageNamed:@"StatusHighlighted"];
+    }
+
     return cellView;
 }
 
@@ -277,5 +241,111 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     return requestedRepresentationImage;
 }
+
+- (NSMenu *)menuForTableView {
+    
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
+    
+    NSMenuItem *openInBrowserMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Browser" action:@selector(didClickOpenWithBrowser:) keyEquivalent:@""];
+    [menu addItem:openInBrowserMenuItem];
+    NSMenuItem *openInFinderMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Finder" action:@selector(didClickOpenInFinder:) keyEquivalent:@""];
+    [menu addItem:openInFinderMenuItem];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Restart" action:@selector(didClickRestart:) keyEquivalent:@""];
+    [menu addItem:menuItem];
+    NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:NULL keyEquivalent:@""];
+    [menu addItem:renameMenuItem];
+    NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(removeClickedRow:) keyEquivalent:@""];
+    [menu addItem:removeMenuItem];
+    
+    [menu setAutoenablesItems:NO];
+    
+    return menu;
+}
+
+- (void)appListTableViewDoubleClicked:(id)sender {
+    
+    NSInteger selectedIndex = [self.appListTableView clickedRow];
+    
+    if (selectedIndex < 0) {
+        return;
+    }
+    
+    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:selectedIndex makeIfNecessary:YES];
+    [cell.textField becomeFirstResponder];
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)obj {
+    
+    NSTextField *textField = (NSTextField *)obj.object;
+    NSInteger selectedIndex = [self.appListTableView selectedRow];
+    
+    
+    NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
+    [app renameTo:textField.stringValue];
+    
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+    [self.appListTableView reloadData];
+}
+
+
+- (void)removeClickedRow:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [dataSource removeApp:app];
+    
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
+    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
+    [self updatePanelHeight];
+}
+
+- (void)didClickOpenInFinder:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+
+    [[NSWorkspace sharedWorkspace] openURL: [app realURL]];
+}
+
+- (void)didClickOpenWithBrowser:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+}
+
+- (void)didClickRestart:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [app restart];
+}
+
+#pragma mark - 
+
+- (void)updatePanelHeight {
+    NSRect panelRect = [[self window] frame];
+    
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
+    NSInteger heightdifference = panelRect.size.height - newHeight;
+    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
+    panelRect.origin.y += heightdifference;
+    [[[self window] animator] setFrame:panelRect display:YES];
+}
+
+-(void)setSelectionFromClick{
+    
+    NSInteger theClickedRow = [self.appListTableView clickedRow];
+    
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:theClickedRow];
+    [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
+}
+
 
 @end

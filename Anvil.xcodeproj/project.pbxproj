@@ -27,7 +27,6 @@
 		4FBFA39815C6FE7F00BA8209 /* NVPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA39715C6FE7F00BA8209 /* NVPanel.m */; };
 		4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA39915C7006A00BA8209 /* Panel.xib */; };
 		4FBFA3A515C7EE4F00BA8209 /* NVSiteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3A415C7EE4F00BA8209 /* NVSiteTableView.m */; };
-		4FBFA3AE15C7EE9100BA8209 /* NVSiteTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3AD15C7EE9100BA8209 /* NVSiteTableCellView.m */; };
 		4FBFA3B215C7F0DE00BA8209 /* NVSiteTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B115C7F0DE00BA8209 /* NVSiteTableController.m */; };
 		4FBFA3B615C7F16300BA8209 /* NVLayeredImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */; };
 		4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B815C7F49200BA8209 /* NVDataSource.m */; };
@@ -71,8 +70,6 @@
 		4FBFA39915C7006A00BA8209 /* Panel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Panel.xib; sourceTree = "<group>"; };
 		4FBFA3A315C7EE4F00BA8209 /* NVSiteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSiteTableView.h; sourceTree = "<group>"; };
 		4FBFA3A415C7EE4F00BA8209 /* NVSiteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSiteTableView.m; sourceTree = "<group>"; };
-		4FBFA3AC15C7EE9100BA8209 /* NVSiteTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NVSiteTableCellView.h; path = ../NVSiteTableCellView.h; sourceTree = "<group>"; };
-		4FBFA3AD15C7EE9100BA8209 /* NVSiteTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NVSiteTableCellView.m; path = ../NVSiteTableCellView.m; sourceTree = "<group>"; };
 		4FBFA3B015C7F0DE00BA8209 /* NVSiteTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSiteTableController.h; sourceTree = "<group>"; };
 		4FBFA3B115C7F0DE00BA8209 /* NVSiteTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSiteTableController.m; sourceTree = "<group>"; };
 		4FBFA3B415C7F16300BA8209 /* NVLayeredImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVLayeredImageView.h; sourceTree = "<group>"; };
@@ -100,6 +97,33 @@
 				4FB9E80C1605FEBE005B50A4 /* NVApp.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		4FB9E92516073894005B50A4 /* NVLabel */ = {
+			isa = PBXGroup;
+			children = (
+				4F6DBFD9160626FA00D2F214 /* NVLabel.h */,
+				4F6DBFDA160626FA00D2F214 /* NVLabel.m */,
+			);
+			name = NVLabel;
+			sourceTree = "<group>";
+		};
+		4FB9E927160738A1005B50A4 /* NVTableRowView */ = {
+			isa = PBXGroup;
+			children = (
+				4FB9E81016061096005B50A4 /* NVTableRowView.h */,
+				4FB9E81116061096005B50A4 /* NVTableRowView.m */,
+			);
+			name = NVTableRowView;
+			sourceTree = "<group>";
+		};
+		4FB9E929160738AC005B50A4 /* NVTableCellView */ = {
+			isa = PBXGroup;
+			children = (
+				4FB9E813160610A1005B50A4 /* NVTableCellView.h */,
+				4FB9E814160610A1005B50A4 /* NVTableCellView.m */,
+			);
+			name = NVTableCellView;
 			sourceTree = "<group>";
 		};
 		4FBFA34B15C6F85800BA8209 = {
@@ -209,18 +233,14 @@
 		4FBFA3A015C7ED5300BA8209 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4F6DBFD9160626FA00D2F214 /* NVLabel.h */,
-				4F6DBFDA160626FA00D2F214 /* NVLabel.m */,
-				4FBFA3BD15C7F4E300BA8209 /* NVPanel */,
 				4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */,
-				4FBFA3BB15C7F4D900BA8209 /* NVSiteTableCellView */,
+				4FB9E92516073894005B50A4 /* NVLabel */,
+				4FBFA3BD15C7F4E300BA8209 /* NVPanel */,
 				4FBFA3BE15C7F4F100BA8209 /* NVStatusItemView */,
 				4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */,
 				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
-				4FB9E81016061096005B50A4 /* NVTableRowView.h */,
-				4FB9E81116061096005B50A4 /* NVTableRowView.m */,
-				4FB9E813160610A1005B50A4 /* NVTableCellView.h */,
-				4FB9E814160610A1005B50A4 /* NVTableCellView.m */,
+				4FB9E927160738A1005B50A4 /* NVTableRowView */,
+				4FB9E929160738AC005B50A4 /* NVTableCellView */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -232,15 +252,6 @@
 				4FBFA3B815C7F49200BA8209 /* NVDataSource.m */,
 			);
 			name = DataSource;
-			sourceTree = "<group>";
-		};
-		4FBFA3BB15C7F4D900BA8209 /* NVSiteTableCellView */ = {
-			isa = PBXGroup;
-			children = (
-				4FBFA3AC15C7EE9100BA8209 /* NVSiteTableCellView.h */,
-				4FBFA3AD15C7EE9100BA8209 /* NVSiteTableCellView.m */,
-			);
-			name = NVSiteTableCellView;
 			sourceTree = "<group>";
 		};
 		4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */ = {
@@ -365,7 +376,6 @@
 				4FBFA38D15C6FA7E00BA8209 /* NVBackgroundView.m in Sources */,
 				4FBFA39815C6FE7F00BA8209 /* NVPanel.m in Sources */,
 				4FBFA3A515C7EE4F00BA8209 /* NVSiteTableView.m in Sources */,
-				4FBFA3AE15C7EE9100BA8209 /* NVSiteTableCellView.m in Sources */,
 				4FBFA3B215C7F0DE00BA8209 /* NVSiteTableController.m in Sources */,
 				4FBFA3B615C7F16300BA8209 /* NVLayeredImageView.m in Sources */,
 				4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */,
