@@ -1,7 +1,9 @@
+#import "NVStyledView.h"
+
 #define ARROW_WIDTH 12
 #define ARROW_HEIGHT 8
 
-@interface NVBackgroundView : NSView
+@interface NVBackgroundView : NVStyledView
 {
     NSInteger _arrowX;
 }

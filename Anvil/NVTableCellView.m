@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        self.backgroundStyle = NSBackgroundStyleLowered;
     }
     
     return self;
@@ -29,6 +30,17 @@
                                        self.textField.frame.size.height);
     [self.localLabel sizeToFit];
     [self.textField setEditable:YES];
+}
+
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+    
+    NSLog(@"heyo");
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    
+    
 }
 
 @end

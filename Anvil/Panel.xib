@@ -66,7 +66,7 @@
 											<reference key="NSNextResponder" ref="984136381"/>
 											<int key="NSvFlags">292</int>
 											<array class="NSMutableArray" key="NSSubviews"/>
-											<string key="NSFrameSize">{335, 517}</string>
+											<string key="NSFrameSize">{335, 521}</string>
 											<reference key="NSSuperview" ref="984136381"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="162184344"/>
@@ -167,7 +167,7 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
-									<string key="NSFrameSize">{335, 517}</string>
+									<string key="NSFrameSize">{335, 521}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="936322405"/>
@@ -195,7 +195,6 @@
 									<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -204,7 +203,7 @@
 									<double key="NSPercent">0.99646643109540634</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{0, -72}, {335, 517}}</string>
+							<string key="NSFrame">{{0, -72}, {335, 521}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="984136381"/>
@@ -618,7 +617,7 @@
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">NVBackgroundView</string>
-					<string key="superclassName">NSView</string>
+					<string key="superclassName">NVStyledView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NVBackgroundView.h</string>

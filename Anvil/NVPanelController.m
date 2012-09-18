@@ -16,6 +16,10 @@
 
 #pragma mark -
 
+@interface NVPanelController ()
+    @property (nonatomic) NSInteger selectedRow;
+@end
+
 @implementation NVPanelController
 
 @synthesize backgroundView = _backgroundView;
@@ -67,6 +71,17 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 
     self.appListTableView.menu = [self menuForTableView];
     [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
+    
+    [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+    [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[[self appListTableView] bounds]
+                                                 options:opts
+                                                   owner:self
+                                                userInfo:nil];
+    [[self appListTableView] addTrackingArea:trackingArea];
+
 }
 
 #pragma mark - Public accessors
@@ -200,13 +215,53 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [[[self window] animator] setFrame:panelRect display:YES];
 }
 
-
-
 #pragma mark - Table View Delegate
+
+- (BOOL)selectionShouldChangeInTableView:(NSTableView *)aTableView {
+    
+    return NO;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldTrackCell:(NSCell *)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    return YES;
+}
+
+-(void)mouseMoved:(NSEvent *)theEvent {
+    
+    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+    NSInteger row = [self.appListTableView rowAtPoint:point];
+    
+    [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
     
     return [[[NVDataSource sharedDataSource] apps] count];
+}
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    
+    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    
+    if (self.selectedRow > -1) {
+            [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+    }
+    
+    self.selectedRow = [self.appListTableView selectedRow];
+    
+    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
+    
+    if (self.appListTableView.selectedRow == 0) {
+//        TODO: arrow color;
+    } else {
+        
+//        self.backgroundView.backgroundColor = [NSColor redColor];
+    }
+
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -270,15 +325,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.appListTableView reloadData];
-}
-
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    
-    if (self.appListTableView.selectedRow == 0) {
-        
-    } else {
-//        self.backgroundView.backgroundColor =
-    }
 }
 
 #pragma mark - Menus

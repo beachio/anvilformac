@@ -24,6 +24,7 @@
         // Initialization code here.
 //        NSLog(@"asdf");
 //        NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
+        [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
     }
     
     return self;
@@ -31,6 +32,8 @@
 
 - (void)awakeFromNib {
     
+    [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+
     NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
 }
 

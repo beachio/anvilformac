@@ -25,4 +25,14 @@
     // Drawing code here.
 }
 
+- (void)drawSelectionInRect:(NSRect)dirtyRect {
+    
+    [[NSColor blueColor] set];
+    NSRectFill([self bounds]);
+    
+//    backgroundImage = [NSImage imageNamed:@"SourceSelectionInactive"];
+//    [backgroundImage drawInRect:[self bounds] fromRect:NSMakeRect(0.0, 0.0, backgroundImage.size.width, backgroundImage.size.height) operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
+}
+
+
 @end
