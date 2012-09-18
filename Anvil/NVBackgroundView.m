@@ -65,6 +65,10 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
+- (BOOL)mouseDownCanMoveWindow {
+    return NO;
+}
+
 #pragma mark -
 #pragma mark Public accessors
 
