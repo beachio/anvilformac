@@ -66,7 +66,7 @@
 											<reference key="NSNextResponder" ref="984136381"/>
 											<int key="NSvFlags">292</int>
 											<array class="NSMutableArray" key="NSSubviews"/>
-											<string key="NSFrameSize">{335, 521}</string>
+											<string key="NSFrameSize">{335, 520}</string>
 											<reference key="NSSuperview" ref="984136381"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="162184344"/>
@@ -167,7 +167,7 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
-									<string key="NSFrameSize">{335, 521}</string>
+									<string key="NSFrameSize">{335, 520}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="936322405"/>
@@ -203,10 +203,11 @@
 									<double key="NSPercent">0.99646643109540634</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{0, -72}, {335, 521}}</string>
+							<string key="NSFrame">{{0, -73}, {335, 520}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="984136381"/>
+							<bool key="NSViewCanDrawConcurrently">YES</bool>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133680</int>
 							<reference key="NSVScroller" ref="8845446"/>

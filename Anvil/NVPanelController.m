@@ -248,20 +248,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     
     if (self.selectedRow > -1) {
-            [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+        [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
     }
     
     self.selectedRow = [self.appListTableView selectedRow];
     
-    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
-    
-    if (self.appListTableView.selectedRow == 0) {
-//        TODO: arrow color;
-    } else {
-        
-//        self.backgroundView.backgroundColor = [NSColor redColor];
+    if ([self.appListTableView selectedRow] > -1) {
+        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
     }
-
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
