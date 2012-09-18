@@ -66,16 +66,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 }
 
 - (void)setHasActivePanel:(BOOL)flag {
-    if (_hasActivePanel != flag)
-    {
-        _hasActivePanel = flag;
+    if (_hasActivePanel != flag) {
         
-        if (_hasActivePanel)
-        {
+        _hasActivePanel = flag;
+        if (_hasActivePanel) {
+            
             [self openPanel];
-        }
-        else
-        {
+        } else {
+            
             [self closePanel];
         }
     }
@@ -88,13 +86,13 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification; {
-    if ([[self window] isVisible])
-    {
+    if ([[self window] isVisible]) {
         self.hasActivePanel = NO;
     }
 }
 
 - (void)windowDidResize:(NSNotification *)notification {
+    
     NSWindow *panel = [self window];
     NSRect statusRect = [self statusRectForWindow:panel];
     NSRect panelRect = [panel frame];
@@ -119,18 +117,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSRect statusRect = NSZeroRect;
     
     NVStatusItemView *statusItemView = nil;
-    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)])
-    {
+    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)]) {
         statusItemView = [self.delegate statusItemViewForPanelController:self];
     }
     
-    if (statusItemView)
-    {
+    if (statusItemView) {
         statusRect = statusItemView.globalRect;
         statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
-    }
-    else
-    {
+    } else {
         statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
         statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
         statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
@@ -150,7 +144,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSRect panelRect = [panel frame];
     panelRect.size.width = PANEL_WIDTH;
     
-//    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
     
@@ -172,8 +165,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [self updatePanelHeight];
 }
 
-- (void)closePanel
-{
+- (void)closePanel {
+    
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:CLOSE_DURATION];
     [[[self window] animator] setAlphaValue:0];
@@ -184,6 +177,20 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
         [self.window orderOut:nil];
     });
 }
+
+#pragma mark - Sizing
+
+- (void)updatePanelHeight {
+    NSRect panelRect = [[self window] frame];
+    
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
+    NSInteger heightdifference = panelRect.size.height - newHeight;
+    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
+    panelRect.origin.y += heightdifference;
+    [[[self window] animator] setFrame:panelRect display:YES];
+}
+
+
 
 #pragma mark - Table View Delegate
 
@@ -242,6 +249,21 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     return requestedRepresentationImage;
 }
 
+- (void)controlTextDidEndEditing:(NSNotification *)obj {
+    
+    NSTextField *textField = (NSTextField *)obj.object;
+    NSInteger selectedIndex = [self.appListTableView selectedRow];
+    
+    
+    NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
+    [app renameTo:textField.stringValue];
+    
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+    [self.appListTableView reloadData];
+}
+
+#pragma mark - Menus
+
 - (NSMenu *)menuForTableView {
     
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
@@ -255,7 +277,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Restart" action:@selector(didClickRestart:) keyEquivalent:@""];
     [menu addItem:menuItem];
-    NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:NULL keyEquivalent:@""];
+    NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(didClickRename:) keyEquivalent:@""];
     [menu addItem:renameMenuItem];
     NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(removeClickedRow:) keyEquivalent:@""];
     [menu addItem:removeMenuItem];
@@ -277,20 +299,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [cell.textField becomeFirstResponder];
 }
 
-- (void)controlTextDidEndEditing:(NSNotification *)obj {
-    
-    NSTextField *textField = (NSTextField *)obj.object;
-    NSInteger selectedIndex = [self.appListTableView selectedRow];
-    
-    
-    NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
-    [app renameTo:textField.stringValue];
-    
-    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-    [self.appListTableView reloadData];
-}
-
-
 - (void)removeClickedRow:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
@@ -303,12 +311,21 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [self updatePanelHeight];
 }
 
+- (void)didClickRename:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
+    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
+    [cell.textField becomeFirstResponder];
+}
+
 - (void)didClickOpenInFinder:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
 
-    [[NSWorkspace sharedWorkspace] openURL: [app realURL]];
+    [[NSWorkspace sharedWorkspace] openURL:[app realURL]];
 }
 
 - (void)didClickOpenWithBrowser:(id)sender {
@@ -325,18 +342,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
     
     [app restart];
-}
-
-#pragma mark - 
-
-- (void)updatePanelHeight {
-    NSRect panelRect = [[self window] frame];
-    
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
-    NSInteger heightdifference = panelRect.size.height - newHeight;
-    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
-    panelRect.origin.y += heightdifference;
-    [[[self window] animator] setFrame:panelRect display:YES];
 }
 
 -(void)setSelectionFromClick{
