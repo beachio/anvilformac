@@ -53,6 +53,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - Actions
 
 - (IBAction)togglePanel:(id)sender {
+    
     self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
     self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
 }
@@ -71,6 +72,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - PanelControllerDelegate
 
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller {
+    
     return self.menubarController.statusItemView;
 }
 

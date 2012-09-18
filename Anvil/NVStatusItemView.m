@@ -41,6 +41,7 @@
 }
 
 -(BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender{
+    
     return YES;
 }
 
@@ -83,9 +84,9 @@
 #pragma mark -
 
 - (void)drawRect:(NSRect)dirtyRect {
-	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:self.isHighlighted];
+	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:NO];
     
-    NSImage *icon = self.isHighlighted ? self.alternateImage : self.image;
+    NSImage *icon = self.image; // self.isHighlighted ? self.alternateImage : self.image;
     NSSize iconSize = [icon size];
     NSRect bounds = self.bounds;
     CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2);

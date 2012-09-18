@@ -55,6 +55,16 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [panel setOpaque:NO];
     [panel setBackgroundColor:[NSColor clearColor]];
     
+    self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
+    self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarTitle"];
+
+    NSInteger height = self.headerIconView.backgroundImage.size.height;
+    NSInteger width = self.headerIconView.backgroundImage.size.width;
+    NSInteger x = (self.window.frame.size.width / 2.0 - width / 2.0);
+    NSInteger y = (self.headerView.frame.size.height / 2.0 - height / 2.0);
+    
+    self.headerIconView.frame = CGRectMake(x, y, width, height);
+
     self.appListTableView.menu = [self menuForTableView];
     [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
 }
@@ -181,12 +191,12 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 #pragma mark - Sizing
 
 - (void)updatePanelHeight {
-    NSRect panelRect = [[self window] frame];
     
+    NSRect panelRect = [[self window] frame];
     NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
     NSInteger heightdifference = panelRect.size.height - newHeight;
-    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
-    panelRect.origin.y += heightdifference;
+    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
+    panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
     [[[self window] animator] setFrame:panelRect display:YES];
 }
 
@@ -260,6 +270,15 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.appListTableView reloadData];
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    
+    if (self.appListTableView.selectedRow == 0) {
+        
+    } else {
+//        self.backgroundView.backgroundColor =
+    }
 }
 
 #pragma mark - Menus

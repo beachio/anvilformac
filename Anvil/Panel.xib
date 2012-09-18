@@ -44,7 +44,7 @@
 				<int key="NSWindowStyleMask">408</int>
 				<bool key="NSWindowAllowNontitledResizable">YES</bool>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{1965, 982}, {280, 489}}</string>
+				<string key="NSWindowRect">{{1965, 982}, {335, 489}}</string>
 				<int key="NSWTFlags">1681392640</int>
 				<string key="NSWindowTitle"/>
 				<string key="NSWindowClass">NVPanel</string>
@@ -66,7 +66,7 @@
 											<reference key="NSNextResponder" ref="984136381"/>
 											<int key="NSvFlags">292</int>
 											<array class="NSMutableArray" key="NSSubviews"/>
-											<string key="NSFrameSize">{282, 484}</string>
+											<string key="NSFrameSize">{335, 517}</string>
 											<reference key="NSSuperview" ref="984136381"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="162184344"/>
@@ -83,7 +83,7 @@
 											</object>
 											<array class="NSMutableArray" key="NSTableColumns">
 												<object class="NSTableColumn" id="111519341">
-													<double key="NSWidth">279</double>
+													<double key="NSWidth">332</double>
 													<double key="NSMinWidth">40</double>
 													<double key="NSMaxWidth">1000</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -167,7 +167,7 @@
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
-									<string key="NSFrameSize">{282, 484}</string>
+									<string key="NSFrameSize">{335, 517}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="936322405"/>
@@ -195,6 +195,7 @@
 									<string key="NSFrame">{{1, 119}, {223, 15}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -203,7 +204,7 @@
 									<double key="NSPercent">0.99646643109540634</double>
 								</object>
 							</array>
-							<string key="NSFrameSize">{282, 484}</string>
+							<string key="NSFrame">{{0, -72}, {335, 517}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="984136381"/>
@@ -217,11 +218,43 @@
 							<double key="NSMaxMagnification">4</double>
 							<double key="NSMagnification">1</double>
 						</object>
+						<object class="NSCustomView" id="483366631">
+							<reference key="NSNextResponder" ref="982126346"/>
+							<int key="NSvFlags">268</int>
+							<array class="NSMutableArray" key="NSSubviews">
+								<object class="NSCustomView" id="231793358">
+									<reference key="NSNextResponder" ref="483366631"/>
+									<int key="NSvFlags">268</int>
+									<string key="NSFrame">{{157, 11}, {20, 13}}</string>
+									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView" ref="331158961"/>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<string key="NSClassName">NVStyledView</string>
+								</object>
+							</array>
+							<string key="NSFrame">{{0, 447}, {335, 34}}</string>
+							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="231793358"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSClassName">NVStyledView</string>
+						</object>
+						<object class="NSCustomView" id="331158961">
+							<reference key="NSNextResponder" ref="982126346"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{10, 457}, {24, 12}}</string>
+							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="244901842"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSClassName">NVSwitchView</string>
+						</object>
 					</array>
-					<string key="NSFrameSize">{280, 489}</string>
+					<string key="NSFrameSize">{335, 489}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="244901842"/>
+					<reference key="NSNextKeyView" ref="483366631"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -266,6 +299,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">headerView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="483366631"/>
+					</object>
+					<int key="connectionID">413</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">headerIconView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="231793358"/>
+					</object>
+					<int key="connectionID">415</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="168886370"/>
 						<reference key="destination" ref="1001"/>
@@ -298,7 +347,7 @@
 								<object class="NSTextField" id="585778320">
 									<reference key="NSNextResponder" ref="162184344"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{28, 6}, {67, 17}}</string>
+									<string key="NSFrame">{{28, 6}, {120, 17}}</string>
 									<reference key="NSSuperview" ref="162184344"/>
 									<reference key="NSNextKeyView" ref="1030250157"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -351,7 +400,7 @@
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
 							</array>
-							<string key="NSFrame">{{1, 1}, {279, 27}}</string>
+							<string key="NSFrame">{{1, 1}, {332, 27}}</string>
 							<reference key="NSNextKeyView" ref="1001150584"/>
 						</object>
 						<reference key="destination" ref="1001150584"/>
@@ -414,6 +463,8 @@
 						<reference key="object" ref="982126346"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="244901842"/>
+							<reference ref="483366631"/>
+							<reference ref="331158961"/>
 						</array>
 						<reference key="parent" ref="168886370"/>
 					</object>
@@ -500,6 +551,24 @@
 						<reference key="object" ref="809340910"/>
 						<reference key="parent" ref="1030250157"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">412</int>
+						<reference key="object" ref="483366631"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="231793358"/>
+						</array>
+						<reference key="parent" ref="982126346"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">414</int>
+						<reference key="object" ref="231793358"/>
+						<reference key="parent" ref="483366631"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">417</int>
+						<reference key="object" ref="331158961"/>
+						<reference key="parent" ref="982126346"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -509,6 +578,9 @@
 				<string key="288.CustomClassName">NVLabel</string>
 				<string key="288.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="412.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="414.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="417.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="49.CustomClassName">NVSiteTableView</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -540,7 +612,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">411</int>
+			<int key="maxID">417</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -594,6 +666,8 @@
 						<string key="appListTableScrollView">NSScrollView</string>
 						<string key="appListTableView">NSTableView</string>
 						<string key="backgroundView">NVBackgroundView</string>
+						<string key="headerIconView">NVStyledView</string>
+						<string key="headerView">NVStyledView</string>
 						<string key="searchField">NSSearchField</string>
 						<string key="textField">NSTextField</string>
 					</dictionary>
@@ -609,6 +683,14 @@
 						<object class="IBToOneOutletInfo" key="backgroundView">
 							<string key="name">backgroundView</string>
 							<string key="candidateClassName">NVBackgroundView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerIconView">
+							<string key="name">headerIconView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerView">
+							<string key="name">headerView</string>
+							<string key="candidateClassName">NVStyledView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="searchField">
 							<string key="name">searchField</string>
@@ -630,6 +712,36 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NVSiteTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVStyledView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVStyledView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVSwitchView</string>
+					<string key="superclassName">NVStyledView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="backgroundView">NVStyledView</string>
+						<string key="switcherView">NVStyledView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="backgroundView">
+							<string key="name">backgroundView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="switcherView">
+							<string key="name">switcherView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVSwitchView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

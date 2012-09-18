@@ -1,6 +1,7 @@
 #import "NVBackgroundView.h"
 #import "NVStatusItemView.h"
 #import "NVDataSource.h"
+#import "NVStyledView.h"
 
 @class NVPanelController;
 
@@ -27,6 +28,8 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NSSearchField *searchField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextField *textField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSScrollView *appListTableScrollView;
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *headerView;
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *headerIconView;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;

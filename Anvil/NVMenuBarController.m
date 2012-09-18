@@ -19,10 +19,11 @@
     self = [super init];
     if (self != nil) {
         NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:STATUS_ITEM_VIEW_WIDTH];
+        [statusItem setHighlightMode:NO];
         _statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
         _statusItemView.delegate = self;
-        _statusItemView.image = [NSImage imageNamed:@"Status"];
-        _statusItemView.alternateImage = [NSImage imageNamed:@"StatusHighlighted"];
+        _statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
+//        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconGlow"];
         _statusItemView.action = @selector(togglePanel:);
     }
     return self;
@@ -36,6 +37,7 @@
 #pragma mark Public accessors
 
 - (NSStatusItem *)statusItem {
+    
     return self.statusItemView.statusItem;
 }
 
