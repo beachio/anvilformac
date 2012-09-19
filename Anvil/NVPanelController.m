@@ -409,6 +409,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
     [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
     NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
+    self.isEditing = YES;
+    [cell.textField setEnabled:YES];
     [cell.textField becomeFirstResponder];
 }
 
