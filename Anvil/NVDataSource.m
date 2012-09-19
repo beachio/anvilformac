@@ -55,7 +55,6 @@ static NSString *const kAppsKey = @"apps";
 
 - (void)readInSavedAppDataFromDisk {
     
-    NSLog(@"reading in");
     NSMutableArray *appsArray = [[NSMutableArray alloc] init];
     
     NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];

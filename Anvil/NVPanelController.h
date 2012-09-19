@@ -40,4 +40,7 @@
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
+- (IBAction)didClickDeleteButton:(id)sender;
+- (IBAction)didClickRestartButton:(id)sender;
+
 @end

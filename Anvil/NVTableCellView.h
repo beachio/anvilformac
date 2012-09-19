@@ -15,5 +15,10 @@
 @property (weak, nonatomic) IBOutlet NVLabel *textField;
 @property (weak, nonatomic) IBOutlet NVLabel *localLabel;
 @property (weak, nonatomic) IBOutlet NVLayeredImageView *faviconImageView;
+@property (weak, nonatomic) IBOutlet NSButton *restartButton;
+@property (weak, nonatomic) IBOutlet NSButton *deleteButton;
+
+- (void)showControls;
+- (void)hideControls;
 
 @end

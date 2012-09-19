@@ -11,6 +11,8 @@
 			<string key="NS.object.0">2549</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>NSButton</string>
+			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
 			<string>NSCustomView</string>
 			<string>NSScrollView</string>
@@ -238,6 +240,8 @@
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="231793358"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSHuggingPriority">{250, 250}</string>
+							<string key="NSAntiCompressionPriority">{750, 1}</string>
 							<string key="NSClassName">NVStyledView</string>
 						</object>
 						<object class="NSCustomView" id="331158961">
@@ -314,6 +318,74 @@
 					<int key="connectionID">415</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">didClickDeleteButton:</string>
+						<reference key="source" ref="1001"/>
+						<object class="NSButton" key="destination" id="496588736">
+							<reference key="NSNextResponder" ref="162184344"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{311, 5}, {14, 15}}</string>
+							<reference key="NSSuperview" ref="162184344"/>
+							<reference key="NSNextKeyView" ref="8845446"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<string key="NSHuggingPriority">{1000, 1}</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="417831506">
+								<int key="NSCellFlags">67108864</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents">X</string>
+								<reference key="NSSupport" ref="669256211"/>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<reference key="NSControlView" ref="496588736"/>
+								<int key="NSButtonFlags">-2046672896</int>
+								<int key="NSButtonFlags2">130</int>
+								<reference key="NSAlternateImage" ref="669256211"/>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						</object>
+					</object>
+					<int key="connectionID">497</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">didClickRestartButton:</string>
+						<reference key="source" ref="1001"/>
+						<object class="NSButton" key="destination" id="308115446">
+							<reference key="NSNextResponder" ref="162184344"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{243, 3}, {64, 19}}</string>
+							<reference key="NSSuperview" ref="162184344"/>
+							<reference key="NSNextKeyView" ref="496588736"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="48390582">
+								<int key="NSCellFlags">67108864</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents">Restart</string>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">12</double>
+									<int key="NSfFlags">4883</int>
+								</object>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<reference key="NSControlView" ref="308115446"/>
+								<int key="NSButtonFlags">-2035007488</int>
+								<int key="NSButtonFlags2">36</int>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">200</int>
+								<int key="NSPeriodicInterval">25</int>
+							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						</object>
+					</object>
+					<int key="connectionID">498</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="168886370"/>
@@ -384,7 +456,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{97, 5}, {31, 17}}</string>
 									<reference key="NSSuperview" ref="162184344"/>
-									<reference key="NSNextKeyView" ref="8845446"/>
+									<reference key="NSNextKeyView" ref="308115446"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="809340910">
@@ -399,6 +471,8 @@
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
+								<reference ref="308115446"/>
+								<reference ref="496588736"/>
 							</array>
 							<string key="NSFrame">{{1, 1}, {332, 27}}</string>
 							<reference key="NSNextKeyView" ref="1001150584"/>
@@ -422,6 +496,22 @@
 						<reference key="destination" ref="585778320"/>
 					</object>
 					<int key="connectionID">304</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">restartButton</string>
+						<reference key="source" ref="162184344"/>
+						<reference key="destination" ref="308115446"/>
+					</object>
+					<int key="connectionID">422</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">deleteButton</string>
+						<reference key="source" ref="162184344"/>
+						<reference key="destination" ref="496588736"/>
+					</object>
+					<int key="connectionID">423</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -517,6 +607,8 @@
 							<reference ref="1001150584"/>
 							<reference ref="585778320"/>
 							<reference ref="1030250157"/>
+							<reference ref="496588736"/>
+							<reference ref="308115446"/>
 						</array>
 						<reference key="parent" ref="111519341"/>
 					</object>
@@ -569,6 +661,32 @@
 						<reference key="object" ref="331158961"/>
 						<reference key="parent" ref="982126346"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">418</int>
+						<reference key="object" ref="308115446"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="48390582"/>
+						</array>
+						<reference key="parent" ref="162184344"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">419</int>
+						<reference key="object" ref="48390582"/>
+						<reference key="parent" ref="308115446"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">420</int>
+						<reference key="object" ref="496588736"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="417831506"/>
+						</array>
+						<reference key="parent" ref="162184344"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">421</int>
+						<reference key="object" ref="417831506"/>
+						<reference key="parent" ref="496588736"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -581,6 +699,10 @@
 				<string key="412.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="414.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="417.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="418.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="419.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="420.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="421.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="49.CustomClassName">NVSiteTableView</string>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -612,7 +734,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">417</int>
+			<int key="maxID">498</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -662,6 +784,25 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NVPanelController</string>
 					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didClickDeleteButton:">id</string>
+						<string key="didClickRestartButton:">id</string>
+						<string key="removeClickedRow:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didClickDeleteButton:">
+							<string key="name">didClickDeleteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRestartButton:">
+							<string key="name">didClickRestartButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="removeClickedRow:">
+							<string key="name">removeClickedRow:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="appListTableScrollView">NSScrollView</string>
 						<string key="appListTableView">NSTableView</string>
@@ -748,11 +889,17 @@
 					<string key="className">NVTableCellView</string>
 					<string key="superclassName">NSTableCellView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="deleteButton">NSButton</string>
 						<string key="faviconImageView">NVLayeredImageView</string>
 						<string key="localLabel">NVLabel</string>
+						<string key="restartButton">NSButton</string>
 						<string key="textField">NVLabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="deleteButton">
+							<string key="name">deleteButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="faviconImageView">
 							<string key="name">faviconImageView</string>
 							<string key="candidateClassName">NVLayeredImageView</string>
@@ -760,6 +907,10 @@
 						<object class="IBToOneOutletInfo" key="localLabel">
 							<string key="name">localLabel</string>
 							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="restartButton">
+							<string key="name">restartButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="textField">
 							<string key="name">textField</string>

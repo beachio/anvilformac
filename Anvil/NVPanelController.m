@@ -249,11 +249,15 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     if (self.selectedRow > -1) {
         [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
     }
     
     self.selectedRow = [self.appListTableView selectedRow];
     
     if ([self.appListTableView selectedRow] > -1) {
+        
+        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] showControls];
+//        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] showControls
         [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
     }
 }
@@ -358,7 +362,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [cell.textField becomeFirstResponder];
 }
 
-- (void)removeClickedRow:(id)sender {
+- (IBAction)removeClickedRow:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
@@ -394,7 +398,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
-- (void)didClickRestart:(id)sender {
+- (IBAction)didClickRestart:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
@@ -408,6 +412,27 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:theClickedRow];
     [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
+}
+
+- (IBAction)didClickDeleteButton:(id)sender {
+
+    NSInteger clickedRow = self.appListTableView.selectedRow;
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    
+    [dataSource removeApp:app];
+    
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
+    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
+    self.selectedRow = -1;
+    [self updatePanelHeight];
+}
+
+- (IBAction)didClickRestartButton:(id)sender {
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
+    
+    [app restart];
 }
 
 

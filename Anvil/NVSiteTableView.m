@@ -21,9 +21,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-//        NSLog(@"asdf");
-//        NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
         [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
     }
     
@@ -33,8 +30,6 @@
 - (void)awakeFromNib {
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-
-    NSLog(@"%ld", [self.dataSource numberOfRowsInTableView:self]);
 }
 
 - (void)drawRect:(NSRect)dirtyRect
