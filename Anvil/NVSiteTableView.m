@@ -12,7 +12,6 @@
 
 - (id)init {
     
-//    NSLog(@"asdf");
     self = [super init];
     return self;
 }

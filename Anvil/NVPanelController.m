@@ -242,19 +242,10 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     return [[[NVDataSource sharedDataSource] apps] count];
 }
 
-//- (void)mouseEntered:(NSEvent *)theEvent {
-//    
-//    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
-//    NSInteger row = [self.appListTableView rowAtPoint:point];
-//
-//    
-//    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
-//    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
-//}
-
 - (void)mouseExited:(NSEvent *)theEvent {
     
-    if (!self.isEditing) {
+    if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
+
         [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
         [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
     }
@@ -279,8 +270,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    
-    NSLog(@"viewFor, go!");
     
     NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
@@ -337,6 +326,43 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     return requestedRepresentationImage;
 }
 
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {
+    
+    if (commandSelector == @selector(cancelOperation:)) {
+        
+        self.isEditing = NO;
+        [self.appListTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.0];
+    }
+    return NO;
+}
+
+- (void)resizeTextField:(NVLabel *)textField {
+    
+    NSRect frame = textField.frame;
+    
+    float fontSize = [[textField.font.fontDescriptor objectForKey:NSFontSizeAttribute] floatValue];
+    NSString *fontName = [textField.font.fontDescriptor objectForKey:NSFontNameAttribute];
+    
+    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                fontName, NSFontNameAttribute,
+                                [NSNumber numberWithFloat:fontSize], NSFontSizeAttribute,
+                                nil];
+    
+    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:textField.text attributes:attributes];
+    NSSize size = attributedString.size;
+    NSInteger width = (int)size.width + 8;
+    
+    [textField setFrame:CGRectMake(frame.origin.x, frame.origin.y, width, frame.size.height)];
+}
+
+- (void)controlTextDidChange:(NSNotification *)obj  {
+    
+    NVTableCellView *tableCellView = [self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO];
+    tableCellView.localLabel.hidden =  YES;
+    
+    [self resizeTextField: [obj object]];
+}
+
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
     
     self.isEditing = NO;
@@ -344,12 +370,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSTextField *textField = (NSTextField *)obj.object;
     NSInteger selectedIndex = self.selectedRow;
     
+    NVTableCellView *tableCellView = [self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO];
+    tableCellView.localLabel.hidden =  NO;
+    
     NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
     [app renameTo:textField.stringValue];
     
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.appListTableView reloadData];
-    
 }
 
 #pragma mark - Menus
