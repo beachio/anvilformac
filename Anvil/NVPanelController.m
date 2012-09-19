@@ -18,15 +18,10 @@
 
 @interface NVPanelController ()
     @property (nonatomic) NSInteger selectedRow;
+    @property (nonatomic) BOOL isEditing;
 @end
 
 @implementation NVPanelController
-
-@synthesize backgroundView = _backgroundView;
-@synthesize delegate = _delegate;
-@synthesize searchField = _searchField;
-@synthesize textField = _textField;
-@synthesize appListTableView;
 
 static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
 
@@ -82,6 +77,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
                                                 userInfo:nil];
     [[self appListTableView] addTrackingArea:trackingArea];
 
+    self.isEditing = NO;
 }
 
 #pragma mark - Public accessors
@@ -208,9 +204,9 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 - (void)updatePanelHeight {
     
     NSRect panelRect = [[self window] frame];
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8;
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8;
     NSInteger heightdifference = panelRect.size.height - newHeight;
-    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
+    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
     panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
     [[[self window] animator] setFrame:panelRect display:YES];
 }
@@ -232,7 +228,13 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
-    [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    
+    if (!self.isEditing) {
+        
+        // A bug - we have to reset the selection, I think. Changes aren't fired when it's the same.
+        [self.appListTableView selectRowIndexes:[[NSIndexSet alloc] init] byExtendingSelection:NO];
+        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    }
 }
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
@@ -240,12 +242,27 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     return [[[NVDataSource sharedDataSource] apps] count];
 }
 
+//- (void)mouseEntered:(NSEvent *)theEvent {
+//    
+//    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+//    NSInteger row = [self.appListTableView rowAtPoint:point];
+//
+//    
+//    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+//    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+//}
+
 - (void)mouseExited:(NSEvent *)theEvent {
     
-    [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+    if (!self.isEditing) {
+        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+        [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+    }
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    
+    self.isEditing = NO;
     
     if (self.selectedRow > -1) {
         [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
@@ -257,20 +274,28 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     if ([self.appListTableView selectedRow] > -1) {
         
         [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] showControls];
-//        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] showControls
         [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
     }
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
+    NSLog(@"viewFor, go!");
+    
     NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
-    cellView.textField.stringValue = app.name;
-    [cellView.textField sizeToFit];
-    cellView.textField.delegate = self;
-    [cellView.textField setWidth];
+    [cellView.siteLabel setText:app.name];
+    [cellView.siteLabel setTextColor:[NSColor colorWithDeviceRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1.0]];
+    [cellView.siteLabel setEnabled:NO];
+    [cellView.siteLabel sizeToFit];
+    cellView.siteLabel.delegate = self;
+    [cellView.siteLabel setWidth];
+    
+    [cellView hideControls];
+    [cellView.siteLabel setWidth];
+    
+    [cellView resizeSubviewsWithOldSize:cellView.frame.size];
     
     if (app.faviconURL) {
     
@@ -314,15 +339,17 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
     
+    self.isEditing = NO;
+
     NSTextField *textField = (NSTextField *)obj.object;
-    NSInteger selectedIndex = [self.appListTableView selectedRow];
-    
+    NSInteger selectedIndex = self.selectedRow;
     
     NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
     [app renameTo:textField.stringValue];
     
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.appListTableView reloadData];
+    
 }
 
 #pragma mark - Menus
@@ -358,7 +385,10 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
         return;
     }
     
+    self.isEditing = YES;
+    
     NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:selectedIndex makeIfNecessary:YES];
+    [cell.textField setEnabled:YES];
     [cell.textField becomeFirstResponder];
 }
 

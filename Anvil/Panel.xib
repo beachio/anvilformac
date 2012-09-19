@@ -145,8 +145,18 @@
 											<double key="NSIntercellSpacingWidth">3</double>
 											<double key="NSIntercellSpacingHeight">2</double>
 											<object class="NSColor" key="NSBackgroundColor">
-												<int key="NSColorSpace">3</int>
-												<bytes key="NSWhite">MQA</bytes>
+												<int key="NSColorSpace">6</int>
+												<string key="NSCatalogName">System</string>
+												<string key="NSColorName">_sourceListBackgroundColor</string>
+												<object class="NSColor" key="NSColor">
+													<int key="NSColorSpace">6</int>
+													<string key="NSCatalogName">System</string>
+													<string key="NSColorName">alternateSelectedControlColor</string>
+													<object class="NSColor" key="NSColor">
+														<int key="NSColorSpace">1</int>
+														<bytes key="NSRGB">MCAwIDEAA</bytes>
+													</object>
+												</object>
 											</object>
 											<object class="NSColor" key="NSGridColor" id="568059130">
 												<int key="NSColorSpace">6</int>
@@ -158,14 +168,15 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">27</double>
-											<int key="NSTvFlags">373325824</int>
+											<int key="NSTvFlags">373293056</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
-											<int key="NSColumnAutoresizingStyle">1</int>
+											<int key="NSColumnAutoresizingStyle">5</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
 											<bool key="NSAllowsTypeSelect">YES</bool>
-											<int key="NSTableViewDraggingDestinationStyle">0</int>
+											<int key="NSTableViewSelectionHighlightStyle">1</int>
+											<int key="NSTableViewDraggingDestinationStyle">1</int>
 											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
@@ -321,7 +332,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">didClickDeleteButton:</string>
 						<reference key="source" ref="1001"/>
-						<object class="NSButton" key="destination" id="496588736">
+						<object class="NSButton" key="destination" id="599015111">
 							<reference key="NSNextResponder" ref="162184344"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{311, 5}, {14, 15}}</string>
@@ -330,13 +341,13 @@
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSHuggingPriority">{1000, 1}</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="417831506">
+							<object class="NSButtonCell" key="NSCell" id="45846846">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">X</string>
 								<reference key="NSSupport" ref="669256211"/>
 								<string key="NSCellIdentifier">_NS:9</string>
-								<reference key="NSControlView" ref="496588736"/>
+								<reference key="NSControlView" ref="599015111"/>
 								<int key="NSButtonFlags">-2046672896</int>
 								<int key="NSButtonFlags2">130</int>
 								<reference key="NSAlternateImage" ref="669256211"/>
@@ -354,15 +365,15 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">didClickRestartButton:</string>
 						<reference key="source" ref="1001"/>
-						<object class="NSButton" key="destination" id="308115446">
+						<object class="NSButton" key="destination" id="409779764">
 							<reference key="NSNextResponder" ref="162184344"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{243, 3}, {64, 19}}</string>
 							<reference key="NSSuperview" ref="162184344"/>
-							<reference key="NSNextKeyView" ref="496588736"/>
+							<reference key="NSNextKeyView" ref="599015111"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="48390582">
+							<object class="NSButtonCell" key="NSCell" id="610829776">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Restart</string>
@@ -372,7 +383,7 @@
 									<int key="NSfFlags">4883</int>
 								</object>
 								<string key="NSCellIdentifier">_NS:9</string>
-								<reference key="NSControlView" ref="308115446"/>
+								<reference key="NSControlView" ref="409779764"/>
 								<int key="NSButtonFlags">-2035007488</int>
 								<int key="NSButtonFlags2">36</int>
 								<string key="NSAlternateContents"/>
@@ -425,11 +436,11 @@
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="590235987">
-										<int key="NSCellFlags">337641537</int>
-										<int key="NSCellFlags2">272631808</int>
+										<int key="NSCellFlags">69206081</int>
+										<int key="NSCellFlags2">272635968</int>
 										<string key="NSContents">Site Name</string>
 										<reference key="NSSupport" ref="669256211"/>
-										<string key="NSPlaceholderString">Text</string>
+										<string key="NSPlaceholderString"/>
 										<reference key="NSControlView" ref="585778320"/>
 										<object class="NSColor" key="NSBackgroundColor" id="166784520">
 											<int key="NSColorSpace">6</int>
@@ -456,7 +467,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{97, 5}, {31, 17}}</string>
 									<reference key="NSSuperview" ref="162184344"/>
-									<reference key="NSNextKeyView" ref="308115446"/>
+									<reference key="NSNextKeyView" ref="409779764"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="809340910">
@@ -471,8 +482,8 @@
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								</object>
-								<reference ref="308115446"/>
-								<reference ref="496588736"/>
+								<reference ref="409779764"/>
+								<reference ref="599015111"/>
 							</array>
 							<string key="NSFrame">{{1, 1}, {332, 27}}</string>
 							<reference key="NSNextKeyView" ref="1001150584"/>
@@ -501,7 +512,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">restartButton</string>
 						<reference key="source" ref="162184344"/>
-						<reference key="destination" ref="308115446"/>
+						<reference key="destination" ref="409779764"/>
 					</object>
 					<int key="connectionID">422</int>
 				</object>
@@ -509,9 +520,17 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">deleteButton</string>
 						<reference key="source" ref="162184344"/>
-						<reference key="destination" ref="496588736"/>
+						<reference key="destination" ref="599015111"/>
 					</object>
 					<int key="connectionID">423</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">siteLabel</string>
+						<reference key="source" ref="162184344"/>
+						<reference key="destination" ref="585778320"/>
+					</object>
+					<int key="connectionID">499</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -607,8 +626,8 @@
 							<reference ref="1001150584"/>
 							<reference ref="585778320"/>
 							<reference ref="1030250157"/>
-							<reference ref="496588736"/>
-							<reference ref="308115446"/>
+							<reference ref="599015111"/>
+							<reference ref="409779764"/>
 						</array>
 						<reference key="parent" ref="111519341"/>
 					</object>
@@ -663,29 +682,29 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">418</int>
-						<reference key="object" ref="308115446"/>
+						<reference key="object" ref="409779764"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="48390582"/>
+							<reference ref="610829776"/>
 						</array>
 						<reference key="parent" ref="162184344"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">419</int>
-						<reference key="object" ref="48390582"/>
-						<reference key="parent" ref="308115446"/>
+						<reference key="object" ref="610829776"/>
+						<reference key="parent" ref="409779764"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">420</int>
-						<reference key="object" ref="496588736"/>
+						<reference key="object" ref="599015111"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="417831506"/>
+							<reference ref="45846846"/>
 						</array>
 						<reference key="parent" ref="162184344"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">421</int>
-						<reference key="object" ref="417831506"/>
-						<reference key="parent" ref="496588736"/>
+						<reference key="object" ref="45846846"/>
+						<reference key="parent" ref="599015111"/>
 					</object>
 				</array>
 			</object>
@@ -734,7 +753,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">498</int>
+			<int key="maxID">499</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -786,12 +805,17 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="didClickDeleteButton:">id</string>
+						<string key="didClickRestart:">id</string>
 						<string key="didClickRestartButton:">id</string>
 						<string key="removeClickedRow:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="didClickDeleteButton:">
 							<string key="name">didClickDeleteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRestart:">
+							<string key="name">didClickRestart:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didClickRestartButton:">
@@ -893,7 +917,7 @@
 						<string key="faviconImageView">NVLayeredImageView</string>
 						<string key="localLabel">NVLabel</string>
 						<string key="restartButton">NSButton</string>
-						<string key="textField">NVLabel</string>
+						<string key="siteLabel">NVLabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="deleteButton">
@@ -912,8 +936,8 @@
 							<string key="name">restartButton</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="textField">
-							<string key="name">textField</string>
+						<object class="IBToOneOutletInfo" key="siteLabel">
+							<string key="name">siteLabel</string>
 							<string key="candidateClassName">NVLabel</string>
 						</object>
 					</dictionary>

@@ -14,19 +14,7 @@
 
 @end
 
-
 @implementation NVSwitchView
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-        
-    }
-    
-    return self;
-}
 
 - (void)awakeFromNib {
     
@@ -55,32 +43,16 @@
     
     [self addSubview:self.backgroundView];
 
-    
     self.switcherView = [[NVStyledView alloc] initWithFrame:rect];
     self.switcherView.backgroundImage = switcherImage;
     [self addSubview:self.switcherView];
     
-    [self turnOn];
+    [self switchTo:YES withAnimation:NO];
 }
 
 - (void)turnOn {
     
-    self.on = YES;
-    self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive"];
-    [self switchTo:YES];
-}
-
-- (void)mouseMoved:(NSEvent *)theEvent {
-    
-//    return NO;
-}
-
-- (BOOL)mouseDownCanMoveWindow {
-    return NO;
-}
-
-- (void)mouseDown:(NSEvent *)theEvent {
-    [self toggle];
+    [self switchTo:YES withAnimation:YES];
 }
 
 - (void)toggle {
@@ -90,41 +62,53 @@
 
 - (void)turnOff {
     
-    self.on = NO;
-    self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive"];
-    [self switchTo:NO];
+    [self switchTo:NO withAnimation:YES];
 }
 
-- (void)switchTo:(BOOL)position {
+- (void)switchTo:(BOOL)position withAnimation:(BOOL)useAnimation {
+    
+    self.on = position;
     
     NSRect firstViewFrame = self.switcherView.frame;
     NSMutableDictionary *newAnimations = [NSMutableDictionary dictionary];
     [newAnimations setObject:self.switcherView forKey:NSViewAnimationTargetKey];
-    [newAnimations setObject:[NSValue valueWithRect:firstViewFrame]
-                      forKey:NSViewAnimationStartFrameKey];
+    [newAnimations setObject:[NSValue valueWithRect:firstViewFrame] forKey:NSViewAnimationStartFrameKey];
     
     NSRect lastViewFrame = firstViewFrame;
 
     if (position) {
+        
         lastViewFrame.origin.x = self.frame.size.width - lastViewFrame.size.width;
+        self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive"];
     } else {
+        
         lastViewFrame.origin.x = 0;
+        self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive"];
     }
     
-    [newAnimations setObject:[NSValue valueWithRect:lastViewFrame]
-                      forKey:NSViewAnimationEndFrameKey];
+    [newAnimations setObject:[NSValue valueWithRect:lastViewFrame] forKey:NSViewAnimationEndFrameKey];
     
-    NSViewAnimation *theAnim = nil;
-    // Create the view animation object.
-    theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObjects:newAnimations, nil]];
-    [theAnim setDuration:0.1];    // One and a half seconds.
-    [theAnim startAnimation];
+    if (useAnimation) {
+        
+        NSViewAnimation *theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObjects:newAnimations, nil]];
+        [theAnim setDuration:0.1];
+        [theAnim startAnimation];
+    } else {
+        
+        self.switcherView.frame = lastViewFrame;
+    }
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-    // Drawing code here.
+#pragma mark - Mouse
+
+- (BOOL)mouseDownCanMoveWindow {
+    
+    return NO;
+}
+
+- (void)mouseDown:(NSEvent *)theEvent {
+    
+    [self toggle];
 }
 
 @end

@@ -26,31 +26,33 @@
     
     // Initialization code here.
     self.backgroundStyle = NSBackgroundStyleLowered;
-    
+        
     [self.deleteButton setImage:[NSImage imageNamed:@"Delete"]];
     [self.deleteButton setStringValue:@""];
     [self hideControls];
     
-    [self.textField setWidth];
-    self.localLabel.frame = CGRectMake(self.textField.frame.origin.x + self.textField.frame.size.width - 2,
-                                       self.textField.frame.origin.y,
-                                       self.textField.frame.size.width,
-                                       self.textField.frame.size.height);
+    [self.siteLabel setWidth];
+    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
+                                       self.siteLabel.frame.origin.y,
+                                       self.siteLabel.frame.size.width,
+                                       self.siteLabel.frame.size.height);
     
     [self.localLabel sizeToFit];
-    [self.textField setEditable:YES];
+    [self.siteLabel setEditable:YES];
 }
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldSize {
     
-    [self.textField setWidth];
-    self.localLabel.frame = CGRectMake(self.textField.frame.origin.x + self.textField.frame.size.width - 2,
-                                       self.textField.frame.origin.y,
-                                       self.textField.frame.size.width,
-                                       self.textField.frame.size.height);
+    NSLog(@"resize called");
+    
+    [self.siteLabel setWidth];
+    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
+                                       self.siteLabel.frame.origin.y,
+                                       self.siteLabel.frame.size.width,
+                                       self.siteLabel.frame.size.height);
     
     [self.localLabel sizeToFit];
-    [self.textField setEditable:YES];
+    [self.siteLabel setEditable:YES];
     
     CGRect dirtyRect = self.frame;
     
@@ -65,7 +67,6 @@
                                           restartButtonFrame.origin.y,
                                           restartButtonFrame.size.width,
                                           restartButtonFrame.size.height);
-
 }
 
 - (void)showControls {

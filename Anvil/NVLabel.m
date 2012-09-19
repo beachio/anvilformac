@@ -43,7 +43,6 @@
     [self setEditable:NO];
     [self setBordered:NO];
     [self setBezeled:NO];
-    
 }
 
 - (void)setWidth {
