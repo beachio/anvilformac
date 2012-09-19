@@ -9,5 +9,6 @@
 }
 
 @property (nonatomic, assign) NSInteger arrowX;
+@property (nonatomic, assign) IBOutlet NVStyledView *titlebarPointImageView;
 
 @end

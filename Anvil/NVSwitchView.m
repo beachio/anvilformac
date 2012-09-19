@@ -69,6 +69,10 @@
     
     self.on = position;
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(switchView:didSwitchTo:)]) {
+        [self.delegate switchView:self didSwitchTo:position];
+    }
+    
     NSRect firstViewFrame = self.switcherView.frame;
     NSMutableDictionary *newAnimations = [NSMutableDictionary dictionary];
     [newAnimations setObject:self.switcherView forKey:NSViewAnimationTargetKey];

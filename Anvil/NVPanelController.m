@@ -11,7 +11,7 @@
 #define CLOSE_DURATION .1
 
 #define POPUP_HEIGHT 122
-#define PANEL_WIDTH 280
+#define PANEL_WIDTH 335
 #define MENU_ANIMATION_DURATION .1
 
 #pragma mark -
@@ -19,6 +19,7 @@
 @interface NVPanelController ()
     @property (nonatomic) NSInteger selectedRow;
     @property (nonatomic) BOOL isEditing;
+@property (nonatomic) BOOL isShowingModal;
 @end
 
 @implementation NVPanelController
@@ -26,6 +27,35 @@
 static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
 
 #pragma mark -
+
+- (id)init {
+    
+    self = [super init];
+    
+    if (self != nil) {
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath:@"/usr/bin/curl"];
+        
+        [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
+        
+        
+        NSPipe *outputPipe = [NSPipe pipe];
+        [task setStandardInput:[NSPipe pipe]];
+        [task setStandardError:[NSPipe pipe]];
+        [task setStandardOutput:outputPipe];
+        [task launch];
+        [task waitUntilExit];
+        
+        NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+        NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", pipeString);
+        
+        BOOL status = [pipeString length] > 0;
+        [self.switchView switchTo:status withAnimation:NO];
+    }
+    
+    return self;
+}
 
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
     
@@ -44,6 +74,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 #pragma mark -
 
 - (void)awakeFromNib {
+    
     [super awakeFromNib];
     
     // Make a fully skinned panel
@@ -55,7 +86,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [panel setBackgroundColor:[NSColor clearColor]];
     
     self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
-    self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarTitle"];
+    self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
 
     NSInteger height = self.headerIconView.backgroundImage.size.height;
     NSInteger width = self.headerIconView.backgroundImage.size.width;
@@ -77,7 +108,58 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
                                                 userInfo:nil];
     [[self appListTableView] addTrackingArea:trackingArea];
 
+    NSShadow *shadow = [[NSShadow alloc] init];
+    [shadow setShadowColor:[NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4]];
+    [shadow setShadowOffset:NSMakeSize(0, -1)];
+    [shadow setShadowBlurRadius:0.0];
+    [self.switchLabel setTextShadow:shadow];
+    
+    self.addButton.image = [NSImage imageNamed:@"AddButton"];
+    self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
+    
+    self.switchView.delegate = self;
     self.isEditing = NO;
+}
+
+- (IBAction)didClickAddButton:(id)sender {
+    
+    NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
+    openPanel.delegate = self;
+    
+    NSURL *sitesURL = [NSURL URLWithString:[@"~/Sites" stringByExpandingTildeInPath]];
+    NSString *sitesURLString = [NSString stringWithFormat:@"file://%@", sitesURL.path];
+    [openPanel setCanChooseDirectories:YES];
+    openPanel.directoryURL = [NSURL URLWithString:sitesURLString];
+    
+    self.isShowingModal = YES;
+    [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
+        
+        self.isShowingModal = NO;
+        if (result == NSFileHandlingPanelCancelButton) {
+            return;
+        }
+        
+        [[NVDataSource sharedDataSource] addAppWithURL:openPanel.URL];
+        [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+        [self.appListTableView reloadData];
+        [self updatePanelHeightAndAnimate:YES];
+    }];
+}
+
+
+- (void)switchView:(NVSwitchView *)switchView didSwitchTo:(BOOL)state {
+
+    if (state) {
+        
+        [self.switchLabel setText:@"ON"];
+        system("launchctl load -Fw \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
+        NSLog(@"powder up");
+    } else {
+        
+        [self.switchLabel setText:@"OFF"];
+        system("launchctl unload \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
+        NSLog(@"powder down");
+    }
 }
 
 #pragma mark - Public accessors
@@ -87,6 +169,12 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 }
 
 - (void)setHasActivePanel:(BOOL)flag {
+    
+    if (self.isShowingModal) {
+        
+        return;
+    }
+    
     if (_hasActivePanel != flag) {
         
         _hasActivePanel = flag;
@@ -174,7 +262,6 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [NSApp activateIgnoringOtherApps:NO];
     [panel setAlphaValue:0];
     [panel setFrame:statusRect display:YES];
-    [panel makeKeyAndOrderFront:nil];
     
     [NSAnimationContext beginGrouping];
     [panel setFrame:panelRect display:YES];
@@ -183,7 +270,9 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     [panel performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
     
-    [self updatePanelHeight];
+    [self updatePanelHeightAndAnimate:NO];
+        
+    [panel makeKeyAndOrderFront:nil];
 }
 
 - (void)closePanel {
@@ -201,14 +290,19 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 
 #pragma mark - Sizing
 
-- (void)updatePanelHeight {
+- (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
     
     NSRect panelRect = [[self window] frame];
     NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8;
     NSInteger heightdifference = panelRect.size.height - newHeight;
     panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
     panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
-    [[[self window] animator] setFrame:panelRect display:YES];
+    
+    if (shouldAnimate) {
+        [[[self window] animator] setFrame:panelRect display:YES];
+    } else {
+        [[self window] setFrame:panelRect display:YES];
+    }
 }
 
 #pragma mark - Table View Delegate
@@ -429,7 +523,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
     [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
-    [self updatePanelHeight];
+    [self updatePanelHeightAndAnimate:YES];
 }
 
 - (void)didClickRename:(id)sender {
@@ -485,7 +579,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
     [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
     self.selectedRow = -1;
-    [self updatePanelHeight];
+    [self updatePanelHeightAndAnimate:YES];
 }
 
 - (IBAction)didClickRestartButton:(id)sender {

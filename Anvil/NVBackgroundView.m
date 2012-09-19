@@ -16,13 +16,41 @@
 
 #pragma mark -
 
+- (id)init {
+    
+    self = [super init];
+    if (self) {
+        
+//        [self addSubview:self.titlebarPointImageView];
+        
+//        NSImage *img = [NSImage imageNamed:@"TitlebarPoint"];
+//        CGRect imageRect = CGRectMake(0, 0, 10, 10);
+//        [img drawInRect:imageRect fromRect:dirtyRect operation:NSCompositeDestinationAtop fraction:1.0];
+        
+    }
+    
+    return self;
+    
+}
+
+- (void)awakeFromNib {
+    self.titlebarPointImageView.backgroundImage = [NSImage imageNamed:@"TitlebarPoint"];
+    
+}
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldSize {
+    
+    [super resizeSubviewsWithOldSize:oldSize];
+//    [self.titlebarPointImageView setFrame:CGRectMake(0, 0, 10, 10)];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSRect contentRect = NSInsetRect([self bounds], LINE_THICKNESS, LINE_THICKNESS);
     NSBezierPath *path = [NSBezierPath bezierPath];
     
-    [path moveToPoint:NSMakePoint(_arrowX, NSMaxY(contentRect))];
-    [path lineToPoint:NSMakePoint(_arrowX + ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
+    [path moveToPoint:NSMakePoint(_arrowX, NSMaxY(contentRect) - ARROW_HEIGHT)];
+//    [path lineToPoint:NSMakePoint(_arrowX + ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path lineToPoint:NSMakePoint(NSMaxX(contentRect) - CORNER_RADIUS, NSMaxY(contentRect) - ARROW_HEIGHT)];
     
     NSPoint topRightCorner = NSMakePoint(NSMaxX(contentRect), NSMaxY(contentRect) - ARROW_HEIGHT);
@@ -46,7 +74,7 @@
     [path curveToPoint:NSMakePoint(NSMinX(contentRect) + CORNER_RADIUS, NSMaxY(contentRect) - ARROW_HEIGHT)
          controlPoint1:topLeftCorner controlPoint2:topLeftCorner];
     
-    [path lineToPoint:NSMakePoint(_arrowX - ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
+//    [path lineToPoint:NSMakePoint(_arrowX - ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path closePath];
     
     [[NSColor colorWithDeviceWhite:1 alpha:FILL_OPACITY] setFill];

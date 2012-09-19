@@ -2,6 +2,8 @@
 #import "NVStatusItemView.h"
 #import "NVDataSource.h"
 #import "NVStyledView.h"
+#import "NVLabel.h"
+#import "NVSwitchView.h"
 
 @class NVPanelController;
 
@@ -15,7 +17,7 @@
 
 #pragma mark -
 
-@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate> {
+@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate, NVSwitchDelegate, NSOpenSavePanelDelegate> {
     BOOL _hasActivePanel;
     __unsafe_unretained NVBackgroundView *_backgroundView;
     __unsafe_unretained id<NVPanelControllerDelegate> _delegate;
@@ -30,11 +32,16 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NSScrollView *appListTableScrollView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *headerView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *headerIconView;
+@property (nonatomic, unsafe_unretained) IBOutlet NVLabel *switchLabel;
+@property (weak, nonatomic) IBOutlet NVSwitchView *switchView;
+@property (weak, nonatomic) IBOutlet NSButton *addButton;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;
 
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate;
+
+
 
 - (void)openPanel;
 - (void)closePanel;
@@ -42,5 +49,6 @@
 
 - (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;
+- (IBAction)didClickAddButton:(id)sender;
 
 @end
