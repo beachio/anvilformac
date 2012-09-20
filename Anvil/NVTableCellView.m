@@ -27,8 +27,8 @@
     // Initialization code here.
     self.backgroundStyle = NSBackgroundStyleLowered;
         
-    [self.deleteButton setImage:[NSImage imageNamed:@"Delete"]];
-    [self.deleteButton setAlternateImage:[NSImage imageNamed:@"DeleteAlt"]];
+//    [self.deleteButton setImage:[NSImage imageNamed:@"Delete"]];
+//    [self.deleteButton setAlternateImage:[NSImage imageNamed:@"DeleteAlt"]];
     [self.deleteButton setStringValue:@""];
     
     [self.restartButton setImage:[NSImage imageNamed:@"Restart"]];
@@ -61,13 +61,13 @@
     CGRect dirtyRect = self.frame;
     
     NSRect deleteButtonFrame = self.deleteButton.frame;
-    self.deleteButton.frame = CGRectMake(dirtyRect.size.width - 5 - deleteButtonFrame.size.width,
+    self.deleteButton.frame = CGRectMake(dirtyRect.size.width - 10 - deleteButtonFrame.size.width,
                                          deleteButtonFrame.origin.y,
                                          deleteButtonFrame.size.width,
                                          deleteButtonFrame.size.height);
     
     NSRect restartButtonFrame = self.restartButton.frame;
-    self.restartButton.frame = CGRectMake(self.deleteButton.frame.origin.x - 5 - restartButtonFrame.size.width,
+    self.restartButton.frame = CGRectMake(self.deleteButton.frame.origin.x - 10 - restartButtonFrame.size.width,
                                           restartButtonFrame.origin.y,
                                           restartButtonFrame.size.width,
                                           restartButtonFrame.size.height);

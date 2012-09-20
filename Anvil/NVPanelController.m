@@ -484,6 +484,9 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     [menu addItem:openInBrowserMenuItem];
     NSMenuItem *openInFinderMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Finder" action:@selector(didClickOpenInFinder:) keyEquivalent:@""];
     [menu addItem:openInFinderMenuItem];
+    NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
+    [menu addItem:openInTerminalMenuItem];
+
     
     [menu addItem:[NSMenuItem separatorItem]];
     
@@ -534,6 +537,17 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     self.isEditing = YES;
     [cell.textField setEnabled:YES];
     [cell.textField becomeFirstResponder];
+}
+
+- (void)didClickOpenInTerminal:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/open"];
+    [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
+    [task launch];
 }
 
 - (void)didClickOpenInFinder:(id)sender {
