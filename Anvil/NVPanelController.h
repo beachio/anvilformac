@@ -36,6 +36,9 @@
 @property (weak, nonatomic) IBOutlet NVSwitchView *switchView;
 @property (weak, nonatomic) IBOutlet NSButton *addButton;
 
+@property (weak, nonatomic) IBOutlet NSPopUpButton *settingsButton;
+@property (weak, nonatomic) IBOutlet NVStyledView *settingsDivider;
+
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;
 
@@ -47,6 +50,7 @@
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
+- (IBAction)didClickSettingsButton:(id)sender;
 - (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;
 - (IBAction)didClickAddButton:(id)sender;

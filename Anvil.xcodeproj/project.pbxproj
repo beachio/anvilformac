@@ -22,6 +22,13 @@
 		4F0DA4D6160A1E7400D21ABE /* TitlebarIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D0160A1E7400D21ABE /* TitlebarIcon@2x.png */; };
 		4F0DA4D7160A1E7400D21ABE /* TitlebarPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D1160A1E7400D21ABE /* TitlebarPoint.png */; };
 		4F0DA4D8160A1E7400D21ABE /* TitlebarPoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D2160A1E7400D21ABE /* TitlebarPoint@2x.png */; };
+		4F361356160C5E35008584A0 /* SettingsAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361350160C5E35008584A0 /* SettingsAlt.png */; };
+		4F361357160C5E35008584A0 /* SettingsAlt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361351160C5E35008584A0 /* SettingsAlt@2x.png */; };
+		4F361358160C5E35008584A0 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361352160C5E35008584A0 /* Settings.png */; };
+		4F361359160C5E35008584A0 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361353160C5E35008584A0 /* Settings@2x.png */; };
+		4F36135A160C5E35008584A0 /* TitlebarSplit.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361354160C5E35008584A0 /* TitlebarSplit.png */; };
+		4F36135B160C5E35008584A0 /* TitlebarSplit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361355160C5E35008584A0 /* TitlebarSplit@2x.png */; };
+		4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F361365160C9816008584A0 /* NVPopupButtonCell.m */; };
 		4F6DBFDB160626FB00D2F214 /* NVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6DBFDA160626FA00D2F214 /* NVLabel.m */; };
 		4F6DBFDE160630CC00D2F214 /* ContextualReveal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F6DBFDD160630CC00D2F214 /* ContextualReveal.png */; };
 		4F78B8941608AD17006B0500 /* NVStyledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8931608AD17006B0500 /* NVStyledView.m */; };
@@ -91,6 +98,14 @@
 		4F0DA4D0160A1E7400D21ABE /* TitlebarIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitlebarIcon@2x.png"; sourceTree = "<group>"; };
 		4F0DA4D1160A1E7400D21ABE /* TitlebarPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitlebarPoint.png; sourceTree = "<group>"; };
 		4F0DA4D2160A1E7400D21ABE /* TitlebarPoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitlebarPoint@2x.png"; sourceTree = "<group>"; };
+		4F361350160C5E35008584A0 /* SettingsAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsAlt.png; sourceTree = "<group>"; };
+		4F361351160C5E35008584A0 /* SettingsAlt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsAlt@2x.png"; sourceTree = "<group>"; };
+		4F361352160C5E35008584A0 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		4F361353160C5E35008584A0 /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
+		4F361354160C5E35008584A0 /* TitlebarSplit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitlebarSplit.png; sourceTree = "<group>"; };
+		4F361355160C5E35008584A0 /* TitlebarSplit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitlebarSplit@2x.png"; sourceTree = "<group>"; };
+		4F361364160C9816008584A0 /* NVPopupButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPopupButtonCell.h; sourceTree = "<group>"; };
+		4F361365160C9816008584A0 /* NVPopupButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPopupButtonCell.m; sourceTree = "<group>"; };
 		4F6DBFD9160626FA00D2F214 /* NVLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVLabel.h; sourceTree = "<group>"; };
 		4F6DBFDA160626FA00D2F214 /* NVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLabel.m; sourceTree = "<group>"; };
 		4F6DBFDD160630CC00D2F214 /* ContextualReveal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ContextualReveal.png; sourceTree = "<group>"; };
@@ -340,6 +355,12 @@
 		4FBFA39C15C7ED3000BA8209 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4F361350160C5E35008584A0 /* SettingsAlt.png */,
+				4F361351160C5E35008584A0 /* SettingsAlt@2x.png */,
+				4F361352160C5E35008584A0 /* Settings.png */,
+				4F361353160C5E35008584A0 /* Settings@2x.png */,
+				4F361354160C5E35008584A0 /* TitlebarSplit.png */,
+				4F361355160C5E35008584A0 /* TitlebarSplit@2x.png */,
 				4F0DA4CD160A1E7400D21ABE /* Titlebar.png */,
 				4F0DA4CE160A1E7400D21ABE /* Titlebar@2x.png */,
 				4F0DA4CF160A1E7400D21ABE /* TitlebarIcon.png */,
@@ -413,6 +434,8 @@
 				4FB9E929160738AC005B50A4 /* NVTableCellView */,
 				4F78B8961608AD3F006B0500 /* NVStyledView */,
 				4F78B8E51608C588006B0500 /* NVSwitchView */,
+				4F361364160C9816008584A0 /* NVPopupButtonCell.h */,
+				4F361365160C9816008584A0 /* NVPopupButtonCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -562,6 +585,12 @@
 				4F0DA4D6160A1E7400D21ABE /* TitlebarIcon@2x.png in Resources */,
 				4F0DA4D7160A1E7400D21ABE /* TitlebarPoint.png in Resources */,
 				4F0DA4D8160A1E7400D21ABE /* TitlebarPoint@2x.png in Resources */,
+				4F361356160C5E35008584A0 /* SettingsAlt.png in Resources */,
+				4F361357160C5E35008584A0 /* SettingsAlt@2x.png in Resources */,
+				4F361358160C5E35008584A0 /* Settings.png in Resources */,
+				4F361359160C5E35008584A0 /* Settings@2x.png in Resources */,
+				4F36135A160C5E35008584A0 /* TitlebarSplit.png in Resources */,
+				4F36135B160C5E35008584A0 /* TitlebarSplit@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +626,7 @@
 				4F78B8E11608ADE4006B0500 /* HMCoding.m in Sources */,
 				4F78B8E41608C585006B0500 /* NVSwitchView.m in Sources */,
 				4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */,
+				4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

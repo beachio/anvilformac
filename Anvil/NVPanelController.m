@@ -119,6 +119,53 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     self.switchView.delegate = self;
     self.isEditing = NO;
+    
+    self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
+
+    [self setupSettingsButton];
+}
+
+- (void)setupSettingsButton {
+    
+    self.settingsButton.image = [NSImage imageNamed:@"Settings"];
+    self.settingsButton.alternateImage = [NSImage imageNamed:@"SettingsAlt"];
+    
+    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+    
+    [self.settingsButton setMenu:settingsMenu];
+    [self.settingsButton setPreferredEdge:NSMinYEdge];
+    [self.settingsButton setPullsDown:YES];
+    [self.settingsButton selectItem: nil];
+    
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@""
+                                                  action:NULL keyEquivalent:@""];
+    [item setImage:[NSImage imageNamed:@"Settings"]];
+    [item setOnStateImage:nil];
+    [item setMixedStateImage:nil];
+    [[self.settingsButton cell] setMenuItem:item];
+    
+    [[self.settingsButton cell] setBordered:NO];
+    [[self.settingsButton cell] setImagePosition:NSImageOnly];
+    [[self.settingsButton cell] setArrowPosition:NSPopUpNoArrow];
+    [[self.settingsButton cell] setUsesItemFromMenu:NO];
+    [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
+
+}
+
+- (void)didClickQuit:(id)sender {
+    
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
+- (void)didClickRestartPow:(id)sender {
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/touch"];
+    [task setArguments:[NSArray arrayWithObjects:[@"~/.pow/restart.txt" stringByExpandingTildeInPath], nil]];
+    [task launch];
 }
 
 - (IBAction)didClickAddButton:(id)sender {
@@ -132,6 +179,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     openPanel.directoryURL = [NSURL URLWithString:sitesURLString];
     
     self.isShowingModal = YES;
+    
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
         
         self.isShowingModal = NO;
@@ -153,12 +202,10 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
         
         [self.switchLabel setText:@"ON"];
         system("launchctl load -Fw \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
-        NSLog(@"powder up");
     } else {
         
         [self.switchLabel setText:@"OFF"];
         system("launchctl unload \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
-        NSLog(@"powder down");
     }
 }
 
