@@ -25,6 +25,7 @@
 @implementation NVPanelController
 
 static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
+static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier";
 
 #pragma mark -
 
@@ -95,6 +96,7 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     self.headerIconView.frame = CGRectMake(x, y, width, height);
 
+    self.appListTableView.gridStyleMask = NSTableViewSolidHorizontalGridLineMask;
     self.appListTableView.menu = [self menuForTableView];
     [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
     
@@ -429,25 +431,25 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
     
     if (app.faviconURL) {
     
+        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIcon"];
         NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
         cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:faviconImage
                                                                             withSize:NSMakeSize(16, 16)];
     } else {
         
-        cellView.faviconImageView.foregroundImage = [NSImage imageNamed:@"StatusHighlighted"];
+        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
     }
 
     return cellView;
 }
 
+
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
-    NSString *kAppListTableRowIdentifier = @"appListTableRowIdentifier";
-    
-    NSTableRowView *rowView = (NSTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
+    NVTableRowView *rowView = (NVTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
     if (rowView == nil) {
         
-        rowView = [[NSTableRowView alloc] init];
+        rowView = [[NVTableRowView alloc] init];
         rowView.identifier = kAppListTableRowIdentifier;
     }
     

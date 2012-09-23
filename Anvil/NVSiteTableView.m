@@ -20,7 +20,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleSourceList];
     }
     
     return self;
@@ -29,6 +28,8 @@
 - (void)awakeFromNib {
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
+    [self setRowHeight:32.0];
+
 }
 
 - (void)drawRect:(NSRect)dirtyRect

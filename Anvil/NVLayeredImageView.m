@@ -20,12 +20,13 @@
 #pragma mark - Drawing
 
 - (void)drawRect:(NSRect)dirtyRect {
-    
+
     NSRect rect = [self bounds];
     
     if (self.backgroundImage) {
         
-        [self.backgroundImage drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+        CGRect imageRect = CGRectMake(0, 0, self.backgroundImage.size.width, self.backgroundImage.size.height);
+        [self.backgroundImage drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
     }
     
     if (self.foregroundImage) {
