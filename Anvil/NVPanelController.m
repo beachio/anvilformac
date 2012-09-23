@@ -96,7 +96,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.headerIconView.frame = CGRectMake(x, y, width, height);
 
-    self.appListTableView.gridStyleMask = NSTableViewSolidHorizontalGridLineMask;
+//    self.appListTableView.gridStyleMask = NSTableViewSolidHorizontalGridLineMask;
     self.appListTableView.menu = [self menuForTableView];
     [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
     
@@ -413,7 +413,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    
+        
     NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];

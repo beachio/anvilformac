@@ -20,24 +20,18 @@
     return self;
 }
 
-//- (void)drawRect:(NSRect)dirtyRect
-//{
-//    // Drawing code here.
-//}
-
-- (void)drawSeparatorInRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
     
-    
-    // Get the table view and info on row index numbers
     NSTableView *tableView = (NSTableView*)[self superview]; // The table view the row is part of
     NSInteger ownRowNumber = [tableView rowForView:self];
     NSInteger numberOfRows = [tableView numberOfRows];
     
-    if (ownRowNumber < numberOfRows-1) {
+    if (ownRowNumber < numberOfRows) {
         NSRect bottomDrawingRect = [self frame];
         bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
         bottomDrawingRect.size.height = 1.0;
-        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:1.0] set]; // Default
+        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:1.0] set];
         NSRectFill(bottomDrawingRect);
     }
     
