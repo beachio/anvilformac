@@ -50,7 +50,6 @@
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 
-- (IBAction)didClickSettingsButton:(id)sender;
 - (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;
 - (IBAction)didClickAddButton:(id)sender;
