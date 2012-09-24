@@ -366,8 +366,14 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NSRect panelRect = [[self window] frame];
     NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8;
     NSInteger heightdifference = panelRect.size.height - newHeight;
+    
     panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
     panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
+    
+    CGRect frame = self.appListTableScrollView.frame;
+    
+    NSLog(@"%@", NSStringFromRect(frame));
+    [self.appListTableScrollView setFrame:CGRectMake(frame.origin.x, 7, frame.size.width, [self window].frame.size.height - ARROW_HEIGHT - 4 - self.headerView.frame.size.height)];
     
     if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
         
