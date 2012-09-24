@@ -21,7 +21,10 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
+    
     [super drawRect:dirtyRect];
+    
+    // Top and bottom borders for rows
     
     NSTableView *tableView = (NSTableView*)[self superview]; // The table view the row is part of
     NSInteger ownRowNumber = [tableView rowForView:self];
@@ -42,7 +45,6 @@
         [[NSColor whiteColor] set];
         NSRectFill (topDrawingRect);
     }
-
 }
 
 @end
