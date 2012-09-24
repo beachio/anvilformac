@@ -386,6 +386,9 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
             panelRect.origin.y -= self.welcomeView.frame.size.height;
             panelRect.size.height += self.welcomeView.frame.size.height;
         }
+    } else {
+        self.noAppsView.hidden = YES;
+        self.welcomeView.hidden = YES;
     }
     
     if (shouldAnimate) {
