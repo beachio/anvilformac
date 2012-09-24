@@ -8,7 +8,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.h"
-         timestampString = "370199096.723205"
+         timestampString = "370212380.411228"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "20"
@@ -77,6 +77,19 @@
          startingLineNumber = "61"
          endingLineNumber = "61"
          landmarkName = "-statusItemView:didReceiveDropURL:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Anvil/NVUnscrollableScrollView.m"
+         timestampString = "370212090.28777"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "14"
+         endingLineNumber = "14"
+         landmarkName = "-reflectScrolledClipView:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

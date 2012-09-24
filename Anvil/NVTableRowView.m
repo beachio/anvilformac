@@ -35,7 +35,7 @@
     NSInteger ownRowNumber = [tableView rowForView:self];
     NSInteger numberOfRows = [tableView numberOfRows];
     
-    if (ownRowNumber < numberOfRows) {
+    if (ownRowNumber < numberOfRows-1) {
         NSRect bottomDrawingRect = [self frame];
         bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
         bottomDrawingRect.size.height = 1.0;
