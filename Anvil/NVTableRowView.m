@@ -27,6 +27,11 @@
     // Top and bottom borders for rows
     
     NSTableView *tableView = (NSTableView*)[self superview]; // The table view the row is part of
+    
+    if (![[self superview] isKindOfClass: [NSTableView class]]) {
+        return;
+    }
+    
     NSInteger ownRowNumber = [tableView rowForView:self];
     NSInteger numberOfRows = [tableView numberOfRows];
     

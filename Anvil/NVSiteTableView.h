@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NVStyledView.h"
 
 @interface NVSiteTableView : NSTableView
 

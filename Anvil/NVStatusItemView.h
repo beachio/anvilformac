@@ -25,4 +25,5 @@
 @optional
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL;
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL;
+- (void)addAppWithURL:(NSURL *)url;
 @end

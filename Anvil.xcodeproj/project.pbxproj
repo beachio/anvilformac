@@ -22,6 +22,7 @@
 		4F0DA4D6160A1E7400D21ABE /* TitlebarIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D0160A1E7400D21ABE /* TitlebarIcon@2x.png */; };
 		4F0DA4D7160A1E7400D21ABE /* TitlebarPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D1160A1E7400D21ABE /* TitlebarPoint.png */; };
 		4F0DA4D8160A1E7400D21ABE /* TitlebarPoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4D2160A1E7400D21ABE /* TitlebarPoint@2x.png */; };
+		4F107C681610CF0E00624611 /* InstallPow.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4F107C671610CF0E00624611 /* InstallPow.sh */; };
 		4F361356160C5E35008584A0 /* SettingsAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361350160C5E35008584A0 /* SettingsAlt.png */; };
 		4F361357160C5E35008584A0 /* SettingsAlt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361351160C5E35008584A0 /* SettingsAlt@2x.png */; };
 		4F361358160C5E35008584A0 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F361352160C5E35008584A0 /* Settings.png */; };
@@ -98,6 +99,7 @@
 		4F0DA4D0160A1E7400D21ABE /* TitlebarIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitlebarIcon@2x.png"; sourceTree = "<group>"; };
 		4F0DA4D1160A1E7400D21ABE /* TitlebarPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitlebarPoint.png; sourceTree = "<group>"; };
 		4F0DA4D2160A1E7400D21ABE /* TitlebarPoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitlebarPoint@2x.png"; sourceTree = "<group>"; };
+		4F107C671610CF0E00624611 /* InstallPow.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = InstallPow.sh; sourceTree = "<group>"; };
 		4F361350160C5E35008584A0 /* SettingsAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsAlt.png; sourceTree = "<group>"; };
 		4F361351160C5E35008584A0 /* SettingsAlt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsAlt@2x.png"; sourceTree = "<group>"; };
 		4F361352160C5E35008584A0 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				4FBFA36615C6F85800BA8209 /* main.m */,
 				4FBFA36815C6F85800BA8209 /* Anvil-Prefix.pch */,
 				4FBFA36915C6F85800BA8209 /* Credits.rtf */,
+				4F107C671610CF0E00624611 /* InstallPow.sh */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				4F361359160C5E35008584A0 /* Settings@2x.png in Resources */,
 				4F36135A160C5E35008584A0 /* TitlebarSplit.png in Resources */,
 				4F36135B160C5E35008584A0 /* TitlebarSplit@2x.png in Resources */,
+				4F107C681610CF0E00624611 /* InstallPow.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,12 +66,12 @@ static NSString *const kAppsKey = @"apps";
     for (NSString* name in dirContents) {
         
         if([name isNotEqualTo:@".DS_Store"]) {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"~/.pow/%@", name]];
+            NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"~/.pow/%@", name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            
             NVApp *thisApp = [[NVApp alloc] initWithURL:url];
             [appsArray addObject:thisApp];
         }
     }
-    
     
     self.apps = [NSArray arrayWithArray:appsArray];
 }
@@ -80,7 +80,7 @@ static NSString *const kAppsKey = @"apps";
     
     NVApp *newApp = [[NVApp alloc] init];
     newApp.name = [url lastPathComponent];
-    newApp.url = [NSURL URLWithString:url.path];
+    newApp.url = url;
     [newApp createSymlink];
     
     [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];

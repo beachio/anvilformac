@@ -57,7 +57,10 @@
 
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL {
     
-    [[NVDataSource sharedDataSource] addAppWithURL:dropURL];
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(addAppWithURL:)]) {
+    
+        [self.delegate addAppWithURL:dropURL];
+//    }
 }
 
 @end

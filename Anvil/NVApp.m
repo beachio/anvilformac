@@ -18,7 +18,6 @@
         NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.absoluteString stringByExpandingTildeInPath]];
         NSURL *realURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
         
-        
         self.url = realURL;
         self.name = [url lastPathComponent];
     }
@@ -54,7 +53,10 @@
 - (NSURL *)symlinkURL {
     
     NSString *powPath = [@"~/.pow/" stringByExpandingTildeInPath];
-    return [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/%@", powPath, self.name]];
+    NSString *urlString = [NSString stringWithFormat:@"file://%@/%@", powPath, [[self.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString]];
+    
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:urlString];
 }
 
 - (NSURL *)browserURL {
@@ -69,20 +71,24 @@
     BOOL isRailsApp = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config/environment.rb"].path isDirectory:nil];
     BOOL hasBuildFolder = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"Build"].path isDirectory:nil];
     
+    NSURL *normalizedSymlinkURL = [self symlinkURL];
+    
     if (isRailsApp) {
         
-            [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
+            [[NSFileManager defaultManager] createSymbolicLinkAtURL:normalizedSymlinkURL withDestinationURL:self.url error:nil];
     } else {
         if (hasBuildFolder) {
             
-            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
-            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:normalizedSymlinkURL.path withIntermediateDirectories:YES attributes:nil error:nil];
+            NSURL *publicFolderURL = [normalizedSymlinkURL URLByAppendingPathComponent:@"Public"];
             NSURL *realBuildURL = [self.url URLByAppendingPathComponent:@"Build"];
             [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:realBuildURL error:nil];
         } else {
             
-            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
-            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:normalizedSymlinkURL.path withIntermediateDirectories:YES attributes:nil error:nil];
+            NSURL *publicFolderURL = [normalizedSymlinkURL URLByAppendingPathComponent:@"Public"];
+            
+            
             [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
         }
     }

@@ -12,12 +12,13 @@
 @optional
 
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller;
+- (BOOL)isPowInstalled;
 
 @end
 
 #pragma mark -
 
-@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate, NVSwitchDelegate, NSOpenSavePanelDelegate> {
+@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate, NVSwitchDelegate, NSOpenSavePanelDelegate, NVStatusItemViewDelegate> {
     BOOL _hasActivePanel;
     __unsafe_unretained NVBackgroundView *_backgroundView;
     __unsafe_unretained id<NVPanelControllerDelegate> _delegate;
@@ -39,12 +40,14 @@
 @property (weak, nonatomic) IBOutlet NSPopUpButton *settingsButton;
 @property (weak, nonatomic) IBOutlet NVStyledView *settingsDivider;
 
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *welcomeView;
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *noAppsView;
+@property (nonatomic, unsafe_unretained) IBOutlet NSButton *installPowButton;
+
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;
 
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate;
-
-
 
 - (void)openPanel;
 - (void)closePanel;
@@ -53,5 +56,6 @@
 - (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;
 - (IBAction)didClickAddButton:(id)sender;
+- (IBAction)didClickInstallPowButton:(id)sender;
 
 @end

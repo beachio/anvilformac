@@ -17,9 +17,11 @@
 #pragma mark -
 
 @interface NVPanelController ()
-    @property (nonatomic) NSInteger selectedRow;
-    @property (nonatomic) BOOL isEditing;
+@property (nonatomic) NSInteger selectedRow;
+@property (nonatomic) BOOL isEditing;
 @property (nonatomic) BOOL isShowingModal;
+@property (nonatomic) BOOL panelIsOpen;
+
 @end
 
 @implementation NVPanelController
@@ -38,7 +40,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         [task setLaunchPath:@"/usr/bin/curl"];
         
         [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
-        
         
         NSPipe *outputPipe = [NSPipe pipe];
         [task setStandardInput:[NSPipe pipe]];
@@ -292,6 +293,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 - (void)openPanel {
     
+    if (self.panelIsOpen) {
+        return;
+    }
+    
+    self.panelIsOpen = YES;
+    
     [[self appListTableView] reloadData];
         
     NSWindow *panel = [self window];
@@ -326,6 +333,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 - (void)closePanel {
     
+    if (!self.panelIsOpen) {
+        return;
+    }
+    
+    self.panelIsOpen = NO;
+    
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:CLOSE_DURATION];
     [[[self window] animator] setAlphaValue:0];
@@ -339,6 +352,15 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 #pragma mark - Sizing
 
+
+- (BOOL)isPowInstalled {
+    
+    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
+    BOOL isDirectory;
+    BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:powPath isDirectory:&isDirectory];
+    return isThere && isDirectory;
+}
+
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
     
     NSRect panelRect = [[self window] frame];
@@ -347,10 +369,41 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8 + self.headerView.frame.size.height;
     panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
     
+    if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+        
+        if ([self isPowInstalled]) {
+            
+            self.noAppsView.hidden = NO;
+            self.welcomeView.hidden = YES;
+            
+            panelRect.origin.y -= self.noAppsView.frame.size.height;
+            panelRect.size.height += self.noAppsView.frame.size.height;
+        } else {
+            
+            self.noAppsView.hidden = YES;
+            self.welcomeView.hidden = NO;
+
+            panelRect.origin.y -= self.welcomeView.frame.size.height;
+            panelRect.size.height += self.welcomeView.frame.size.height;
+        }
+    }
+    
     if (shouldAnimate) {
         [[[self window] animator] setFrame:panelRect display:YES];
     } else {
         [[self window] setFrame:panelRect display:YES];
+    }
+}
+
+- (void)renderAlternatePanels {
+    
+    [self.appListTableView setHidden:YES];
+    
+    if ([[[NVDataSource sharedDataSource] apps] count] > 0) {
+        
+    } else {
+        [self.noAppsView setHidden:NO];
+        [self.noAppsView setFrame:self.window.frame];
     }
 }
 
@@ -413,7 +466,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-        
+    
     NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
@@ -639,9 +692,10 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     [dataSource removeApp:app];
     
+    self.selectedRow = -1;
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
     [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
-    self.selectedRow = -1;
+    
     [self updatePanelHeightAndAnimate:YES];
 }
 
@@ -652,5 +706,30 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     [app restart];
 }
 
+- (IBAction)didClickInstallPowButton:(id)sender {
+    
+    [self.installPowButton setEnabled:NO];
+    [self.installPowButton setTitle:@"Installing..."];
+    [self.welcomeView setAlphaValue:0.8];
+    
+    NSTask *task = [[NSTask alloc] init];
+    
+    [task setLaunchPath:@"/bin/sh"];
+    [task setArguments:[NSArray arrayWithObjects:[[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"], nil]];
+
+    NSPipe *outputPipe = [NSPipe pipe];
+    [task setStandardInput:[NSPipe pipe]];
+    [task setStandardError:[NSPipe pipe]];
+    [task setStandardOutput:outputPipe];
+    
+    [task launch];
+    [task waitUntilExit];
+    
+    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", pipeString);
+    
+    [self updatePanelHeightAndAnimate:YES];
+}
 
 @end

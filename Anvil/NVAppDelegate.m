@@ -35,6 +35,7 @@ void *kContextActivePanel = &kContextActivePanel;
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];
     [self panelController];
+    self.menubarController.delegate = self;
 
     [self.dataSource readInSavedAppDataFromDisk];
 }
@@ -74,6 +75,15 @@ void *kContextActivePanel = &kContextActivePanel;
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller {
     
     return self.menubarController.statusItemView;
+}
+
+- (void)addAppWithURL:(NSURL *)dropURL {
+    
+    [[NVDataSource sharedDataSource] addAppWithURL:dropURL];
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+    
+    [self.panelController.appListTableView reloadData];
+    [self.panelController openPanel];
 }
 
 @end

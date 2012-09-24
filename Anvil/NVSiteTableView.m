@@ -8,7 +8,16 @@
 
 #import "NVSiteTableView.h"
 
+
+@interface NVSiteTableView ()
+
+@property (strong, nonatomic) IBOutlet NVStyledView *welcomeView;
+@property (strong, nonatomic) IBOutlet NVStyledView *noSitesView;
+
+@end
+
 @implementation NVSiteTableView
+
 
 - (id)init {
     
@@ -20,6 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
     }
     
     return self;
@@ -29,13 +39,12 @@
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     [self setRowHeight:32.0];
-
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
+- (void)drawRect:(NSRect)dirtyRect {
     // Drawing code here.
     [super drawRect:dirtyRect];
 }
+
 
 @end
