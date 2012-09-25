@@ -7,6 +7,17 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
+         filePath = "Anvil/NVPanelController.h"
+         timestampString = "370271593.030357"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "20"
+         endingLineNumber = "20">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
          timestampString = "370283061.866144"
          startingColumnNumber = "9223372036854775807"

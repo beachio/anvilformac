@@ -68,7 +68,7 @@
 
 - (void)createSymlink {
     
-    BOOL isRailsApp = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config/environment.rb"].path isDirectory:nil];
+    BOOL isRailsApp = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config.ru"].path isDirectory:nil];
     BOOL hasBuildFolder = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"Build"].path isDirectory:nil];
     
     NSURL *normalizedSymlinkURL = [self symlinkURL];
