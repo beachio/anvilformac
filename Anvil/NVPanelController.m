@@ -4,6 +4,7 @@
 #import "NVMenubarController.h"
 #import "NVTableRowView.h"
 #import "NVTableCellView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define SEARCH_INSET 15
 
@@ -110,7 +111,14 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
                                                    owner:self
                                                 userInfo:nil];
     [[self appListTableView] addTrackingArea:trackingArea];
-
+    
+    [self.appListTableScrollView.layer setMasksToBounds:YES];
+    [self.appListTableScrollView setWantsLayer:YES];
+    [self.appListTableScrollView.layer setOpaque:NO];
+    [self.appListTableScrollView.layer setCornerRadius:4];
+    [self.appListTableScrollView.contentView setWantsLayer:YES];
+    [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
+    
     NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4]];
     [shadow setShadowOffset:NSMakeSize(0, -1)];
@@ -300,6 +308,8 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     self.panelIsOpen = YES;
     
     [[self appListTableView] reloadData];
+    
+    [self updatePanelHeightAndAnimate:NO];
         
     NSWindow *panel = [self window];
     
@@ -366,8 +376,10 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NSRect panelRect = [[self window] frame];
     NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8;
     NSInteger heightdifference = panelRect.size.height - newHeight;
-    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 4 + self.headerView.frame.size.height;
+    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 5 + self.headerView.frame.size.height;
     panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
+    
+    self.appListTableScrollView.frame = CGRectMake(1, 0, PANEL_WIDTH - 2, panelRect.size.height - self.headerView.frame.size.height - 5);
     
     if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
         

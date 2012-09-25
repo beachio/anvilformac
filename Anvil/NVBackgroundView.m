@@ -27,6 +27,13 @@
 //        CGRect imageRect = CGRectMake(0, 0, 10, 10);
 //        [img drawInRect:imageRect fromRect:dirtyRect operation:NSCompositeDestinationAtop fraction:1.0];
         
+        [self.layer setMasksToBounds:YES];
+        
+        [self setWantsLayer:YES];
+        [self.layer setOpaque:YES];
+        [self.layer setCornerRadius:4];
+        
+
     }
     
     return self;
@@ -50,6 +57,7 @@
     NSBezierPath *path = [NSBezierPath bezierPath];
     
     [path moveToPoint:NSMakePoint(_arrowX, NSMaxY(contentRect) - ARROW_HEIGHT)];
+    // Removed by Elliott - the arrow is an image now.
 //    [path lineToPoint:NSMakePoint(_arrowX + ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path lineToPoint:NSMakePoint(NSMaxX(contentRect) - CORNER_RADIUS, NSMaxY(contentRect) - ARROW_HEIGHT)];
     
@@ -74,10 +82,11 @@
     [path curveToPoint:NSMakePoint(NSMinX(contentRect) + CORNER_RADIUS, NSMaxY(contentRect) - ARROW_HEIGHT)
          controlPoint1:topLeftCorner controlPoint2:topLeftCorner];
     
+    // Removed by Elliott - the arrow is an image now.
 //    [path lineToPoint:NSMakePoint(_arrowX - ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path closePath];
     
-    [[NSColor colorWithDeviceWhite:1 alpha:FILL_OPACITY] setFill];
+    [[self backgroundColor] setFill];
     [path fill];
     
     [NSGraphicsContext saveGraphicsState];
@@ -87,7 +96,7 @@
     [clip addClip];
     
     [path setLineWidth:LINE_THICKNESS * 2];
-    [[NSColor whiteColor] setStroke];
+    [[self backgroundColor] setStroke];
     [path stroke];
     
     [NSGraphicsContext restoreGraphicsState];

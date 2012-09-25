@@ -59,6 +59,8 @@
 		4F78B8E01608ADE4006B0500 /* NSShadow+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8D91608ADE4006B0500 /* NSShadow+Additions.m */; };
 		4F78B8E11608ADE4006B0500 /* HMCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8DB1608ADE4006B0500 /* HMCoding.m */; };
 		4F78B8E41608C585006B0500 /* NVSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8E31608C585006B0500 /* NVSwitchView.m */; };
+		4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB52721611D78400BD03F8 /* QuartzCore.framework */; };
+		4FAB527A1611D89100BD03F8 /* NVRoundedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB52791611D89100BD03F8 /* NVRoundedScrollView.m */; };
 		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
@@ -148,6 +150,9 @@
 		4F78B8DB1608ADE4006B0500 /* HMCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMCoding.m; sourceTree = "<group>"; };
 		4F78B8E21608C585006B0500 /* NVSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSwitchView.h; sourceTree = "<group>"; };
 		4F78B8E31608C585006B0500 /* NVSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSwitchView.m; sourceTree = "<group>"; };
+		4FAB52721611D78400BD03F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4FAB52781611D89100BD03F8 /* NVRoundedScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVRoundedScrollView.h; sourceTree = "<group>"; };
+		4FAB52791611D89100BD03F8 /* NVRoundedScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVRoundedScrollView.m; sourceTree = "<group>"; };
 		4FB9E80B1605FEBE005B50A4 /* NVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVApp.h; sourceTree = "<group>"; };
 		4FB9E80C1605FEBE005B50A4 /* NVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVApp.m; sourceTree = "<group>"; };
 		4FB9E81016061096005B50A4 /* NVTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableRowView.h; sourceTree = "<group>"; };
@@ -195,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */,
 				4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +289,7 @@
 		4FBFA34B15C6F85800BA8209 = {
 			isa = PBXGroup;
 			children = (
+				4FAB52721611D78400BD03F8 /* QuartzCore.framework */,
 				4FBFA36015C6F85800BA8209 /* Anvil */,
 				4FBFA35915C6F85800BA8209 /* Frameworks */,
 				4FBFA35715C6F85800BA8209 /* Products */,
@@ -439,6 +446,8 @@
 				4F78B8E51608C588006B0500 /* NVSwitchView */,
 				4F361364160C9816008584A0 /* NVPopupButtonCell.h */,
 				4F361365160C9816008584A0 /* NVPopupButtonCell.m */,
+				4FAB52781611D89100BD03F8 /* NVRoundedScrollView.h */,
+				4FAB52791611D89100BD03F8 /* NVRoundedScrollView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -631,6 +640,7 @@
 				4F78B8E41608C585006B0500 /* NVSwitchView.m in Sources */,
 				4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */,
 				4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */,
+				4FAB527A1611D89100BD03F8 /* NVRoundedScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

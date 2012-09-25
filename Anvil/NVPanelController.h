@@ -4,6 +4,7 @@
 #import "NVStyledView.h"
 #import "NVLabel.h"
 #import "NVSwitchView.h"
+#import "NVRoundedScrollView.h"
 
 @class NVPanelController;
 

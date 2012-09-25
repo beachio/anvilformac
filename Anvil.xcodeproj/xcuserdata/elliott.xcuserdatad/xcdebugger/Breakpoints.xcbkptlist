@@ -8,11 +8,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.h"
-         timestampString = "370212380.411228"
+         timestampString = "370268456.376274"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "20"
-         endingLineNumber = "20">
+         startingLineNumber = "22"
+         endingLineNumber = "22"
+         landmarkName = "@interface NVPanelController"
+         landmarkType = "2">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -58,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVBackgroundView.m"
-         timestampString = "369762868.187458"
+         timestampString = "370270201.660818"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-awakeFromNib"
          landmarkType = "5">
       </FileBreakpoint>
