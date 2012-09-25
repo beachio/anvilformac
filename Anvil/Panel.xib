@@ -244,7 +244,6 @@
 									<string key="NSFrame">{{113, 16}, {108, 32}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="3956122">
@@ -297,7 +296,7 @@
 						</object>
 						<object class="NSScrollView" id="244901842">
 							<reference key="NSNextResponder" ref="982126346"/>
-							<int key="NSvFlags">274</int>
+							<int key="NSvFlags">50</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSClipView" id="984136381">
 									<reference key="NSNextResponder" ref="244901842"/>
@@ -453,7 +452,6 @@
 							<reference key="NSSuperview" ref="982126346"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="984136381"/>
-							<bool key="NSViewCanDrawConcurrently">YES</bool>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133680</int>
 							<reference key="NSVScroller" ref="8845446"/>
@@ -472,7 +470,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
-				<int key="NSWindowAnimationBehavior">2</int>
+				<int key="NSWindowAnimationBehavior">4</int>
 				<int key="NSWindowCollectionBehavior">66</int>
 				<bool key="NSWindowIsRestorable">NO</bool>
 			</object>
@@ -1256,9 +1254,7 @@
 						<string key="didClickAddButton:">id</string>
 						<string key="didClickDeleteButton:">id</string>
 						<string key="didClickInstallPowButton:">id</string>
-						<string key="didClickRestart:">id</string>
 						<string key="didClickRestartButton:">id</string>
-						<string key="removeClickedRow:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="didClickAddButton:">
@@ -1273,22 +1269,14 @@
 							<string key="name">didClickInstallPowButton:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="didClickRestart:">
-							<string key="name">didClickRestart:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="didClickRestartButton:">
 							<string key="name">didClickRestartButton:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="removeClickedRow:">
-							<string key="name">removeClickedRow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addButton">NSButton</string>
-						<string key="appListTableScrollView">NVRoundedScrollView</string>
+						<string key="appListTableScrollView">NSScrollView</string>
 						<string key="appListTableView">NSTableView</string>
 						<string key="backgroundView">NVBackgroundView</string>
 						<string key="headerIconView">NVStyledView</string>
@@ -1310,7 +1298,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="appListTableScrollView">
 							<string key="name">appListTableScrollView</string>
-							<string key="candidateClassName">NVRoundedScrollView</string>
+							<string key="candidateClassName">NSScrollView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="appListTableView">
 							<string key="name">appListTableView</string>
@@ -1376,14 +1364,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/NVPopupButtonCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NVRoundedScrollView</string>
-					<string key="superclassName">NSScrollView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NVRoundedScrollView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

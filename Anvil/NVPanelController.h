@@ -4,7 +4,6 @@
 #import "NVStyledView.h"
 #import "NVLabel.h"
 #import "NVSwitchView.h"
-#import "NVRoundedScrollView.h"
 
 @class NVPanelController;
 
@@ -53,6 +52,7 @@
 - (void)openPanel;
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
+- (void)togglePanel;
 
 - (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;

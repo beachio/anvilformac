@@ -260,7 +260,8 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 - (void)windowDidResize:(NSNotification *)notification {
     
-    NSWindow *panel = [self window];
+    NSWindow *panel = [notification object];
+
     NSRect statusRect = [self statusRectForWindow:panel];
     NSRect panelRect = [panel frame];
 
@@ -268,6 +269,9 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     CGFloat panelX = statusX - NSMinX(panelRect);
 
     self.backgroundView.arrowX = panelX;
+    
+    NSInteger appListHeight = panel.frame.size.height - self.headerView.frame.size.height - 5;
+    [self.appListTableScrollView setFrame:NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight)];
 }
 
 #pragma mark - Keyboard
@@ -302,8 +306,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 - (void)openPanel {
     
     if (self.panelIsOpen) {
+        [self.appListTableView reloadData];
+        [self updatePanelHeightAndAnimate:YES];
         return;
     }
+    
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     
     self.panelIsOpen = YES;
     
@@ -326,13 +334,8 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
     
     [NSApp activateIgnoringOtherApps:NO];
-    [panel setAlphaValue:0];
-    [panel setFrame:statusRect display:YES];
-    
-    [NSAnimationContext beginGrouping];
     [panel setFrame:panelRect display:YES];
     [panel setAlphaValue:1];
-    [NSAnimationContext endGrouping];
     
     [panel performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
     
@@ -341,18 +344,25 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     [panel makeKeyAndOrderFront:nil];
 }
 
+- (void)togglePanel {
+    
+    if (self.panelIsOpen) {
+        [self closePanel];
+    } else {
+        [self openPanel];
+    }
+}
+
 - (void)closePanel {
     
     if (!self.panelIsOpen) {
         return;
     }
     
-    self.panelIsOpen = NO;
+    [[NSApplication sharedApplication] deactivate];
     
-    [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:CLOSE_DURATION];
-    [[[self window] animator] setAlphaValue:0];
-    [NSAnimationContext endGrouping];
+    self.panelIsOpen = NO;
+    [[self window] setAlphaValue:0];
     
     dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{
         
@@ -361,7 +371,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 #pragma mark - Sizing
-
 
 - (BOOL)isPowInstalled {
     
@@ -373,13 +382,14 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
     
-    NSRect panelRect = [[self window] frame];
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 8;
-    NSInteger heightdifference = panelRect.size.height - newHeight;
-    panelRect.size.height = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 5 + self.headerView.frame.size.height;
-    panelRect.origin.y += heightdifference - self.headerView.frame.size.height;
+    [self.appListTableView sizeToFit];
     
-    self.appListTableScrollView.frame = CGRectMake(1, 0, PANEL_WIDTH - 2, panelRect.size.height - self.headerView.frame.size.height - 5);
+    NSRect panelRect = [[self window] frame];
+    
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 5 + self.headerView.frame.size.height;
+    
+    NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
+    panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
     
     if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
         
@@ -406,7 +416,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     if (shouldAnimate) {
         [[[self window] animator] setFrame:panelRect display:YES];
     } else {
-        [[self window] setFrame:panelRect display:YES];
+        [self.window setFrame:panelRect display:YES];
     }
 }
 
