@@ -178,7 +178,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 - (void)didClickCheckForUpdates:(id)sender {
     
     SUUpdater *updater = [[SUUpdater alloc] init];
-    [updater checkForUpdatesInBackground];
+    [updater checkForUpdates:sender];
 }
 
 - (void)didClickQuit:(id)sender {
