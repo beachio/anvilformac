@@ -18,7 +18,7 @@
 
 #pragma mark -
 
-@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDelegate, NSTextFieldDelegate, NVSwitchDelegate, NSOpenSavePanelDelegate, NVStatusItemViewDelegate> {
+@interface NVPanelController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTextFieldDelegate, NVSwitchDelegate, NSOpenSavePanelDelegate, NVStatusItemViewDelegate> {
     BOOL _hasActivePanel;
     __unsafe_unretained NVBackgroundView *_backgroundView;
     __unsafe_unretained id<NVPanelControllerDelegate> _delegate;

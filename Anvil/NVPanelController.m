@@ -90,33 +90,31 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
     self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
-
     NSInteger height = self.headerIconView.backgroundImage.size.height;
     NSInteger width = self.headerIconView.backgroundImage.size.width;
     NSInteger x = (self.window.frame.size.width / 2.0 - width / 2.0);
     NSInteger y = (self.headerView.frame.size.height / 2.0 - height / 2.0);
-    
     self.headerIconView.frame = CGRectMake(x, y, width, height);
 
-//    self.appListTableView.gridStyleMask = NSTableViewSolidHorizontalGridLineMask;
-    self.appListTableView.menu = [self menuForTableView];
-    [self.appListTableView setDoubleAction:@selector(appListTableViewDoubleClicked:)];
-    
     [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+    
+    self.appListTableView.menu = [self menuForTableView];
+    [self.appListTableView setAction:@selector(appListTableViewDoubleClicked:)];
+
     [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
     
-    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[[self appListTableView] bounds]
-                                                 options:opts
-                                                   owner:self
-                                                userInfo:nil];
-    [[self appListTableView] addTrackingArea:trackingArea];
+    self.appListTableView.delegate = self;
     
-    [self.appListTableScrollView.layer setMasksToBounds:YES];
+//    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+//    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[[self appListTableView] bounds]
+//                                                 options:opts
+//                                                   owner:self
+//                                                userInfo:nil];
+//    [[self appListTableView] addTrackingArea:trackingArea];
+    
     [self.appListTableScrollView setWantsLayer:YES];
     [self.appListTableScrollView.layer setOpaque:NO];
     [self.appListTableScrollView.layer setCornerRadius:4];
-    [self.appListTableScrollView.contentView setWantsLayer:YES];
     [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
     
     NSShadow *shadow = [[NSShadow alloc] init];
@@ -134,6 +132,14 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
 
     [self setupSettingsButton];
+}
+
+- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
 - (void)setupSettingsButton {
@@ -450,10 +456,10 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
     
-    if (!self.isEditing) {
+    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
         
         // A bug - we have to reset the selection, I think. Changes aren't fired when it's the same.
-        [self.appListTableView selectRowIndexes:[[NSIndexSet alloc] init] byExtendingSelection:NO];
+//        [self.appListTableView selectRowIndexes:[[NSIndexSet alloc] init] byExtendingSelection:NO];
         [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     }
 }
@@ -472,21 +478,40 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     }
 }
 
+- (void)tableViewSelectionIsChanging:(NSNotification *)notification {
+    
+    
+    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] setNeedsDisplay:YES];
+    
+//    if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
+//        [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+//        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
+//    }
+
+    
+}
+
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    
+    [self.appListTableView deselectRow:self.selectedRow];
     
     self.isEditing = NO;
     
     if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
         [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] setNeedsDisplay:YES];
         [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
     }
-    
+
     self.selectedRow = [self.appListTableView selectedRow];
     
     if ([self.appListTableView selectedRow] > -1) {
         
         [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] showControls];
-        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
+        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setNeedsDisplay:YES];
+//        [self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] 
+//        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
     }
 }
 
@@ -607,22 +632,15 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
     
-    NSMenuItem *openInBrowserMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Browser" action:@selector(didClickOpenWithBrowser:) keyEquivalent:@""];
-    [menu addItem:openInBrowserMenuItem];
     NSMenuItem *openInFinderMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Finder" action:@selector(didClickOpenInFinder:) keyEquivalent:@""];
     [menu addItem:openInFinderMenuItem];
     NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
     [menu addItem:openInTerminalMenuItem];
 
-    
     [menu addItem:[NSMenuItem separatorItem]];
     
-    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Restart" action:@selector(didClickRestart:) keyEquivalent:@""];
-    [menu addItem:menuItem];
     NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(didClickRename:) keyEquivalent:@""];
     [menu addItem:renameMenuItem];
-    NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(removeClickedRow:) keyEquivalent:@""];
-    [menu addItem:removeMenuItem];
     
     [menu setAutoenablesItems:NO];
     
@@ -630,6 +648,11 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 - (void)appListTableViewDoubleClicked:(id)sender {
+    
+    if (self.appListTableView.clickedRow != self.appListTableView.selectedRow) {
+        
+        return;
+    }
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];

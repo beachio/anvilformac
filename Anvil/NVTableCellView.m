@@ -35,7 +35,8 @@
     [self.restartButton setAlternateImage:[NSImage imageNamed:@"RestartAlt"]];
     [self.restartButton setStringValue:@""];
     
-    [self hideControls];
+    [self.restartButton setHidden:YES];
+    [self.deleteButton setHidden:YES];
     
     [self.siteLabel setWidth];
     self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
@@ -75,14 +76,20 @@
 
 - (void)showControls {
     
-    self.restartButton.hidden = NO;
-    self.deleteButton.hidden = NO;
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:0.1];
+    [[self.restartButton animator] setHidden:NO];
+    [[self.deleteButton animator] setHidden:NO];
+    [NSAnimationContext endGrouping];
 }
 
 - (void)hideControls {
-    
-    self.restartButton.hidden = YES;
-    self.deleteButton.hidden = YES;
+
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:0.05];
+    [[self.restartButton animator] setHidden:YES];
+    [[self.deleteButton animator] setHidden:YES];
+    [NSAnimationContext endGrouping];
 }
 
 @end
