@@ -65,23 +65,9 @@
     return;
 }
 
-//- (void)draggingExited:(id<NSDraggingInfo>)sender {
-//    
-//    NSLog(@"draggingExited");
-//    self.mouseIsDown = NO;
-//}
-//
-//- (void)mouseExited:(NSEvent *)theEvent {
-//    NSLog(@"mouseExited");
-//    [super mouseExited:theEvent];
-//    self.mouseIsDown = NO;
-//    self.needsDisplay = YES;
-//}
-//
 - (void)mouseDown:(NSEvent *)theEvent {
     
     self.clickEvent = theEvent;
-    NSLog(@"mouseDown");
     self.mouseIsDown = YES;
     self.needsDisplay = YES;
     [super mouseDown:theEvent];
@@ -89,15 +75,12 @@
 }
 
 - (void)mouseUp:(NSEvent *)theEvent {
-    
-    NSLog(@"mouseUp");
+
     self.mouseIsDown = NO;
     self.needsDisplay = YES;
     
     if (theEvent == self.clickEvent) {
         [super mouseUp:theEvent];
-    } else {
-        
     }
 }
 

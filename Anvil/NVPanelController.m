@@ -51,7 +51,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         
         NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
         NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", pipeString);
+//        NSLog(@"%@", pipeString);
         
         BOOL status = [pipeString length] > 0;
         [self.switchView switchTo:status withAnimation:NO];
@@ -458,8 +458,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     if (!self.isEditing && row != [self.appListTableView selectedRow]) {
         
-        // A bug - we have to reset the selection, I think. Changes aren't fired when it's the same.
-//        [self.appListTableView selectRowIndexes:[[NSIndexSet alloc] init] byExtendingSelection:NO];
         [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     }
 }
@@ -755,7 +753,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
     NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", pipeString);
+//    NSLog(@"%@", pipeString);
     
     [self updatePanelHeightAndAnimate:YES];
 }
