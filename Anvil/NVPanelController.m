@@ -476,7 +476,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.isEditing = NO;
     
-    if (self.selectedRow > -1) {
+    if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
         [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
         [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
     }
@@ -631,29 +631,10 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
 - (void)appListTableViewDoubleClicked:(id)sender {
     
-    NSInteger selectedIndex = [self.appListTableView clickedRow];
-    
-    if (selectedIndex < 0) {
-        return;
-    }
-    
-    self.isEditing = YES;
-    
-    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:selectedIndex makeIfNecessary:YES];
-    [cell.textField setEnabled:YES];
-    [cell.textField becomeFirstResponder];
-}
-
-- (IBAction)removeClickedRow:(id)sender {
-    
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
     
-    [dataSource removeApp:app];
-    
-    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
-    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
-    [self updatePanelHeightAndAnimate:YES];
+    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
 - (void)didClickRename:(id)sender {
@@ -682,7 +663,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
 
-    [[NSWorkspace sharedWorkspace] openURL:[app realURL]];
+    [[NSWorkspace sharedWorkspace] openURL:app.url];
 }
 
 - (void)didClickOpenWithBrowser:(id)sender {
@@ -719,7 +700,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.selectedRow = -1;
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
-    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationSlideUp];
+    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationEffectFade];
     
     [self updatePanelHeightAndAnimate:YES];
 }
