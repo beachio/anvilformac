@@ -270,7 +270,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
     self.backgroundView.arrowX = panelX;
     
-    NSInteger appListHeight = panel.frame.size.height - self.headerView.frame.size.height - 5;
+    NSInteger appListHeight = panel.frame.size.height - self.headerView.frame.size.height - 6;
     [self.appListTableScrollView setFrame:NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight)];
 }
 
@@ -386,7 +386,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     NSRect panelRect = [[self window] frame];
     
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 5 + self.headerView.frame.size.height;
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 6 + self.headerView.frame.size.height;
     
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
@@ -685,7 +685,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 -(void)setSelectionFromClick{
     
     NSInteger theClickedRow = [self.appListTableView clickedRow];
-    
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:theClickedRow];
     [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
 }
