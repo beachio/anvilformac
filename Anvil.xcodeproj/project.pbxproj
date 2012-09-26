@@ -63,6 +63,9 @@
 		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
+		4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
+		4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
+		4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4FBABB09161344D600D4174B /* dsa_pub.pem */; };
 		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
 		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
 		4FBFA36715C6F85800BA8209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36615C6F85800BA8209 /* main.m */; };
@@ -82,6 +85,19 @@
 		4FBFA3B615C7F16300BA8209 /* NVLayeredImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */; };
 		4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B815C7F49200BA8209 /* NVDataSource.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4FBABB071613443100D4174B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4F0DA4B81609CED500D21ABE /* BFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFImage.m; sourceTree = "<group>"; };
@@ -156,6 +172,8 @@
 		4FB9E81116061096005B50A4 /* NVTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableRowView.m; sourceTree = "<group>"; };
 		4FB9E813160610A1005B50A4 /* NVTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableCellView.h; sourceTree = "<group>"; };
 		4FB9E814160610A1005B50A4 /* NVTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableCellView.m; sourceTree = "<group>"; };
+		4FBABB041613442200D4174B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		4FBABB09161344D600D4174B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4FBFA35D15C6F85800BA8209 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -199,6 +217,7 @@
 			files = (
 				4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */,
 				4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */,
+				4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,11 +302,21 @@
 			name = NVTableCellView;
 			sourceTree = "<group>";
 		};
+		4FBABB0B161344D900D4174B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4FBABB09161344D600D4174B /* dsa_pub.pem */,
+			);
+			name = Resources;
+			path = Anvil;
+			sourceTree = "<group>";
+		};
 		4FBFA34B15C6F85800BA8209 = {
 			isa = PBXGroup;
 			children = (
 				4FAB52721611D78400BD03F8 /* QuartzCore.framework */,
 				4FBFA36015C6F85800BA8209 /* Anvil */,
+				4FBABB0B161344D900D4174B /* Resources */,
 				4FBFA35915C6F85800BA8209 /* Frameworks */,
 				4FBFA35715C6F85800BA8209 /* Products */,
 			);
@@ -304,6 +333,7 @@
 		4FBFA35915C6F85800BA8209 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FBABB041613442200D4174B /* Sparkle.framework */,
 				4FBFA35A15C6F85800BA8209 /* Cocoa.framework */,
 				4FBFA35C15C6F85800BA8209 /* Other Frameworks */,
 			);
@@ -511,6 +541,7 @@
 				4FBFA35215C6F85800BA8209 /* Sources */,
 				4FBFA35315C6F85800BA8209 /* Frameworks */,
 				4FBFA35415C6F85800BA8209 /* Resources */,
+				4FBABB071613443100D4174B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -599,6 +630,7 @@
 				4F36135A160C5E35008584A0 /* TitlebarSplit.png in Resources */,
 				4F36135B160C5E35008584A0 /* TitlebarSplit@2x.png in Resources */,
 				4F107C681610CF0E00624611 /* InstallPow.sh in Resources */,
+				4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +753,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
@@ -734,6 +770,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";

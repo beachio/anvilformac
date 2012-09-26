@@ -5,6 +5,7 @@
 #import "NVTableRowView.h"
 #import "NVTableCellView.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Sparkle/Sparkle.h>
 
 #define SEARCH_INSET 15
 
@@ -150,7 +151,9 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Update Anvil" action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+
     
     [self.settingsButton setMenu:settingsMenu];
     [self.settingsButton setPreferredEdge:NSMinYEdge];
@@ -170,6 +173,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     [[self.settingsButton cell] setUsesItemFromMenu:NO];
     [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
 
+}
+
+- (void)didClickCheckForUpdates:(id)sender {
+    
+    SUUpdater *updater = [[SUUpdater alloc] init];
+    [updater checkForUpdatesInBackground];
 }
 
 - (void)didClickQuit:(id)sender {
