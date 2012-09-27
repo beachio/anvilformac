@@ -133,6 +133,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
 
     [self setupSettingsButton];
+    
 }
 
 - (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
@@ -206,7 +207,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.isShowingModal = YES;
     
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
         
         self.isShowingModal = NO;
@@ -264,10 +264,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
+    
     self.hasActivePanel = NO;
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification; {
+
     if ([[self window] isVisible]) {
         self.hasActivePanel = NO;
     }
@@ -326,9 +328,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         return;
     }
     
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    
-    self.panelIsOpen = YES;
+    [self.window becomeMainWindow];
     
     [[self appListTableView] reloadData];
     
@@ -357,26 +357,11 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     [self updatePanelHeightAndAnimate:NO];
         
     [panel makeKeyAndOrderFront:nil];
-}
-
-- (void)togglePanel {
     
-    if (self.panelIsOpen) {
-        [self closePanel];
-    } else {
-        [self openPanel];
-    }
 }
 
 - (void)closePanel {
-    
-    if (!self.panelIsOpen) {
-        return;
-    }
-    
-    [[NSApplication sharedApplication] deactivate];
-    
-    self.panelIsOpen = NO;
+
     [[self window] setAlphaValue:0];
     
     dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{

@@ -21,6 +21,7 @@
 void *kContextActivePanel = &kContextActivePanel;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+
     if (context == kContextActivePanel) {
         self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
     }
@@ -30,16 +31,6 @@ void *kContextActivePanel = &kContextActivePanel;
 }
 
 #pragma mark - NSApplicationDelegate
-
-- (void)applicationDidResignActive:(NSNotification *)notification {
-    
-    [self.panelController closePanel];
-}
-
-- (void)applicationWillResignActive:(NSNotification *)notification {
-
-    [self.panelController closePanel];
-}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     // Install icon into the menu bar
@@ -66,8 +57,7 @@ void *kContextActivePanel = &kContextActivePanel;
 - (IBAction)togglePanel:(id)sender {
     
     self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
-    
-    [self.panelController togglePanel];
+    self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
 }
 
 #pragma mark - Public accessors

@@ -19,12 +19,11 @@
     self = [super init];
     if (self != nil) {
         NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:STATUS_ITEM_VIEW_WIDTH];
-        [statusItem setHighlightMode:NO];
         _statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
-        _statusItemView.delegate = self;
         _statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
-//        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconGlow"];
+        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconGlow"];
         _statusItemView.action = @selector(togglePanel:);
+        _statusItemView.delegate = self;
     }
     return self;
 }
@@ -57,10 +56,10 @@
 
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL {
     
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(addAppWithURL:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addAppWithURL:)]) {
     
         [self.delegate addAppWithURL:dropURL];
-//    }
+    }
 }
 
 @end
