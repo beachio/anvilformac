@@ -4,6 +4,8 @@
 #import "NVStyledView.h"
 #import "NVLabel.h"
 #import "NVSwitchView.h"
+#import "NVStyledButton.h"
+#import "CustomLoadingSpinner.h"
 
 @class NVPanelController;
 
@@ -37,12 +39,21 @@
 @property (weak, nonatomic) IBOutlet NVSwitchView *switchView;
 @property (weak, nonatomic) IBOutlet NSButton *addButton;
 
+@property (weak, nonatomic) IBOutlet CustomLoadingSpinner *installingPowSpinner;
+
+
+
 @property (weak, nonatomic) IBOutlet NSPopUpButton *settingsButton;
 @property (weak, nonatomic) IBOutlet NVStyledView *settingsDivider;
 
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *welcomeView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *noAppsView;
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledButton *noSitesAddASiteButton;
 @property (nonatomic, unsafe_unretained) IBOutlet NSButton *installPowButton;
+
+@property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelHeader;
+@property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelFirstLine;
+@property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelSecondLine;
 
 @property (nonatomic) BOOL hasActivePanel;
 @property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;
@@ -52,11 +63,10 @@
 - (void)openPanel;
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
-- (void)togglePanel;
 
-- (IBAction)didClickDeleteButton:(id)sender;
 - (IBAction)didClickRestartButton:(id)sender;
 - (IBAction)didClickAddButton:(id)sender;
 - (IBAction)didClickInstallPowButton:(id)sender;
+- (IBAction)didClickReallyDeleteButton:(id)sender;
 
 @end

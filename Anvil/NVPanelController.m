@@ -13,8 +13,10 @@
 #define CLOSE_DURATION .1
 
 #define POPUP_HEIGHT 122
-#define PANEL_WIDTH 335
+#define PANEL_WIDTH 256
 #define MENU_ANIMATION_DURATION .1
+
+#define HEADER_HEIGHT 34
 
 #pragma mark -
 
@@ -30,7 +32,7 @@
 
 static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
 static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier";
-
+static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier";
 #pragma mark -
 
 - (id)init {
@@ -53,6 +55,8 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
         NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
 //        NSLog(@"%@", pipeString);
+        
+        self.selectedRow = -1;
         
         BOOL status = [pipeString length] > 0;
         [self.switchView switchTo:status withAnimation:NO];
@@ -91,12 +95,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
     self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
-    NSInteger height = self.headerIconView.backgroundImage.size.height;
-    NSInteger width = self.headerIconView.backgroundImage.size.width;
-    NSInteger x = (self.window.frame.size.width / 2.0 - width / 2.0);
-    NSInteger y = (self.headerView.frame.size.height / 2.0 - height / 2.0);
-    self.headerIconView.frame = CGRectMake(x, y, width, height);
-
+    
     [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
     
     self.appListTableView.menu = [self menuForTableView];
@@ -106,12 +105,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     
     self.appListTableView.delegate = self;
     
-//    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-//    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[[self appListTableView] bounds]
-//                                                 options:opts
-//                                                   owner:self
-//                                                userInfo:nil];
-//    [[self appListTableView] addTrackingArea:trackingArea];
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.backgroundView bounds]
+                                                 options:opts
+                                                   owner:self
+                                                userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
+    [[self appListTableView] addTrackingArea:trackingArea];
     
     [self.appListTableScrollView setWantsLayer:YES];
     [self.appListTableScrollView.layer setOpaque:NO];
@@ -134,6 +133,21 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
     [self setupSettingsButton];
     
+    [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
+    [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
+    
+    [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
+    [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
+    [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
+    [self.noSitesAddASiteButton setTextSize:12.0];
+    [self.noSitesAddASiteButton setIsBold:NO];
+    
+    CGRect frame = self.welcomeView.frame;
+    [self.welcomeView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+    
+    frame = self.noAppsView.frame;
+    [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+
 }
 
 - (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
@@ -226,10 +240,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
     if (state) {
         
+        NSLog(@"Switch on the pow.");
         [self.switchLabel setText:@"ON"];
         system("launchctl load -Fw \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
     } else {
-        
+
+        NSLog(@"Switch ooff the pow.");
         [self.switchLabel setText:@"OFF"];
         system("launchctl unload \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
     }
@@ -287,7 +303,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 
     self.backgroundView.arrowX = panelX;
     
-    NSInteger appListHeight = panel.frame.size.height - self.headerView.frame.size.height - 6;
+    NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 6;
     [self.appListTableScrollView setFrame:NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight)];
 }
 
@@ -381,12 +397,12 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
-    
+
     [self.appListTableView sizeToFit];
     
     NSRect panelRect = [[self window] frame];
     
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 6 + self.headerView.frame.size.height;
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 6 + HEADER_HEIGHT;
     
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
@@ -395,13 +411,15 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         
         if ([self isPowInstalled]) {
             
+            self.appListTableView.hidden = YES;
             self.noAppsView.hidden = NO;
             self.welcomeView.hidden = YES;
             
             panelRect.origin.y -= self.noAppsView.frame.size.height;
             panelRect.size.height += self.noAppsView.frame.size.height;
         } else {
-            
+
+            self.appListTableView.hidden = YES;
             self.noAppsView.hidden = YES;
             self.welcomeView.hidden = NO;
 
@@ -409,6 +427,7 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
             panelRect.size.height += self.welcomeView.frame.size.height;
         }
     } else {
+        self.appListTableView.hidden = NO;
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = YES;
     }
@@ -449,7 +468,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
-    
     if (!self.isEditing && row != [self.appListTableView selectedRow]) {
         
         [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
@@ -462,30 +480,21 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-    
-    if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
 
-        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
-        [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+    NSString *trackingAreaName = [theEvent.trackingArea.userInfo objectForKey:@"identifier"];
+    
+    if (trackingAreaName == kPanelTrackingAreaIdentifier) {
+        [self.appListTableView deselectRow:self.selectedRow];
+        
+        if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
+            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+            [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+        }
     }
 }
 
-- (void)tableViewSelectionIsChanging:(NSNotification *)notification {
-    
-    
-    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
-    [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] setNeedsDisplay:YES];
-    
-//    if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
-//        [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
-//        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
-//    }
-
-    
-}
-
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    
+
     [self.appListTableView deselectRow:self.selectedRow];
     
     self.isEditing = NO;
@@ -502,8 +511,6 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
         
         [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] showControls];
         [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setNeedsDisplay:YES];
-//        [self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] 
-//        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
     }
 }
 
@@ -704,8 +711,8 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
 }
 
-- (IBAction)didClickDeleteButton:(id)sender {
-
+- (IBAction)didClickReallyDeleteButton:(id)sender {
+    
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
@@ -724,29 +731,47 @@ static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier"
     NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
     
     [app restart];
+    
+    NVSpinnerButton *restartButton = sender;
+    [restartButton showSpinnerFor:0.4];
 }
 
 - (IBAction)didClickInstallPowButton:(id)sender {
     
     [self.installPowButton setEnabled:NO];
-    [self.installPowButton setTitle:@"Installing..."];
+    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
+    [self.installPowButton setHidden:YES];
     [self.welcomeView setAlphaValue:0.8];
+    
+    self.installingPowSpinner.hidden = NO;
+    [self.installingPowSpinner setSpinning:YES];
+    
+    self.welcomePanelFirstLine.hidden = YES;
+    self.welcomePanelSecondLine.hidden = YES;
+
+    [self performSelectorInBackground:@selector(installPow:) withObject:nil];
+}
+
+- (void)installPow:(id)sender {
     
     NSTask *task = [[NSTask alloc] init];
     
     [task setLaunchPath:@"/bin/sh"];
     [task setArguments:[NSArray arrayWithObjects:[[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"], nil]];
-
+    
     NSPipe *outputPipe = [NSPipe pipe];
     [task setStandardInput:[NSPipe pipe]];
     [task setStandardError:[NSPipe pipe]];
     [task setStandardOutput:outputPipe];
     
     [task launch];
+    
     [task waitUntilExit];
     
-    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    [self.switchView switchTo:[self isPowInstalled] withAnimation:YES];
+    
+//    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+//    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
 //    NSLog(@"%@", pipeString);
     
     [self updatePanelHeightAndAnimate:YES];

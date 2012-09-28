@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F08AF791614664900D446C2 /* DeleteButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F08AF751614664900D446C2 /* DeleteButton@2x.png */; };
+		4F08AF7A1614664900D446C2 /* DeleteButtonPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F08AF761614664900D446C2 /* DeleteButtonPushed.png */; };
+		4F08AF7B1614664900D446C2 /* DeleteButtonPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F08AF771614664900D446C2 /* DeleteButtonPushed@2x.png */; };
+		4F08AF7C1614664900D446C2 /* DeleteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F08AF781614664900D446C2 /* DeleteButton.png */; };
+		4F08AF9D1614885600D446C2 /* NVStyledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F08AF9C1614885500D446C2 /* NVStyledButton.m */; };
 		4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DA4B81609CED500D21ABE /* BFImage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4F0DA4C51609F51B00D21ABE /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4BD1609F51A00D21ABE /* Delete.png */; };
 		4F0DA4C61609F51B00D21ABE /* Delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DA4BE1609F51A00D21ABE /* Delete@2x.png */; };
@@ -60,6 +65,13 @@
 		4F78B8E11608ADE4006B0500 /* HMCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8DB1608ADE4006B0500 /* HMCoding.m */; };
 		4F78B8E41608C585006B0500 /* NVSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8E31608C585006B0500 /* NVSwitchView.m */; };
 		4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB52721611D78400BD03F8 /* QuartzCore.framework */; };
+		4FAC9A6D1614AB1300C260B4 /* BlueButtonAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A671614AB1300C260B4 /* BlueButtonAdd@2x.png */; };
+		4FAC9A6E1614AB1300C260B4 /* BlueButtonAddPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A681614AB1300C260B4 /* BlueButtonAddPushed@2x.png */; };
+		4FAC9A6F1614AB1300C260B4 /* BlueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A691614AB1300C260B4 /* BlueButton@2x.png */; };
+		4FAC9A701614AB1300C260B4 /* BlueButtonAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A6A1614AB1300C260B4 /* BlueButtonAdd.png */; };
+		4FAC9A711614AB1300C260B4 /* BlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A6B1614AB1300C260B4 /* BlueButton.png */; };
+		4FAC9A721614AB1300C260B4 /* BlueButtonAddPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A6C1614AB1300C260B4 /* BlueButtonAddPushed.png */; };
+		4FAC9A741614B2CC00C260B4 /* BlueButtonPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A731614B2CC00C260B4 /* BlueButtonPushed.png */; };
 		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
@@ -84,6 +96,8 @@
 		4FBFA3B215C7F0DE00BA8209 /* NVSiteTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B115C7F0DE00BA8209 /* NVSiteTableController.m */; };
 		4FBFA3B615C7F16300BA8209 /* NVLayeredImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */; };
 		4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B815C7F49200BA8209 /* NVDataSource.m */; };
+		4FCEDE9516159EA600122B18 /* CustomLoadingSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */; };
+		4FCEDE991615B7F700122B18 /* NVSpinnerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -100,6 +114,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F08AF751614664900D446C2 /* DeleteButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteButton@2x.png"; sourceTree = "<group>"; };
+		4F08AF761614664900D446C2 /* DeleteButtonPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteButtonPushed.png; sourceTree = "<group>"; };
+		4F08AF771614664900D446C2 /* DeleteButtonPushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteButtonPushed@2x.png"; sourceTree = "<group>"; };
+		4F08AF781614664900D446C2 /* DeleteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteButton.png; sourceTree = "<group>"; };
+		4F08AF9B1614885500D446C2 /* NVStyledButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStyledButton.h; sourceTree = "<group>"; };
+		4F08AF9C1614885500D446C2 /* NVStyledButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStyledButton.m; sourceTree = "<group>"; };
 		4F0DA4B81609CED500D21ABE /* BFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFImage.m; sourceTree = "<group>"; };
 		4F0DA4B91609CED500D21ABE /* BFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFImage.h; sourceTree = "<group>"; };
 		4F0DA4BD1609F51A00D21ABE /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Delete.png; sourceTree = "<group>"; };
@@ -166,6 +186,13 @@
 		4F78B8E21608C585006B0500 /* NVSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSwitchView.h; sourceTree = "<group>"; };
 		4F78B8E31608C585006B0500 /* NVSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSwitchView.m; sourceTree = "<group>"; };
 		4FAB52721611D78400BD03F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4FAC9A671614AB1300C260B4 /* BlueButtonAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueButtonAdd@2x.png"; sourceTree = "<group>"; };
+		4FAC9A681614AB1300C260B4 /* BlueButtonAddPushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueButtonAddPushed@2x.png"; sourceTree = "<group>"; };
+		4FAC9A691614AB1300C260B4 /* BlueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueButton@2x.png"; sourceTree = "<group>"; };
+		4FAC9A6A1614AB1300C260B4 /* BlueButtonAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButtonAdd.png; sourceTree = "<group>"; };
+		4FAC9A6B1614AB1300C260B4 /* BlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButton.png; sourceTree = "<group>"; };
+		4FAC9A6C1614AB1300C260B4 /* BlueButtonAddPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButtonAddPushed.png; sourceTree = "<group>"; };
+		4FAC9A731614B2CC00C260B4 /* BlueButtonPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButtonPushed.png; sourceTree = "<group>"; };
 		4FB9E80B1605FEBE005B50A4 /* NVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVApp.h; sourceTree = "<group>"; };
 		4FB9E80C1605FEBE005B50A4 /* NVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVApp.m; sourceTree = "<group>"; };
 		4FB9E81016061096005B50A4 /* NVTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableRowView.h; sourceTree = "<group>"; };
@@ -208,6 +235,10 @@
 		4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLayeredImageView.m; sourceTree = "<group>"; };
 		4FBFA3B715C7F49200BA8209 /* NVDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVDataSource.h; sourceTree = "<group>"; };
 		4FBFA3B815C7F49200BA8209 /* NVDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVDataSource.m; sourceTree = "<group>"; };
+		4FCEDE9316159EA600122B18 /* CustomLoadingSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoadingSpinner.h; sourceTree = "<group>"; };
+		4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoadingSpinner.m; sourceTree = "<group>"; };
+		4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSpinnerButton.h; sourceTree = "<group>"; };
+		4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSpinnerButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,6 +423,17 @@
 		4FBFA39C15C7ED3000BA8209 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4FAC9A671614AB1300C260B4 /* BlueButtonAdd@2x.png */,
+				4FAC9A681614AB1300C260B4 /* BlueButtonAddPushed@2x.png */,
+				4FAC9A691614AB1300C260B4 /* BlueButton@2x.png */,
+				4FAC9A6A1614AB1300C260B4 /* BlueButtonAdd.png */,
+				4FAC9A6B1614AB1300C260B4 /* BlueButton.png */,
+				4FAC9A731614B2CC00C260B4 /* BlueButtonPushed.png */,
+				4FAC9A6C1614AB1300C260B4 /* BlueButtonAddPushed.png */,
+				4F08AF751614664900D446C2 /* DeleteButton@2x.png */,
+				4F08AF761614664900D446C2 /* DeleteButtonPushed.png */,
+				4F08AF771614664900D446C2 /* DeleteButtonPushed@2x.png */,
+				4F08AF781614664900D446C2 /* DeleteButton.png */,
 				4F361350160C5E35008584A0 /* SettingsAlt.png */,
 				4F361351160C5E35008584A0 /* SettingsAlt@2x.png */,
 				4F361352160C5E35008584A0 /* Settings.png */,
@@ -461,6 +503,9 @@
 		4FBFA3A015C7ED5300BA8209 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FCEDE961615B7EA00122B18 /* New Group */,
+				4FCEDE9316159EA600122B18 /* CustomLoadingSpinner.h */,
+				4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */,
 				4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */,
 				4FB9E92516073894005B50A4 /* NVLabel */,
 				4FBFA3BD15C7F4E300BA8209 /* NVPanel */,
@@ -473,6 +518,8 @@
 				4F78B8E51608C588006B0500 /* NVSwitchView */,
 				4F361364160C9816008584A0 /* NVPopupButtonCell.h */,
 				4F361365160C9816008584A0 /* NVPopupButtonCell.m */,
+				4F08AF9B1614885500D446C2 /* NVStyledButton.h */,
+				4F08AF9C1614885500D446C2 /* NVStyledButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -529,6 +576,15 @@
 				4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */,
 			);
 			name = NVLayeredImageVivew;
+			sourceTree = "<group>";
+		};
+		4FCEDE961615B7EA00122B18 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */,
+				4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */,
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -631,6 +687,17 @@
 				4F36135B160C5E35008584A0 /* TitlebarSplit@2x.png in Resources */,
 				4F107C681610CF0E00624611 /* InstallPow.sh in Resources */,
 				4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */,
+				4F08AF791614664900D446C2 /* DeleteButton@2x.png in Resources */,
+				4F08AF7A1614664900D446C2 /* DeleteButtonPushed.png in Resources */,
+				4F08AF7B1614664900D446C2 /* DeleteButtonPushed@2x.png in Resources */,
+				4F08AF7C1614664900D446C2 /* DeleteButton.png in Resources */,
+				4FAC9A6D1614AB1300C260B4 /* BlueButtonAdd@2x.png in Resources */,
+				4FAC9A6E1614AB1300C260B4 /* BlueButtonAddPushed@2x.png in Resources */,
+				4FAC9A6F1614AB1300C260B4 /* BlueButton@2x.png in Resources */,
+				4FAC9A701614AB1300C260B4 /* BlueButtonAdd.png in Resources */,
+				4FAC9A711614AB1300C260B4 /* BlueButton.png in Resources */,
+				4FAC9A721614AB1300C260B4 /* BlueButtonAddPushed.png in Resources */,
+				4FAC9A741614B2CC00C260B4 /* BlueButtonPushed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +734,9 @@
 				4F78B8E41608C585006B0500 /* NVSwitchView.m in Sources */,
 				4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */,
 				4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */,
+				4F08AF9D1614885600D446C2 /* NVStyledButton.m in Sources */,
+				4FCEDE9516159EA600122B18 /* CustomLoadingSpinner.m in Sources */,
+				4FCEDE991615B7F700122B18 /* NVSpinnerButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
