@@ -495,9 +495,11 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
 
-    [self.appListTableView deselectRow:self.selectedRow];
+    if (self.isEditing) {
+        return;
+    }
     
-    self.isEditing = NO;
+    [self.appListTableView deselectRow:self.selectedRow];
     
     if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
         [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
@@ -540,11 +542,11 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     } else {
         
         cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
+        cellView.faviconImageView.foregroundImage = nil;
     }
 
     return cellView;
 }
-
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
