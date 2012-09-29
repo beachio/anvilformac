@@ -533,6 +533,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [cellView resizeSubviewsWithOldSize:cellView.frame.size];
     
+    cellView.showRestartButton = [app canBeRestarted];
+    
     if (app.faviconURL) {
     
         cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIcon"];
