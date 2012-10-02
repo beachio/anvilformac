@@ -165,13 +165,16 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
+    
+    // TODO: about window
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
+    [settingsMenu addItem:[NSMenuItem separatorItem]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Update Anvil" action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
-
     
     [self.settingsButton setMenu:settingsMenu];
-    [self.settingsButton setPreferredEdge:NSMinYEdge];
+    [self.settingsButton setPreferredEdge:NSMaxYEdge];
     [self.settingsButton setPullsDown:YES];
     [self.settingsButton selectItem: nil];
     
@@ -188,6 +191,11 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self.settingsButton cell] setUsesItemFromMenu:NO];
     [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
 
+}
+
+- (void)didClickShowAbout:(id)sender {
+    
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
 }
 
 - (void)didClickCheckForUpdates:(id)sender {
@@ -532,6 +540,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [cellView.siteLabel setWidth];
     
     [cellView resizeSubviewsWithOldSize:cellView.frame.size];
+    
+    cellView.showRestartButton = [app canBeRestarted];
     
     if (app.faviconURL) {
     

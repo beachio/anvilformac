@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet NSButton *deleteButton;
 @property (weak, nonatomic) IBOutlet NSButton *reallyDeleteButton;
 
+@property (atomic) BOOL showRestartButton;
+
 - (void)showControls;
 - (void)hideControls;
 - (void)showReallyDeleteButton;

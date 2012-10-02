@@ -116,7 +116,9 @@
     
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.1];
-    [[self.restartButton animator] setHidden:NO];
+    if (self.showRestartButton) {
+        [[self.restartButton animator] setHidden:NO];
+    }
     [[self.deleteButton animator] setHidden:NO];
     [NSAnimationContext endGrouping];
 }
