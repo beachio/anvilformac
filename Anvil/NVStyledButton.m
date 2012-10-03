@@ -97,6 +97,10 @@
 
 - (void)mouseDown:(NSEvent *)theEvent {
     
+    if (!self.isEnabled) {
+        return;
+    }
+    
     self.state = NSOnState;
     [super mouseDown:theEvent];
 }
