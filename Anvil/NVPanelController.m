@@ -311,7 +311,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
     self.backgroundView.arrowX = panelX;
     
-    NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 6;
+    NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 5;
     [self.appListTableScrollView setFrame:NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight)];
 }
 

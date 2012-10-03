@@ -24,6 +24,8 @@
         _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconGlow"];
         _statusItemView.action = @selector(togglePanel:);
         _statusItemView.delegate = self;
+        // TODO
+//        _statusItemView.menu = [[NSMenu alloc] init];
     }
     return self;
 }
