@@ -248,14 +248,22 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
     if (state) {
         
-        NSLog(@"Switch on the pow.");
         [self.switchLabel setText:@"ON"];
-        system("launchctl load -Fw \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
+        
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath:@"/bin/launchctl"];
+        NSString *path = [@"~/Library/LaunchAgents/cx.pow.powd.plist" stringByExpandingTildeInPath];
+        [task setArguments:[NSArray arrayWithObjects:@"load", @"-Fw", path, nil]];
+        [task launch];
     } else {
 
-        NSLog(@"Switch ooff the pow.");
         [self.switchLabel setText:@"OFF"];
-        system("launchctl unload \"$HOME/Library/LaunchAgents/cx.pow.powd.plist\" 2>/dev/null");
+        
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath:@"/bin/launchctl"];
+        NSString *path = [@"~/Library/LaunchAgents/cx.pow.powd.plist" stringByExpandingTildeInPath];
+        [task setArguments:[NSArray arrayWithObjects:@"unload", path, nil]];
+        [task launch];
     }
 }
 
