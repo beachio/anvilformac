@@ -49,7 +49,7 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *welcomeView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledView *noAppsView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVStyledButton *noSitesAddASiteButton;
-@property (nonatomic, unsafe_unretained) IBOutlet NSButton *installPowButton;
+@property (nonatomic, unsafe_unretained) IBOutlet NVStyledButton *installPowButton;
 
 @property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelHeader;
 @property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelFirstLine;

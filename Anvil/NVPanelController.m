@@ -39,7 +39,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     self = [super init];
     
-    if (self != nil) {
+    if (self) {
+        
         NSTask *task = [[NSTask alloc] init];
         [task setLaunchPath:@"/usr/bin/curl"];
         
@@ -135,6 +136,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
     [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
+    [self.installPowButton setIsBold:NO];
+    [self.installPowButton setTextSize:12.0];
     
     [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
     [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
@@ -229,7 +232,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     self.isShowingModal = YES;
     
+    [self.addButton setEnabled:NO];
+    [self.noSitesAddASiteButton setEnabled:NO]; // This button needs a disabled style
+    
     [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
+        
+        [self.addButton setEnabled:YES];
+        [self.noSitesAddASiteButton setEnabled:YES];
         
         self.isShowingModal = NO;
         if (result == NSFileHandlingPanelCancelButton) {
@@ -376,7 +385,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
-    
+        
     if (NSMaxX(panelRect) > (NSMaxX(screenRect) - ARROW_HEIGHT))
         panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
     
