@@ -135,6 +135,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
     [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
+    [self.installPowButton setIsBold:NO];
+    [self.installPowButton setTextSize:12.0];
     
     [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
     [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
