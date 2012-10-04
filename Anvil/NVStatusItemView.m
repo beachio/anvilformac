@@ -101,6 +101,8 @@
 #pragma mark Mouse tracking
 
 - (void)mouseDown:(NSEvent *)theEvent {
+    
+    // Right click stuff
     [NSApp sendAction:self.action to:self.target from:self];
 }
 
