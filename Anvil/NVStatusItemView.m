@@ -102,8 +102,12 @@
 
 - (void)mouseDown:(NSEvent *)theEvent {
     
-    // Right click stuff
     [NSApp sendAction:self.action to:self.target from:self];
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent {
+    
+    [NSApp sendAction:self.rightClickAction to:self.target from:self];
 }
 
 #pragma mark -
