@@ -10,7 +10,7 @@
     NVStatusItemView *_statusItemView;
 }
 
-@property (nonatomic) BOOL hasActiveIcon;
+@property (assign, nonatomic) BOOL hasActiveIcon;
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, strong, readonly) NVStatusItemView *statusItemView;
 @property (assign, nonatomic) id <NVStatusItemViewDelegate> delegate;
