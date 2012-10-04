@@ -1,14 +1,14 @@
 #import "NVAppDelegate.h"
 
-@interface NVAppDelegate ()
+@interface NVAppDelegate () <NSMenuDelegate>
 
 @end
+
 
 @implementation NVAppDelegate
 
 @synthesize panelController = _panelController;
 @synthesize menubarController = _menubarController;
-
 
 #pragma mark -
 
@@ -35,7 +35,11 @@ void *kContextActivePanel = &kContextActivePanel;
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];
-    [self panelController];
+    
+    // [self panelController];
+    self.panelController = [[NVPanelController alloc] initWithDelegate:self];
+    [self.panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
+    
     self.menubarController.delegate = self;
 
     [self.dataSource readInSavedAppDataFromDisk];
@@ -56,20 +60,41 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (IBAction)togglePanel:(id)sender {
     
+    self.menubarController.showHighlightIcon = NO;
     self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
     self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
 }
 
+- (IBAction)menuItemRightClicked:(id)sender {
+    
+    if (self.panelController.hasActivePanel) {
+        [self togglePanel:nil];
+    }
+    
+    self.menubarController.showHighlightIcon = YES;
+    
+    NSMenu *settingsMenu = [self.panelController buildSettingsMenu];
+    settingsMenu.delegate = self;
+    
+    for (NSMenuItem *item in settingsMenu.itemArray) {
+        [item setTarget:self.panelController];
+    }
+
+    [settingsMenu removeItemAtIndex:0]; // Remove the blank one from 0
+        
+    [self.menubarController.statusItem popUpStatusItemMenu:settingsMenu];
+}
+
 #pragma mark - Public accessors
 
-- (NVPanelController *)panelController {
-    
-    if (_panelController == nil) {
-        _panelController = [[NVPanelController alloc] initWithDelegate:self];
-        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
-    }
-    return _panelController;
-}
+//- (NVPanelController *)panelController {
+//    
+//    if (_panelController == nil) {
+//        _panelController = [[NVPanelController alloc] initWithDelegate:self];
+//        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
+//    }
+//    return _panelController;
+//}
 
 #pragma mark - PanelControllerDelegate
 
@@ -85,6 +110,13 @@ void *kContextActivePanel = &kContextActivePanel;
     
     [self.panelController.appListTableView reloadData];
     [self.panelController openPanel];
+}
+
+#pragma mark - NSMenuDelegate
+
+- (void)menuDidClose:(NSMenu *)menu {
+    
+    self.menubarController.showHighlightIcon = NO;
 }
 
 @end

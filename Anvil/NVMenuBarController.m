@@ -21,8 +21,9 @@
         NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:STATUS_ITEM_VIEW_WIDTH];
         _statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
         _statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
-        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconGlow"];
+        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconAlt"];
         _statusItemView.action = @selector(togglePanel:);
+        _statusItemView.rightClickAction = @selector(menuItemRightClicked:);
         _statusItemView.delegate = self;
         // TODO
 //        _statusItemView.menu = [[NSMenu alloc] init];
@@ -50,6 +51,16 @@
 
 - (void)setHasActiveIcon:(BOOL)flag {
     self.statusItemView.isHighlighted = flag;
+}
+
+- (BOOL)showHighlightIcon {
+    
+    return self.statusItemView.showHighlightIcon;
+}
+
+- (void)setShowHighlightIcon:(BOOL)showHighlightIcon {
+    
+    self.statusItemView.showHighlightIcon = showHighlightIcon;
 }
 
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL {

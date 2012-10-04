@@ -5,7 +5,7 @@
 @interface NVAppDelegate : NSObject <NSApplicationDelegate, NVPanelControllerDelegate, NVStatusItemViewDelegate>
 
 @property (nonatomic, strong) NVMenubarController *menubarController;
-@property (nonatomic, strong, readonly) NVPanelController *panelController;
+@property (nonatomic, strong) NVPanelController *panelController;
 
 - (IBAction)togglePanel:(id)sender;
 

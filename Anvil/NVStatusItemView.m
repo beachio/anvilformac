@@ -1,4 +1,5 @@
 #import "NVStatusItemView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface NVStatusItemView ()
 
@@ -26,7 +27,7 @@
     CGFloat itemWidth = [statusItem length];
     CGFloat itemHeight = [[NSStatusBar systemStatusBar] thickness];
     NSRect itemRect = NSMakeRect(0.0, 0.0, itemWidth, itemHeight);
-    self = [super initWithFrame:itemRect];
+    self = [super initWithFrame:itemRect]; // Doesnt seem to set height
     
     if (self != nil) {
         _statusItem = statusItem;
@@ -62,8 +63,6 @@
         if (filePath) {
             
             NSURL *url = [NSURL URLWithString:filePath];
-            
-            
             if (self.delegate && [self.delegate respondsToSelector:@selector(statusItemView:didReceiveDropURL:)]) {
                 
                 [self.delegate statusItemView:self didReceiveDropURL:url];
@@ -86,14 +85,27 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
 	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:NO];
+        
+    if (self.showHighlightIcon) {
+        
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"AppleAquaColorVariant"] == 6) {
+            [[NSColor colorWithPatternImage:[NSImage imageNamed:@"GraphiteHighlight"]] setFill];
+        }
+        else {
+            [[NSColor colorWithPatternImage:[NSImage imageNamed:@"AquaHighlight"]] setFill];
+        }
+           
+        NSRectFill(dirtyRect);
+    }
     
-    NSImage *icon = self.image; // self.isHighlighted ? self.alternateImage : self.image;
+    NSImage *icon = self.showHighlightIcon ? self.alternateImage : self.image;
     NSSize iconSize = [icon size];
     NSRect bounds = self.bounds;
+        
     CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2);
     CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
     NSPoint iconPoint = NSMakePoint(iconX, iconY);
-    
+        
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];
 }
 
@@ -116,6 +128,16 @@
 - (void)setHighlighted:(BOOL)newFlag {
     if (_isHighlighted == newFlag) return;
     _isHighlighted = newFlag;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)setShowHighlightIcon:(BOOL)showHighlightIcon {
+    
+    if (_showHighlightIcon == showHighlightIcon) {
+        return;
+    }
+    
+    _showHighlightIcon = showHighlightIcon;
     [self setNeedsDisplay:YES];
 }
 

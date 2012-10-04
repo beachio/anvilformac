@@ -166,15 +166,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     self.settingsButton.image = [NSImage imageNamed:@"Settings"];
     self.settingsButton.alternateImage = [NSImage imageNamed:@"SettingsAlt"];
     
-    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
-    
-    // TODO: about window
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
-    [settingsMenu addItem:[NSMenuItem separatorItem]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+    NSMenu *settingsMenu = [self buildSettingsMenu];
     
     [self.settingsButton setMenu:settingsMenu];
     [self.settingsButton setPreferredEdge:NSMaxYEdge];
@@ -193,9 +185,32 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self.settingsButton cell] setArrowPosition:NSPopUpNoArrow];
     [[self.settingsButton cell] setUsesItemFromMenu:NO];
     [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
-
 }
 
+- (NSMenu *)buildSettingsMenu {
+    
+    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
+    
+    // TODO: about window
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Email Support" action:@selector(emailSupportMenuItemClicked:) keyEquivalent:@""]];
+    [settingsMenu addItem:[NSMenuItem separatorItem]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+    
+    return settingsMenu;
+}
+
+- (void)emailSupportMenuItemClicked:(id)sender {
+     
+    NSString *toEmail = [@"support@riothq.com" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *emailURL = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", toEmail]];
+     
+    [[NSWorkspace sharedWorkspace] openURL:emailURL];
+}
+     
 - (void)didClickShowAbout:(id)sender {
     
     [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];

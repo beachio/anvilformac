@@ -19,6 +19,7 @@
 @property (assign, nonatomic) SEL rightClickAction;
 @property (nonatomic, unsafe_unretained) id target;
 @property (nonatomic, unsafe_unretained) id delegate;
+@property (assign, nonatomic) BOOL showHighlightIcon;
 
 @end
 
