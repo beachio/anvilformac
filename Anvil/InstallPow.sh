@@ -189,3 +189,7 @@ fi
 
 echo "*** Installed"
 print_troubleshooting_instructions
+
+osascript -e "Tell application \"Anvil\" to activate"
+
+exit 0

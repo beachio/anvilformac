@@ -174,6 +174,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
     [settingsMenu addItem:[NSMenuItem separatorItem]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
+
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
     
     [self.settingsButton setMenu:settingsMenu];
@@ -768,16 +770,16 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (IBAction)didClickInstallPowButton:(id)sender {
     
-    [self.installPowButton setEnabled:NO];
-    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
-    [self.installPowButton setHidden:YES];
-    [self.welcomeView setAlphaValue:0.8];
-    
-    self.installingPowSpinner.hidden = NO;
-    [self.installingPowSpinner setSpinning:YES];
-    
-    self.welcomePanelFirstLine.hidden = YES;
-    self.welcomePanelSecondLine.hidden = YES;
+//    [self.installPowButton setEnabled:NO];
+//    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
+//    [self.installPowButton setHidden:YES];
+//    [self.welcomeView setAlphaValue:0.8];
+//    
+//    self.installingPowSpinner.hidden = NO;
+//    [self.installingPowSpinner setSpinning:YES];
+//    
+//    self.welcomePanelFirstLine.hidden = YES;
+//    self.welcomePanelSecondLine.hidden = YES;
 
     [self performSelectorInBackground:@selector(installPow:) withObject:nil];
 }
@@ -790,7 +792,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
     NSString *command = [NSString stringWithFormat:
-                   @"tell application \"Terminal\" to do script \"/bin/sh %@\"", installPowPath];
+                   @"tell application \"Terminal\" to do script \"/bin/sh %@; exit\"", installPowPath];
     
     NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     
@@ -802,6 +804,31 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     NSAppleScript *as2 = [[NSAppleScript alloc] initWithSource: command2];
     
     [as2 executeAndReturnError:nil];
+}
+
+- (void)uninstallPow:(id)sender {
+    
+    self.hasActivePanel = NO;
+    
+    NSTask *task = [[NSTask alloc] init];
+    
+    [task setLaunchPath:@"/bin/sh"];
+    
+    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
+    NSString *command = [NSString stringWithFormat:
+                         @"tell application \"Terminal\" to do script \"curl get.pow.cx/uninstall.sh | sh\""];
+    
+    NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
+    
+    [as executeAndReturnError:nil];
+    
+    NSString *command2 = [NSString stringWithFormat:
+                          @"tell application \"Terminal\" to activate"];
+    
+    NSAppleScript *as2 = [[NSAppleScript alloc] initWithSource: command2];
+    
+    [as2 executeAndReturnError:nil];
+
 }
 
 @end
