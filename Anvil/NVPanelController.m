@@ -414,11 +414,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark - Sizing
 
 - (BOOL)isPowInstalled {
-    
-    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
+
+    //    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
+    NSString *powPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist";
     BOOL isDirectory;
     BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:powPath isDirectory:&isDirectory];
-    return isThere && isDirectory;
+    
+    return isThere && !isDirectory;
 }
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
@@ -431,26 +433,25 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
-    
-    if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+
+    if (![self isPowInstalled]) {
         
-        if ([self isPowInstalled]) {
-            
-            self.appListTableView.hidden = YES;
-            self.noAppsView.hidden = NO;
-            self.welcomeView.hidden = YES;
-            
-            panelRect.origin.y -= self.noAppsView.frame.size.height;
-            panelRect.size.height += self.noAppsView.frame.size.height;
-        } else {
-
-            self.appListTableView.hidden = YES;
-            self.noAppsView.hidden = YES;
-            self.welcomeView.hidden = NO;
-
-            panelRect.origin.y -= self.welcomeView.frame.size.height;
-            panelRect.size.height += self.welcomeView.frame.size.height;
-        }
+        self.appListTableView.hidden = YES;
+        self.noAppsView.hidden = YES;
+        self.welcomeView.hidden = NO;
+        
+        panelRect.origin.y -= self.welcomeView.frame.size.height;
+        panelRect.size.height += self.welcomeView.frame.size.height;
+        
+    } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+        self.appListTableView.hidden = YES;
+        self.noAppsView.hidden = NO;
+        self.welcomeView.hidden = YES;
+        
+        panelRect.origin.y -= self.noAppsView.frame.size.height;
+        panelRect.size.height += self.noAppsView.frame.size.height;
+        
+//        }
     } else {
         self.appListTableView.hidden = NO;
         self.noAppsView.hidden = YES;
@@ -782,28 +783,25 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 }
 
 - (void)installPow:(id)sender {
-    
+
     NSTask *task = [[NSTask alloc] init];
     
     [task setLaunchPath:@"/bin/sh"];
-    [task setArguments:[NSArray arrayWithObjects:[[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"], nil]];
     
-    NSPipe *outputPipe = [NSPipe pipe];
-    [task setStandardInput:[NSPipe pipe]];
-    [task setStandardError:[NSPipe pipe]];
-    [task setStandardOutput:outputPipe];
+    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
+    NSString *command = [NSString stringWithFormat:
+                   @"tell application \"Terminal\" to do script \"/bin/sh %@\"", installPowPath];
     
-    [task launch];
+    NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     
-    [task waitUntilExit];
+    [as executeAndReturnError:nil];
     
-    [self.switchView switchTo:[self isPowInstalled] withAnimation:YES];
+    NSString *command2 = [NSString stringWithFormat:
+                         @"tell application \"Terminal\" to activate"];
     
-//    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-//    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-//    NSLog(@"%@", pipeString);
+    NSAppleScript *as2 = [[NSAppleScript alloc] initWithSource: command2];
     
-    [self updatePanelHeightAndAnimate:YES];
+    [as2 executeAndReturnError:nil];
 }
 
 @end
