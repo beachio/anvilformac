@@ -115,7 +115,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.appListTableScrollView setWantsLayer:YES];
     [self.appListTableScrollView.layer setOpaque:NO];
-    [self.appListTableScrollView.layer setCornerRadius:4];
+    [self.appListTableScrollView.layer setCornerRadius:0];
     [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
     
     NSShadow *shadow = [[NSShadow alloc] init];
