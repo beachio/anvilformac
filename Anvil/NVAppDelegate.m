@@ -32,6 +32,11 @@ void *kContextActivePanel = &kContextActivePanel;
 
 #pragma mark - NSApplicationDelegate
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    
+    [self.panelController setHasActivePanel:YES];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];

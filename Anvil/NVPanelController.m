@@ -198,6 +198,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Email Support" action:@selector(emailSupportMenuItemClicked:) keyEquivalent:@""]];
     [settingsMenu addItem:[NSMenuItem separatorItem]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
     
     return settingsMenu;
@@ -429,11 +430,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark - Sizing
 
 - (BOOL)isPowInstalled {
-    
-    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
+
+    //    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
+    NSString *powPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist";
     BOOL isDirectory;
     BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:powPath isDirectory:&isDirectory];
-    return isThere && isDirectory;
+    
+    return isThere && !isDirectory;
 }
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
@@ -446,26 +449,25 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
-    
-    if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+
+    if (![self isPowInstalled]) {
         
-        if ([self isPowInstalled]) {
-            
-            self.appListTableView.hidden = YES;
-            self.noAppsView.hidden = NO;
-            self.welcomeView.hidden = YES;
-            
-            panelRect.origin.y -= self.noAppsView.frame.size.height;
-            panelRect.size.height += self.noAppsView.frame.size.height;
-        } else {
-
-            self.appListTableView.hidden = YES;
-            self.noAppsView.hidden = YES;
-            self.welcomeView.hidden = NO;
-
-            panelRect.origin.y -= self.welcomeView.frame.size.height;
-            panelRect.size.height += self.welcomeView.frame.size.height;
-        }
+        self.appListTableView.hidden = YES;
+        self.noAppsView.hidden = YES;
+        self.welcomeView.hidden = NO;
+        
+        panelRect.origin.y -= self.welcomeView.frame.size.height;
+        panelRect.size.height += self.welcomeView.frame.size.height;
+        
+    } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+        self.appListTableView.hidden = YES;
+        self.noAppsView.hidden = NO;
+        self.welcomeView.hidden = YES;
+        
+        panelRect.origin.y -= self.noAppsView.frame.size.height;
+        panelRect.size.height += self.noAppsView.frame.size.height;
+        
+//        }
     } else {
         self.appListTableView.hidden = NO;
         self.noAppsView.hidden = YES;
@@ -782,43 +784,65 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (IBAction)didClickInstallPowButton:(id)sender {
     
-    [self.installPowButton setEnabled:NO];
-    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
-    [self.installPowButton setHidden:YES];
-    [self.welcomeView setAlphaValue:0.8];
-    
-    self.installingPowSpinner.hidden = NO;
-    [self.installingPowSpinner setSpinning:YES];
-    
-    self.welcomePanelFirstLine.hidden = YES;
-    self.welcomePanelSecondLine.hidden = YES;
+//    [self.installPowButton setEnabled:NO];
+//    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
+//    [self.installPowButton setHidden:YES];
+//    [self.welcomeView setAlphaValue:0.8];
+//    
+//    self.installingPowSpinner.hidden = NO;
+//    [self.installingPowSpinner setSpinning:YES];
+//    
+//    self.welcomePanelFirstLine.hidden = YES;
+//    self.welcomePanelSecondLine.hidden = YES;
 
     [self performSelectorInBackground:@selector(installPow:) withObject:nil];
 }
 
 - (void)installPow:(id)sender {
+
+    NSTask *task = [[NSTask alloc] init];
+    
+    [task setLaunchPath:@"/bin/sh"];
+    
+    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
+    NSString *command = [NSString stringWithFormat:
+                   @"tell application \"Terminal\" to do script \"/bin/sh %@; exit\"", installPowPath];
+    
+    NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
+    
+    [as executeAndReturnError:nil];
+    
+    NSString *command2 = [NSString stringWithFormat:
+                         @"tell application \"Terminal\" to activate"];
+    
+    NSAppleScript *as2 = [[NSAppleScript alloc] initWithSource: command2];
+    
+    [as2 executeAndReturnError:nil];
+}
+
+- (void)uninstallPow:(id)sender {
+    
+    self.hasActivePanel = NO;
     
     NSTask *task = [[NSTask alloc] init];
     
     [task setLaunchPath:@"/bin/sh"];
-    [task setArguments:[NSArray arrayWithObjects:[[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"], nil]];
     
-    NSPipe *outputPipe = [NSPipe pipe];
-    [task setStandardInput:[NSPipe pipe]];
-    [task setStandardError:[NSPipe pipe]];
-    [task setStandardOutput:outputPipe];
+    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
+    NSString *command = [NSString stringWithFormat:
+                         @"tell application \"Terminal\" to do script \"curl get.pow.cx/uninstall.sh | sh\""];
     
-    [task launch];
+    NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     
-    [task waitUntilExit];
+    [as executeAndReturnError:nil];
     
-    [self.switchView switchTo:[self isPowInstalled] withAnimation:YES];
+    NSString *command2 = [NSString stringWithFormat:
+                          @"tell application \"Terminal\" to activate"];
     
-//    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-//    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-//    NSLog(@"%@", pipeString);
+    NSAppleScript *as2 = [[NSAppleScript alloc] initWithSource: command2];
     
-    [self updatePanelHeightAndAnimate:YES];
+    [as2 executeAndReturnError:nil];
+
 }
 
 @end
