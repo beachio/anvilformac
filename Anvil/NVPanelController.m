@@ -456,18 +456,23 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = NO;
         
+        // In this case, appListTableView can actually be tall without being visible!
+        // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
+        // TODO: Clean up these numbers.
+        y = [[NSScreen mainScreen] frame].size.height - (24 + 6 + HEADER_HEIGHT);
+        panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
+        
         panelRect.origin.y -= self.welcomeView.frame.size.height;
         panelRect.size.height += self.welcomeView.frame.size.height;
         
     } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+        
         self.appListTableView.hidden = YES;
         self.noAppsView.hidden = NO;
         self.welcomeView.hidden = YES;
         
         panelRect.origin.y -= self.noAppsView.frame.size.height;
         panelRect.size.height += self.noAppsView.frame.size.height;
-        
-//        }
     } else {
         self.appListTableView.hidden = NO;
         self.noAppsView.hidden = YES;
@@ -828,7 +833,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [task setLaunchPath:@"/bin/sh"];
     
-    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
     NSString *command = [NSString stringWithFormat:
                          @"tell application \"Terminal\" to do script \"curl get.pow.cx/uninstall.sh | sh\""];
     
