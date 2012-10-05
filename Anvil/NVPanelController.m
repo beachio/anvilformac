@@ -459,11 +459,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // In this case, appListTableView can actually be tall without being visible!
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
-        y = [[NSScreen mainScreen] frame].size.height - (24 + 6 + HEADER_HEIGHT);
-        panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
-        
-        panelRect.origin.y -= self.welcomeView.frame.size.height;
-        panelRect.size.height += self.welcomeView.frame.size.height;
+        y = [[NSScreen mainScreen] frame].size.height - (24 + 6 + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
+        NSInteger height = self.welcomeView.frame.size.height + HEADER_HEIGHT + 6;
+        panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, height);
         
     } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
         
@@ -788,6 +786,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 }
 
 - (IBAction)didClickInstallPowButton:(id)sender {
+    
+    // This just shows the Terminal now, so we don't really need these spinners.
+    // TODO: Bring these spinners back, but hide them when appropriate.
     
 //    [self.installPowButton setEnabled:NO];
 //    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
