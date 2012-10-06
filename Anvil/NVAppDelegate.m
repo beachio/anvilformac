@@ -41,7 +41,6 @@ void *kContextActivePanel = &kContextActivePanel;
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];
     
-    // [self panelController];
     self.panelController = [[NVPanelController alloc] initWithDelegate:self];
     [self.panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
     
