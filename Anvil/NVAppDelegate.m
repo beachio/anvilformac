@@ -69,6 +69,7 @@ void *kContextActivePanel = &kContextActivePanel;
     
     if ([theEvent modifierFlags] & NSControlKeyMask) {
         
+        self.panelController.hasActivePanel = NO;
         [self menuItemRightClicked:sender];
     } else {
         self.menubarController.showHighlightIcon = NO;
