@@ -97,6 +97,8 @@
 		4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B815C7F49200BA8209 /* NVDataSource.m */; };
 		4FCEDE9516159EA600122B18 /* CustomLoadingSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */; };
 		4FCEDE991615B7F700122B18 /* NVSpinnerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */; };
+		4FF0A99716209ADC006B8531 /* Switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FF0A99616209ADC006B8531 /* Switch@2x.png */; };
+		4FF0A99B16209BA5006B8531 /* SwitchActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FF0A99916209AEE006B8531 /* SwitchActive@2x.png */; };
 		A408F78B161DA6BD00C7943C /* MenubarIconAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = A408F789161DA6BD00C7943C /* MenubarIconAlt.png */; };
 		A408F78C161DA6BD00C7943C /* MenubarIconAlt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A408F78A161DA6BD00C7943C /* MenubarIconAlt@2x.png */; };
 		A408F78F161DABF400C7943C /* AquaHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = A408F78D161DABF400C7943C /* AquaHighlight.png */; };
@@ -242,6 +244,8 @@
 		4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoadingSpinner.m; sourceTree = "<group>"; };
 		4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSpinnerButton.h; sourceTree = "<group>"; };
 		4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSpinnerButton.m; sourceTree = "<group>"; };
+		4FF0A99616209ADC006B8531 /* Switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Switch@2x.png"; sourceTree = "<group>"; };
+		4FF0A99916209AEE006B8531 /* SwitchActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchActive@2x.png"; sourceTree = "<group>"; };
 		A408F789161DA6BD00C7943C /* MenubarIconAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenubarIconAlt.png; sourceTree = "<group>"; };
 		A408F78A161DA6BD00C7943C /* MenubarIconAlt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenubarIconAlt@2x.png"; sourceTree = "<group>"; };
 		A408F78D161DABF400C7943C /* AquaHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AquaHighlight.png; sourceTree = "<group>"; };
@@ -349,7 +353,6 @@
 				4FBABB09161344D600D4174B /* dsa_pub.pem */,
 			);
 			name = Resources;
-			path = Anvil;
 			sourceTree = "<group>";
 		};
 		4FBFA34B15C6F85800BA8209 = {
@@ -358,7 +361,6 @@
 				4FBE23711619EC7100CB6793 /* Anvil.iconset */,
 				4FAB52721611D78400BD03F8 /* QuartzCore.framework */,
 				4FBFA36015C6F85800BA8209 /* Anvil */,
-				4FBABB0B161344D900D4174B /* Resources */,
 				4FBFA35915C6F85800BA8209 /* Frameworks */,
 				4FBFA35715C6F85800BA8209 /* Products */,
 			);
@@ -395,6 +397,7 @@
 		4FBFA36015C6F85800BA8209 /* Anvil */ = {
 			isa = PBXGroup;
 			children = (
+				4FBABB0B161344D900D4174B /* Resources */,
 				4F78B8CB1608ADC0006B0500 /* Categories */,
 				4FBFA3BA15C7F49B00BA8209 /* DataSource */,
 				4FBFA39F15C7ED4800BA8209 /* App Delegate */,
@@ -481,9 +484,11 @@
 				4F78B8A51608AD8A006B0500 /* SiteIconDefault.png */,
 				4F78B8A61608AD8A006B0500 /* SiteIconDefault@2x.png */,
 				4F78B8A71608AD8A006B0500 /* Switch.png */,
+				4FF0A99616209ADC006B8531 /* Switch@2x.png */,
 				4F78B8A91608AD8A006B0500 /* SwitchInactive.png */,
 				4F78B8AA1608AD8A006B0500 /* SwitchInactive@2x.png */,
 				A4E7A58C161CC1DA00D06622 /* SwitchActive.png */,
+				4FF0A99916209AEE006B8531 /* SwitchActive@2x.png */,
 				4FBFA38E15C6FC0C00BA8209 /* Status.png */,
 				4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */,
 			);
@@ -714,6 +719,8 @@
 				A408F78C161DA6BD00C7943C /* MenubarIconAlt@2x.png in Resources */,
 				A408F78F161DABF400C7943C /* AquaHighlight.png in Resources */,
 				A408F790161DABF400C7943C /* GraphiteHighlight.png in Resources */,
+				4FF0A99716209ADC006B8531 /* Switch@2x.png in Resources */,
+				4FF0A99B16209BA5006B8531 /* SwitchActive@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,7 +845,7 @@
 		4FBFA37515C6F85800BA8209 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -855,7 +862,7 @@
 		4FBFA37615C6F85800BA8209 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

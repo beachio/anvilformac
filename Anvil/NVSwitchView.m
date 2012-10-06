@@ -20,8 +20,18 @@
     
     [super awakeFromNib];
     
-    NSImage *switcherImage = [NSImage imageNamed:@"Switch"];
-    NSImage *backgroundImage = [NSImage imageNamed:@"SwitchInactive"];
+    BOOL retinaScreen = [NSScreen mainScreen].backingScaleFactor == 2.0;
+    
+    NSImage *switcherImage = nil;
+    NSImage *backgroundImage = nil;
+    
+    if (retinaScreen) {
+        switcherImage = [NSImage imageNamed:@"Switch@2x.png"];
+        backgroundImage = [NSImage imageNamed:@"SwitchInactive@2x.png"];
+    } else {
+        switcherImage = [NSImage imageNamed:@"Switch.png"];
+        backgroundImage = [NSImage imageNamed:@"SwitchInactive.png"];
+    }
     
     CGRect rect = CGRectMake(0, 0, switcherImage.size.width, switcherImage.size.height);
     
@@ -80,14 +90,25 @@
     
     NSRect lastViewFrame = firstViewFrame;
 
+    BOOL retinaScreen = [NSScreen mainScreen].backingScaleFactor == 2.0;
+    
     if (position) {
         
         lastViewFrame.origin.x = self.frame.size.width - lastViewFrame.size.width;
-        self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive"];
+        
+        if (retinaScreen) {
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive@2x.png"];
+        } else {
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive.png"];
+        }
     } else {
         
         lastViewFrame.origin.x = 0;
-        self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive"];
+        if (retinaScreen) {
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive@2x.png"];
+        } else {
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive.png"];
+        }
     }
     
     [newAnimations setObject:[NSValue valueWithRect:lastViewFrame] forKey:NSViewAnimationEndFrameKey];
