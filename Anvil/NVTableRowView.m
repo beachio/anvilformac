@@ -12,7 +12,7 @@
 
 @property (assign) BOOL highlighted;
 @property (assign) BOOL mouseIsDown;
-@property (assign) NSEvent *clickEvent;
+@property (strong, nonatomic) NSEvent *clickEvent;
 
 @end
 
@@ -80,6 +80,7 @@
     self.needsDisplay = YES;
     
     if (theEvent == self.clickEvent) {
+        
         [super mouseUp:theEvent];
     }
 }

@@ -100,7 +100,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
     
     self.appListTableView.menu = [self menuForTableView];
-    [self.appListTableView setAction:@selector(appListTableViewDoubleClicked:)];
+    [self.appListTableView setAction:@selector(appListTableViewClicked:)];
 
     [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
     
@@ -151,14 +151,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     frame = self.noAppsView.frame;
     [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
 
-}
-
-- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
 - (void)setupSettingsButton {
@@ -695,17 +687,28 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return menu;
 }
 
-- (void)appListTableViewDoubleClicked:(id)sender {
+- (void)appListTableViewClicked:(id)sender {
     
     if (self.appListTableView.clickedRow != self.appListTableView.selectedRow) {
         
         return;
     }
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    NSEvent *theEvent = [NSApp currentEvent];
     
-    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+    if ([theEvent modifierFlags] & NSControlKeyMask) //Command + LMB
+    {
+        
+        [NSMenu popUpContextMenu:self.appListTableView.menu withEvent:theEvent forView:self.appListTableView];
+    } else {
+        
+        NVDataSource *dataSource = [NVDataSource sharedDataSource];
+        NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+        
+        [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+        
+        self.hasActivePanel = NO;
+    }
 }
 
 - (void)didClickRename:(id)sender {

@@ -65,9 +65,16 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (IBAction)togglePanel:(id)sender {
     
-    self.menubarController.showHighlightIcon = NO;
-    self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
-    self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
+    NSEvent *theEvent = [NSApp currentEvent];
+    
+    if ([theEvent modifierFlags] & NSControlKeyMask) {
+        
+        [self menuItemRightClicked:sender];
+    } else {
+        self.menubarController.showHighlightIcon = NO;
+        self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
+        self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
+    }
 }
 
 - (IBAction)menuItemRightClicked:(id)sender {
