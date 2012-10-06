@@ -800,6 +800,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 //    
 //    self.welcomePanelFirstLine.hidden = YES;
 //    self.welcomePanelSecondLine.hidden = YES;
+    
+    self.hasActivePanel = NO;
 
     [self performSelectorInBackground:@selector(installPow:) withObject:nil];
 }
@@ -812,7 +814,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
     NSString *command = [NSString stringWithFormat:
-                   @"tell application \"Terminal\" to do script \"/bin/sh %@; exit\"", installPowPath];
+                   @"tell application \"Terminal\" to do script \"/bin/sh \\\"%@\\\"; exit\"", installPowPath];
     
     NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     
