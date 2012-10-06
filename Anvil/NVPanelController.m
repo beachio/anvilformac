@@ -377,7 +377,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         return;
     }
     
-    [self.window becomeMainWindow];
+    [NSApp activateIgnoringOtherApps:YES];
     
     [[self appListTableView] reloadData];
     
@@ -437,9 +437,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSRect panelRect = [[self window] frame];
     
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 6 + HEADER_HEIGHT;
+    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 7 + HEADER_HEIGHT;
     
-    NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 24;
+    NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 25;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
 
     if (![self isPowInstalled]) {
@@ -451,7 +451,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // In this case, appListTableView can actually be tall without being visible!
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
-        y = [[NSScreen mainScreen] frame].size.height - (24 + 6 + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
+        y = [[NSScreen mainScreen] frame].size.height - (25 + 6 + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
         NSInteger height = self.welcomeView.frame.size.height + HEADER_HEIGHT + 6;
         panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, height);
         

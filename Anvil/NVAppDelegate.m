@@ -33,7 +33,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - NSApplicationDelegate
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-    
+
     [self.panelController setHasActivePanel:YES];
 }
 
