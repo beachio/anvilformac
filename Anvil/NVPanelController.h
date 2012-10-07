@@ -64,6 +64,7 @@
 - (void)closePanel;
 - (NSRect)statusRectForWindow:(NSWindow *)window;
 - (NSMenu *)buildSettingsMenu;
+- (void)beginEditingRowAtIndex:(NSNumber *)index;
 
 - (IBAction)didClickRestartButton:(id)sender;
 - (IBAction)didClickAddButton:(id)sender;

@@ -52,6 +52,31 @@ static NSString *const kAppsKey = @"apps";
     return sharedDataSource;
 }
 
+- (NSInteger)indexOfAppWithURL:(NSURL *)url {
+    
+    NSInteger i = 0;
+    for (NVApp* app in self.apps) {
+        
+        if ([app.url.path isEqualToString:url.path]) {
+            
+            return i;
+        }
+        i = i + 1;
+    }
+    return -1;
+}
+
+- (NVApp *)findAppWithURL:(NSURL *)url {
+    
+    for (NVApp* app in self.apps) {
+        
+        if (app.url == url) {
+            
+            return app;
+        }
+    }
+    return nil;
+}
 
 - (void)readInSavedAppDataFromDisk {
     

@@ -179,6 +179,22 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
 }
 
+- (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
+    
+    NSInteger index = [indexNumber integerValue];
+
+    if (index > -1 && index < self.appListTableView.numberOfRows) {
+        
+        NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:index];
+        [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+        
+        NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:index makeIfNecessary:YES];
+        self.isEditing = YES;
+        [cell.textField setEnabled:YES];
+        [cell.textField becomeFirstResponder];
+    }
+}
+
 - (NSMenu *)buildSettingsMenu {
     
     NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
@@ -253,10 +269,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
             return;
         }
         
-        [[NVDataSource sharedDataSource] addAppWithURL:openPanel.URL];
-        [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+        NVDataSource *dataSource = [NVDataSource sharedDataSource];
+        [dataSource addAppWithURL:openPanel.URL];
+        [dataSource readInSavedAppDataFromDisk];
         [self.appListTableView reloadData];
         [self updatePanelHeightAndAnimate:YES];
+        
+        NSInteger indexOfNewlyAddedRow = [dataSource indexOfAppWithURL:openPanel.URL];
+        [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
     }];
 }
 

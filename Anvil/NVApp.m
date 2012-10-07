@@ -18,6 +18,20 @@
         NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.absoluteString stringByExpandingTildeInPath]];
         NSURL *realURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
         
+        NSArray *folderTypesArray = [[NSArray alloc] initWithObjects:@"Public", @"Build", nil];
+        
+        for (NSString *folderName in folderTypesArray) {
+            
+            // Check whether this app has a public URL symlink inside it.
+            NSString *publicURLPath = [stringWithSymlinks  stringByAppendingPathComponent:folderName];
+            NSURL *publicURL = [[NSURL URLWithString:publicURLPath] URLByResolvingSymlinksInPath];
+            BOOL publicURLExists = [[NSFileManager defaultManager] fileExistsAtPath:publicURL.path];
+            if (publicURLExists && ![[publicURL.path stringByDeletingLastPathComponent] isEqualTo:realURL.path]) {
+                
+                realURL = publicURL;
+            }
+        }
+        
         self.url = realURL;
         self.name = [url lastPathComponent];
     }
@@ -26,6 +40,7 @@
 
 #pragma mark - URLs
 
+// TODO: Rename this. Awful.
 - (NSURL *)realURL {
     
     NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [self.url.absoluteString stringByExpandingTildeInPath]];
@@ -87,8 +102,6 @@
             
             [[NSFileManager defaultManager] createDirectoryAtPath:normalizedSymlinkURL.path withIntermediateDirectories:YES attributes:nil error:nil];
             NSURL *publicFolderURL = [normalizedSymlinkURL URLByAppendingPathComponent:@"Public"];
-            
-            
             [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
         }
     }

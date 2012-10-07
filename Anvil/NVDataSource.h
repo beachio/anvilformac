@@ -17,5 +17,7 @@
 + (NVDataSource *)sharedDataSource;
 - (void)addAppWithURL:(NSURL *)url;
 - (void)removeApp:(NVApp *)appToRemove;
+- (NVApp *)findAppWithURL:(NSURL *)url;
+- (NSInteger)indexOfAppWithURL:(NSURL *)url;
 
 @end

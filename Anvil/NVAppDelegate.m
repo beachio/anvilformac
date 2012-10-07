@@ -122,6 +122,9 @@ void *kContextActivePanel = &kContextActivePanel;
     
     [self.panelController.appListTableView reloadData];
     [self.panelController openPanel];
+    
+    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:dropURL]];
+    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
 }
 
 #pragma mark - NSMenuDelegate
