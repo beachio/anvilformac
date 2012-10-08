@@ -459,6 +459,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 7 + HEADER_HEIGHT;
     
+    NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
+    
+    if (newHeight > maxHeight) {
+        
+        newHeight = maxHeight;
+    }
+    
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 25;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
 
