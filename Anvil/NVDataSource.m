@@ -101,6 +101,16 @@ static NSString *const kAppsKey = @"apps";
     self.apps = [NSArray arrayWithArray:appsArray];
 }
 
+- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
+    
+    NVApp *newApp = [[NVApp alloc] init];
+    newApp.name = name;
+    newApp.url = url;
+    [newApp createSymlink];
+    
+    [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
+}
+
 - (void)addAppWithURL:(NSURL *)url {
     
     NVApp *newApp = [[NVApp alloc] init];

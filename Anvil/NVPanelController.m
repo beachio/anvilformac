@@ -151,6 +151,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     frame = self.noAppsView.frame;
     [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
 
+
 }
 
 - (void)setupSettingsButton {
@@ -400,33 +401,10 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [NSApp activateIgnoringOtherApps:YES];
     
     [[self appListTableView] reloadData];
-    
     [self updatePanelHeightAndAnimate:NO];
-        
-    NSWindow *panel = [self window];
     
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
-    NSRect statusRect = [self statusRectForWindow:panel];
-    
-    NSRect panelRect = [panel frame];
-    panelRect.size.width = PANEL_WIDTH;
-    
-    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
-    panelRect.origin.y = NSMaxY(statusRect) - NSHeight(panelRect);
-        
-    if (NSMaxX(panelRect) > (NSMaxX(screenRect) - ARROW_HEIGHT))
-        panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
-    
-    [NSApp activateIgnoringOtherApps:NO];
-    [panel setFrame:panelRect display:YES];
-    [panel setAlphaValue:1];
-    
-    [panel performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
-    
-    [self updatePanelHeightAndAnimate:NO];
-        
-    [panel makeKeyAndOrderFront:nil];
-    
+    [self.window performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
+    [self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)closePanel {
@@ -466,6 +444,18 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         newHeight = maxHeight;
     }
     
+    NSWindow *panel = [self window];
+    
+    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
+    NSRect statusRect = [self statusRectForWindow:panel];
+    
+    panelRect.size.width = PANEL_WIDTH;
+    
+    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
+    
+    if (NSMaxX(panelRect) > (NSMaxX(screenRect) - ARROW_HEIGHT))
+        panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
+    
     NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 25;
     panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
 
@@ -495,6 +485,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = YES;
     }
+    
+    [panel setAlphaValue:1];
     
     if (shouldAnimate) {
         [[[self window] animator] setFrame:panelRect display:YES];

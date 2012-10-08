@@ -34,6 +34,8 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
+    [self hostHammerSites];
+    [self.panelController.appListTableView reloadData];
     [self.panelController setHasActivePanel:YES];
 }
 
@@ -113,6 +115,18 @@ void *kContextActivePanel = &kContextActivePanel;
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller {
     
     return self.menubarController.statusItemView;
+}
+
+- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
+    
+    [[NVDataSource sharedDataSource] addAppWithURL:url andName:name];
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+    
+    [self.panelController.appListTableView reloadData];
+    [self.panelController openPanel];
+    
+    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:url]];
+    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
 }
 
 - (void)addAppWithURL:(NSURL *)dropURL {
