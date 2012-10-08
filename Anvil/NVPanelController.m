@@ -785,6 +785,11 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (IBAction)didClickReallyDeleteButton:(id)sender {
     
+    if (self.isEditing) {
+        
+        return;
+    }
+    
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:clickedRow];

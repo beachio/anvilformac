@@ -15,8 +15,8 @@
 
 @property (assign, nonatomic) id <NVSwitchDelegate> delegate;
 
-@property (strong, atomic) IBOutlet NVStyledView *backgroundView;
-@property (strong, atomic) IBOutlet NVStyledView *switcherView;
+@property (strong, nonatomic) IBOutlet NVStyledView *backgroundView;
+@property (strong, nonatomic) IBOutlet NVStyledView *switcherView;
 
 - (void)turnOn;
 - (void)turnOff;
