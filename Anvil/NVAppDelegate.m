@@ -34,7 +34,6 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
-    [self hostHammerSites];
     [self.panelController.appListTableView reloadData];
     [self.panelController setHasActivePanel:YES];
 }
