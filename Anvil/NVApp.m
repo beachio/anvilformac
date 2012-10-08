@@ -8,7 +8,18 @@
 
 #import "NVApp.h"
 
+@interface NVApp ()
+
+@property (readwrite, nonatomic) NSURL *_faviconURL;
+@property (readwrite, nonatomic) BOOL hasNoFavicon;
+
+@end
+
 @implementation NVApp
+
+static NSString *const kFaviconFileName = @"favicon.ico";
+static NSString *const kAppleTouchIconFileName = @"apple-touch-icon.png";
+static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-precomposed.png";
 
 - (id)initWithURL:(NSURL *)url {
    
@@ -35,6 +46,7 @@
         
         self.url = realURL;
         self.name = [url lastPathComponent];
+        [self faviconURL];
     }
     return self;
 }
@@ -52,16 +64,61 @@
 
 - (NSURL *)faviconURL {
     
-    NSURL *faviconURL = [self.url URLByAppendingPathComponent:@"public/favicon.ico"];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // If we've cached this already, use the cache.
+    if (self._faviconURL) {
+        
+        return self._faviconURL;
+    } else if(self.hasNoFavicon) {
+        
+        return nil;
+    }
+
+    NSURL *faviconURL = nil; //[self.url URLByAppendingPathComponent:@"public/favicon.ico"];
+    NSArray *enumeratorKeys = [NSArray arrayWithObject:NSURLIsDirectoryKey];
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:self.url includingPropertiesForKeys:enumeratorKeys options:0 errorHandler:NULL];
+    
+    // Go through every file and find the right icons
+    for (NSURL *subFileURL in enumerator) {
+        
+        NSString *subFileName = subFileURL.pathComponents.lastObject;
+        
+        if ([subFileName isEqualToString:kFaviconFileName]) {
+            
+            if (!faviconURL) {
+                
+                faviconURL = subFileURL;
+            }
+        }
+        
+        // TODO: apple touch icons. Stolen from Hammer.
+//        if ([subFileName isEqualToString:kPrecomposedAppleTouchIconFileName]) {
+//            
+//            precomposedAppleTouchIconURL = subFileURL;
+//        }
+//        else if ([subFileName isEqualToString:kAppleTouchIconFileName]) {
+//            
+//            appleTouchIconURL = subFileURL;
+//        }
+//        else if ([subFileName isEqualToString:kFaviconFileName]) {
+//            
+//            faviconURL = subFileURL;
+//        }
+        
+        
+    }
+    
     NSDictionary *attrs = [fileManager attributesOfItemAtPath:faviconURL.path error:NULL];
     
     if( [fileManager fileExistsAtPath:faviconURL.path] && [attrs fileSize] > 0){
         
+        self._faviconURL = faviconURL;
         return faviconURL;
     } else {
         
+        self.hasNoFavicon = YES;
+        self._faviconURL = nil;
         return nil;
     }
 }
