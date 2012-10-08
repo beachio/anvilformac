@@ -25,9 +25,10 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
    
     self = [super  init];
     if(self) {
-        
-        NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.absoluteString stringByExpandingTildeInPath]];
-        NSURL *realURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
+    
+        // file:// Users/Elliott/a/b/c
+        NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
+        NSURL *expandedURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
         
         // TODO: Add , @"Build" to this array when Hammer is available.
         NSArray *folderTypesArray = [[NSArray alloc] initWithObjects:@"Public", nil];
@@ -38,15 +39,32 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
             NSString *publicURLPath = [stringWithSymlinks  stringByAppendingPathComponent:folderName];
             NSURL *publicURL = [[NSURL URLWithString:publicURLPath] URLByResolvingSymlinksInPath];
             BOOL publicURLExists = [[NSFileManager defaultManager] fileExistsAtPath:publicURL.path];
-            if (publicURLExists && ![[publicURL.path stringByDeletingLastPathComponent] isEqualTo:realURL.path]) {
+            if (publicURLExists && ![[publicURL.path stringByDeletingLastPathComponent] isEqualTo:expandedURL.path]) {
                 
-                realURL = publicURL;
+                expandedURL = publicURL;
             }
         }
         
-        self.url = realURL;
+        self.url = expandedURL;
+        
         self.name = [url lastPathComponent];
         [self faviconURL];
+        
+        if (![self canBeRestarted]) {
+            
+            // Check for index.html file
+            
+            NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];
+            BOOL indexHTMLExists = [[NSFileManager defaultManager] fileExistsAtPath:indexString];
+            
+            if( !indexHTMLExists ){
+                
+                NSURL *indexURL = [NSURL fileURLWithPath:indexString];
+                NSString *dummyPagePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+                [[NSFileManager defaultManager] copyItemAtPath:dummyPagePath toPath:indexURL.path error:nil];
+            }
+
+        }
     }
     return self;
 }
@@ -67,7 +85,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     // If we've cached this already, use the cache.
-    if (self._faviconURL) {
+    if (self._faviconURL && [fileManager fileExistsAtPath:self._faviconURL.path]) {
         
         return self._faviconURL;
     } else if(self.hasNoFavicon) {
