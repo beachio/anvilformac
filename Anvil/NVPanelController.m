@@ -223,6 +223,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
      
 - (void)didClickShowAbout:(id)sender {
     
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
 }
 
@@ -259,6 +261,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.addButton setEnabled:NO];
     [self.noSitesAddASiteButton setEnabled:NO]; // This button needs a disabled style
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
     
     [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
         
@@ -392,13 +397,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)openPanel {
     
+//    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+    
     if (self.panelIsOpen) {
         [self.appListTableView reloadData];
         [self updatePanelHeightAndAnimate:YES];
         return;
     }
-    
-    [NSApp activateIgnoringOtherApps:YES];
     
     [[self appListTableView] reloadData];
     [self updatePanelHeightAndAnimate:NO];
