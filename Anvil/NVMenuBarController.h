@@ -1,4 +1,4 @@
-#define STATUS_ITEM_VIEW_WIDTH 24.0
+#define STATUS_ITEM_VIEW_WIDTH 28.0
 
 #pragma mark -
 
