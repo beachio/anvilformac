@@ -39,6 +39,7 @@ void *kContextActivePanel = &kContextActivePanel;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];
     
@@ -98,17 +99,6 @@ void *kContextActivePanel = &kContextActivePanel;
     [self.menubarController.statusItem popUpStatusItemMenu:settingsMenu];
 }
 
-#pragma mark - Public accessors
-
-//- (NVPanelController *)panelController {
-//    
-//    if (_panelController == nil) {
-//        _panelController = [[NVPanelController alloc] initWithDelegate:self];
-//        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
-//    }
-//    return _panelController;
-//}
-
 #pragma mark - PanelControllerDelegate
 
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller {
@@ -122,7 +112,7 @@ void *kContextActivePanel = &kContextActivePanel;
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     
     [self.panelController.appListTableView reloadData];
-    [self.panelController openPanel];
+    self.panelController.hasActivePanel = YES;
     
     NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:url]];
     [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
@@ -134,7 +124,7 @@ void *kContextActivePanel = &kContextActivePanel;
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     
     [self.panelController.appListTableView reloadData];
-    [self.panelController openPanel];
+    self.panelController.hasActivePanel = YES;
     
     NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:dropURL]];
     [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];

@@ -4,6 +4,7 @@
 @interface NVStatusItemView ()
 
 @property (nonatomic, strong) NSArray *pasteboardTypes;
+@property (nonatomic, strong) NSStatusItem *statusItem;
 
 @end
 
@@ -30,8 +31,8 @@
     self = [super initWithFrame:itemRect]; // Doesnt seem to set height
     
     if (self != nil) {
-        _statusItem = statusItem;
-        _statusItem.view = self;
+        self.statusItem = statusItem;
+        self.statusItem.view = self;
     }
     
     return self;
@@ -68,7 +69,6 @@
                 [self.delegate statusItemView:self didReceiveDropURL:url];
             }
             
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kFolderWasDroppedNotification object:url];
             return YES;
         }
     }
@@ -79,7 +79,6 @@
 - (void)draggingEnded:(id<NSDraggingInfo>)sender {
     
 }
-
 
 #pragma mark -
 

@@ -25,13 +25,12 @@
         _statusItemView.action = @selector(togglePanel:);
         _statusItemView.rightClickAction = @selector(menuItemRightClicked:);
         _statusItemView.delegate = self;
-        // TODO
-//        _statusItemView.menu = [[NSMenu alloc] init];
     }
     return self;
 }
 
 - (void)dealloc {
+    
     [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
 }
 
