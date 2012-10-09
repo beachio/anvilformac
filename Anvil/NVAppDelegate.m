@@ -35,7 +35,7 @@ void *kContextActivePanel = &kContextActivePanel;
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
     [self.panelController.appListTableView reloadData];
-    [self.panelController setHasActivePanel:YES];
+//    [self.panelController setHasActivePanel:YES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
