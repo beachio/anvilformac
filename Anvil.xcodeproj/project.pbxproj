@@ -76,7 +76,6 @@
 		4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
 		4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
 		4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4FBABB09161344D600D4174B /* dsa_pub.pem */; };
-		4FBE236F1619EC4A00CB6793 /* Anvil.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4FBE236E1619EC4A00CB6793 /* Anvil.iconset */; };
 		4FBE23721619EC7100CB6793 /* Anvil.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4FBE23711619EC7100CB6793 /* Anvil.iconset */; };
 		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
 		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
@@ -206,7 +205,6 @@
 		4FB9E814160610A1005B50A4 /* NVTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableCellView.m; sourceTree = "<group>"; };
 		4FBABB041613442200D4174B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FBABB09161344D600D4174B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		4FBE236E1619EC4A00CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = "<group>"; };
 		4FBE23711619EC7100CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = SOURCE_ROOT; };
 		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -361,7 +359,6 @@
 				4FBE23711619EC7100CB6793 /* Anvil.iconset */,
 				4F0B716016234A82007246F9 /* 404 */,
 				4FBFA39C15C7ED3000BA8209 /* Images */,
-				4FBE236E1619EC4A00CB6793 /* Anvil.iconset */,
 				4FBABB09161344D600D4174B /* dsa_pub.pem */,
 			);
 			name = Resources;
@@ -755,7 +752,6 @@
 				4FAC9A711614AB1300C260B4 /* BlueButton.png in Resources */,
 				4FAC9A721614AB1300C260B4 /* BlueButtonAddPushed.png in Resources */,
 				4FAC9A741614B2CC00C260B4 /* BlueButtonPushed.png in Resources */,
-				4FBE236F1619EC4A00CB6793 /* Anvil.iconset in Resources */,
 				4FBE23721619EC7100CB6793 /* Anvil.iconset in Resources */,
 				A4E7A58D161CC1DA00D06622 /* SwitchActive.png in Resources */,
 				A408F78B161DA6BD00C7943C /* MenubarIconAlt.png in Resources */,

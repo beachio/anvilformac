@@ -15,6 +15,7 @@
 
 - (NVStatusItemView *)statusItemViewForPanelController:(NVPanelController *)controller;
 - (BOOL)isPowInstalled;
+- (CGRect)globalMenubarViewFrame;
 
 @end
 

@@ -137,4 +137,9 @@ void *kContextActivePanel = &kContextActivePanel;
     self.menubarController.showHighlightIcon = NO;
 }
 
+- (CGRect)globalMenubarViewFrame {
+    
+    return self.menubarController.statusItemView.window.frame;
+}
+
 @end

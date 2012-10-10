@@ -14,6 +14,9 @@
 
 #define POPUP_HEIGHT 122
 #define PANEL_WIDTH 256
+
+#define WINDOW_VERTICAL_OFFSET 5
+
 #define MENU_ANIMATION_DURATION .1
 
 #define HEADER_HEIGHT 34
@@ -55,8 +58,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
         NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@", pipeString);
-        
         self.selectedRow = -1;
         
         BOOL status = [pipeString length] > 0;
@@ -69,8 +70,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
     
     self = [super initWithWindowNibName:@"Panel"];
-    if (self != nil)
-    {
+    if (self != nil) {
+        
         _delegate = delegate;
     }
     return self;
@@ -150,8 +151,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     frame = self.noAppsView.frame;
     [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
-
-
 }
 
 - (void)setupSettingsButton {
@@ -285,7 +284,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
     }];
 }
-
 
 - (void)switchView:(NVSwitchView *)switchView didSwitchTo:(BOOL)state {
 
@@ -423,10 +421,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     });
 }
 
-#pragma mark - Sizing
-
 - (BOOL)isPowInstalled {
-
+    
     //    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
     NSString *powPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist";
     BOOL isDirectory;
@@ -435,35 +431,40 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return isThere && !isDirectory;
 }
 
+#pragma mark - Sizing
+
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
 
     [self.appListTableView sizeToFit];
     
-    NSRect panelRect = [[self window] frame];
-    
-    NSInteger newHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + 7 + HEADER_HEIGHT;
-    
-    NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
-    
-    if (newHeight > maxHeight) {
-        
-        newHeight = maxHeight;
-    }
-    
     NSWindow *panel = [self window];
-    
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
+    NSRect panelRect = panel.frame;
     NSRect statusRect = [self statusRectForWindow:panel];
     
-    panelRect.size.width = PANEL_WIDTH;
+    NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
+
+    // Set our maximum height
+    NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
+    if (panelHeight > maxHeight) {
+        
+        panelHeight = maxHeight;
+    }
     
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     
+    // Better make sure the panel's inside the window.
+    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     if (NSMaxX(panelRect) > (NSMaxX(screenRect) - ARROW_HEIGHT))
         panelRect.origin.x -= NSMaxX(panelRect) - (NSMaxX(screenRect) - ARROW_HEIGHT);
     
-    NSInteger y = [[NSScreen mainScreen] frame].size.height - newHeight - 25;
-    panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, newHeight);
+    CGRect menuBarViewFrame = [self.delegate globalMenubarViewFrame];
+    
+    NSInteger bottomOfMenubarViewOffset = menuBarViewFrame.origin.y - WINDOW_VERTICAL_OFFSET;
+    
+    // This is the y-position of the panel. Bottom of the menubar icon frame, minus its height.
+    NSInteger panelY = bottomOfMenubarViewOffset - panelHeight;
+    
+    panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
 
     if (![self isPowInstalled]) {
         
@@ -474,9 +475,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // In this case, appListTableView can actually be tall without being visible!
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
-        y = [[NSScreen mainScreen] frame].size.height - (25 + 6 + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
-        NSInteger height = self.welcomeView.frame.size.height + HEADER_HEIGHT + 6;
-        panelRect = CGRectMake(panelRect.origin.x, y, panelRect.size.width, height);
+        panelY = [[NSScreen mainScreen] frame].size.height - (bottomOfMenubarViewOffset + ARROW_HEIGHT + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
+        panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
+        panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
     } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
         
@@ -500,6 +501,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         [self.window setFrame:panelRect display:YES];
     }
 }
+
+#pragma mark - Alternate panels
 
 - (void)renderAlternatePanels {
     
@@ -525,7 +528,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return YES;
 }
 
--(void)mouseMoved:(NSEvent *)theEvent {
+- (void)mouseMoved:(NSEvent *)theEvent {
     
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
@@ -536,7 +539,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     }
 }
 
--(NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
     
     return [[[NVDataSource sharedDataSource] apps] count];
 }

@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12C54</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2840</string>
+			<string key="NS.object.0">2843</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSButton</string>
@@ -562,7 +562,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="160445123"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<int key="NSWindowAnimationBehavior">4</int>
 				<int key="NSWindowCollectionBehavior">65</int>
@@ -1144,11 +1144,6 @@
 						<reference key="parent" ref="295544388"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">417</int>
-						<reference key="object" ref="331158961"/>
-						<reference key="parent" ref="483366631"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">513</int>
 						<reference key="object" ref="287973955"/>
 						<array class="NSMutableArray" key="children">
@@ -1369,6 +1364,11 @@
 						<int key="objectID">573</int>
 						<reference key="object" ref="518626533"/>
 						<reference key="parent" ref="1004212260"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">417</int>
+						<reference key="object" ref="331158961"/>
+						<reference key="parent" ref="483366631"/>
 					</object>
 				</array>
 			</object>
