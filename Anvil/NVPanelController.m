@@ -36,36 +36,6 @@
 static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifier";
 static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier";
 static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier";
-#pragma mark -
-
-- (id)init {
-    
-    self = [super init];
-    
-    if (self) {
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath:@"/usr/bin/curl"];
-        
-        [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
-        
-        NSPipe *outputPipe = [NSPipe pipe];
-        [task setStandardInput:[NSPipe pipe]];
-        [task setStandardError:[NSPipe pipe]];
-        [task setStandardOutput:outputPipe];
-        [task launch];
-        [task waitUntilExit];
-        
-        NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-        NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-        self.selectedRow = -1;
-        
-        BOOL status = [pipeString length] > 0;
-        [self.switchView switchTo:status withAnimation:NO];
-    }
-    
-    return self;
-}
 
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
     
@@ -151,6 +121,30 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     frame = self.noAppsView.frame;
     [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+}
+
+#pragma mark - Setting the switch status
+
+- (void)switchSwitchViewToPowStatus {
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/curl"];
+    
+    [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
+    
+    NSPipe *outputPipe = [NSPipe pipe];
+    [task setStandardInput:[NSPipe pipe]];
+    [task setStandardError:[NSPipe pipe]];
+    [task setStandardOutput:outputPipe];
+    [task launch];
+    [task waitUntilExit];
+    
+    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    self.selectedRow = -1;
+    
+    BOOL status = [pipeString length] > 0;
+    [self.switchView switchTo:status withAnimation:NO];
 }
 
 - (void)setupSettingsButton {
@@ -409,6 +403,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.window performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
     [self.window makeKeyAndOrderFront:nil];
+    
+    [self switchSwitchViewToPowStatus];
 }
 
 - (void)closePanel {
