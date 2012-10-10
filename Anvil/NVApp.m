@@ -215,7 +215,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 // Is it a Rails app?
 - (BOOL)canBeRestarted {
     
-    return [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config/environment.rb"].path isDirectory:nil];
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config.ru"].path isDirectory:nil];
 }
 
 @end
