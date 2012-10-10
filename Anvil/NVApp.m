@@ -25,6 +25,8 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
    
     self = [super  init];
     if(self) {
+        
+        self.name = [url lastPathComponent];
     
         // file:// Users/Elliott/a/b/c
         NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
@@ -44,10 +46,9 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
                 expandedURL = publicURL;
             }
         }
-        
         self.url = expandedURL;
         
-        self.name = [url lastPathComponent];
+        // Prime the cache
         [self faviconURL];
         
         if (![self isARackApp]) {
@@ -74,10 +75,9 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 // TODO: Rename this. Awful.
 - (NSURL *)realURL {
     
-    NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [self.url.absoluteString stringByExpandingTildeInPath]];
-    NSURL *realURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
-    
-    return realURL;
+    NSString *expandedString = [self.url.absoluteString stringByExpandingTildeInPath];
+    NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", expandedString];
+    return [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
 }
 
 - (NSURL *)faviconURL {
