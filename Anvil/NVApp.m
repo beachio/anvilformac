@@ -88,22 +88,6 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
                 faviconURL = subFileURL;
             }
         }
-        
-        // TODO: apple touch icons. Stolen from Hammer.
-//        if ([subFileName isEqualToString:kPrecomposedAppleTouchIconFileName]) {
-//            
-//            precomposedAppleTouchIconURL = subFileURL;
-//        }
-//        else if ([subFileName isEqualToString:kAppleTouchIconFileName]) {
-//            
-//            appleTouchIconURL = subFileURL;
-//        }
-//        else if ([subFileName isEqualToString:kFaviconFileName]) {
-//            
-//            faviconURL = subFileURL;
-//        }
-        
-        
     }
     
     NSDictionary *attrs = [fileManager attributesOfItemAtPath:faviconURL.path error:NULL];
