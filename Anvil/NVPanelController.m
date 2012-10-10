@@ -470,8 +470,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
         
-        NSInteger panelY = bottomOfMenubarViewOffset - (panelHeight + self.welcomeView.frame.size.height);
+
         panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
+        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
     } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
