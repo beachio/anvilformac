@@ -51,34 +51,13 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         // Prime the cache
         [self faviconURL];
         
-        if (![self isARackApp]) {
-            
-            // Check for index.html file
-            
-            NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];
-            BOOL indexHTMLExists = [[NSFileManager defaultManager] fileExistsAtPath:indexString];
-            
-            if( !indexHTMLExists ){
-                
-                NSURL *indexURL = [NSURL fileURLWithPath:indexString];
-                NSString *dummyPagePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-                [[NSFileManager defaultManager] copyItemAtPath:dummyPagePath toPath:indexURL.path error:nil];
-            }
-
-        }
+        // Check for index.html file
+        [self createIndexFileIfNonExistentAndNotARackApp];
     }
     return self;
 }
 
 #pragma mark - URLs
-
-// TODO: Rename this. Awful.
-- (NSURL *)realURL {
-    
-    NSString *expandedString = [self.url.absoluteString stringByExpandingTildeInPath];
-    NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", expandedString];
-    return [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
-}
 
 - (NSURL *)faviconURL {
     
@@ -156,6 +135,22 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 }
 
 #pragma mark - Actions
+
+- (void)createIndexFileIfNonExistentAndNotARackApp {
+    
+    if (![self isARackApp]) {
+        
+        NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];
+        BOOL indexHTMLExists = [[NSFileManager defaultManager] fileExistsAtPath:indexString];
+        
+        if( !indexHTMLExists ){
+            
+            NSURL *indexURL = [NSURL fileURLWithPath:indexString];
+            NSString *dummyPagePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+            [[NSFileManager defaultManager] copyItemAtPath:dummyPagePath toPath:indexURL.path error:nil];
+        }
+    }
+}
 
 - (void)createSymlink {
     

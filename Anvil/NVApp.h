@@ -18,7 +18,7 @@
 - (NSURL *)faviconURL;
 - (void)createSymlink;
 - (void)destroySymlink;
-- (NSURL *)realURL;
+
 - (NSURL *)browserURL;
 - (void)restart;
 - (void)renameTo:(NSString *)newName;
