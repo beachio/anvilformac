@@ -471,7 +471,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // In this case, appListTableView can actually be tall without being visible!
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
-        panelY = [[NSScreen mainScreen] frame].size.height - (bottomOfMenubarViewOffset + ARROW_HEIGHT + HEADER_HEIGHT) - self.welcomeView.frame.size.height;
+        
+        NSInteger panelY = bottomOfMenubarViewOffset - (panelHeight + self.welcomeView.frame.size.height);
         panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
