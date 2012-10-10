@@ -15,7 +15,7 @@
 #define POPUP_HEIGHT 122
 #define PANEL_WIDTH 256
 
-#define WINDOW_VERTICAL_OFFSET 5
+#define WINDOW_VERTICAL_OFFSET 4
 
 #define MENU_ANIMATION_DURATION .1
 
@@ -446,7 +446,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         panelHeight = maxHeight;
     }
     
-    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
+    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2) - 2;
     
     // Better make sure the panel's inside the window.
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
