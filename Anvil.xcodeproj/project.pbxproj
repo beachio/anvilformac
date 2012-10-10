@@ -207,7 +207,7 @@
 		4FBABB041613442200D4174B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FBABB09161344D600D4174B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		4FBE236E1619EC4A00CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = "<group>"; };
-		4FBE23711619EC7100CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = "<group>"; };
+		4FBE23711619EC7100CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = SOURCE_ROOT; };
 		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4FBFA35D15C6F85800BA8209 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -358,6 +358,7 @@
 		4FBABB0B161344D900D4174B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4FBE23711619EC7100CB6793 /* Anvil.iconset */,
 				4F0B716016234A82007246F9 /* 404 */,
 				4FBFA39C15C7ED3000BA8209 /* Images */,
 				4FBE236E1619EC4A00CB6793 /* Anvil.iconset */,
@@ -369,7 +370,6 @@
 		4FBFA34B15C6F85800BA8209 = {
 			isa = PBXGroup;
 			children = (
-				4FBE23711619EC7100CB6793 /* Anvil.iconset */,
 				4FAB52721611D78400BD03F8 /* QuartzCore.framework */,
 				4FBFA36015C6F85800BA8209 /* Anvil */,
 				4FBFA35915C6F85800BA8209 /* Frameworks */,
@@ -408,6 +408,7 @@
 		4FBFA36015C6F85800BA8209 /* Anvil */ = {
 			isa = PBXGroup;
 			children = (
+				4FB9E80F1605FEC2005B50A4 /* Model */,
 				4FBABB0B161344D900D4174B /* Resources */,
 				4F78B8CB1608ADC0006B0500 /* Categories */,
 				4FBFA3BA15C7F49B00BA8209 /* DataSource */,
@@ -416,7 +417,6 @@
 				4FBFA3A015C7ED5300BA8209 /* Views */,
 				4FBFA39B15C7ED0F00BA8209 /* Nibs */,
 				4FBFA36115C6F85800BA8209 /* Supporting Files */,
-				4FB9E80F1605FEC2005B50A4 /* Model */,
 			);
 			path = Anvil;
 			sourceTree = "<group>";
@@ -531,23 +531,17 @@
 		4FBFA3A015C7ED5300BA8209 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4FCEDE961615B7EA00122B18 /* Spinner Button */,
-				4FCEDE9316159EA600122B18 /* CustomLoadingSpinner.h */,
-				4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */,
-				4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */,
-				4FB9E92516073894005B50A4 /* NVLabel */,
+				4FC8A0F8162587A000D335E0 /* CustomLoadingSpinner */,
+				4FCEDE961615B7EA00122B18 /* NVSpinnerButton */,
+				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
 				4FBFA3BD15C7F4E300BA8209 /* NVPanel */,
 				4FBFA3BE15C7F4F100BA8209 /* NVStatusItemView */,
-				4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */,
-				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
-				4FB9E927160738A1005B50A4 /* NVTableRowView */,
-				4FB9E929160738AC005B50A4 /* NVTableCellView */,
+				4FC8A0FB162587D200D335E0 /* NVTableView */,
+				4FB9E92516073894005B50A4 /* NVLabel */,
 				4F78B8961608AD3F006B0500 /* NVStyledView */,
 				4F78B8E51608C588006B0500 /* NVSwitchView */,
-				4F361364160C9816008584A0 /* NVPopupButtonCell.h */,
-				4F361365160C9816008584A0 /* NVPopupButtonCell.m */,
-				4F08AF9B1614885500D446C2 /* NVStyledButton.h */,
-				4F08AF9C1614885500D446C2 /* NVStyledButton.m */,
+				4FC8A0FD1625880600D335E0 /* NVPopupButtonCell */,
+				4FC8A0FC162587FD00D335E0 /* NVStyledButton */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -573,6 +567,7 @@
 		4FBFA3BD15C7F4E300BA8209 /* NVPanel */ = {
 			isa = PBXGroup;
 			children = (
+				4FBFA3BC15C7F4E100BA8209 /* NVBackgroundView */,
 				4FBFA39615C6FE7E00BA8209 /* NVPanel.h */,
 				4FBFA39715C6FE7F00BA8209 /* NVPanel.m */,
 			);
@@ -606,13 +601,50 @@
 			name = NVLayeredImageVivew;
 			sourceTree = "<group>";
 		};
-		4FCEDE961615B7EA00122B18 /* Spinner Button */ = {
+		4FC8A0F8162587A000D335E0 /* CustomLoadingSpinner */ = {
+			isa = PBXGroup;
+			children = (
+				4FCEDE9316159EA600122B18 /* CustomLoadingSpinner.h */,
+				4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */,
+			);
+			name = CustomLoadingSpinner;
+			sourceTree = "<group>";
+		};
+		4FC8A0FB162587D200D335E0 /* NVTableView */ = {
+			isa = PBXGroup;
+			children = (
+				4FBFA3BF15C7F4F800BA8209 /* NVSiteTableView */,
+				4FB9E927160738A1005B50A4 /* NVTableRowView */,
+				4FB9E929160738AC005B50A4 /* NVTableCellView */,
+			);
+			name = NVTableView;
+			sourceTree = "<group>";
+		};
+		4FC8A0FC162587FD00D335E0 /* NVStyledButton */ = {
+			isa = PBXGroup;
+			children = (
+				4F08AF9B1614885500D446C2 /* NVStyledButton.h */,
+				4F08AF9C1614885500D446C2 /* NVStyledButton.m */,
+			);
+			name = NVStyledButton;
+			sourceTree = "<group>";
+		};
+		4FC8A0FD1625880600D335E0 /* NVPopupButtonCell */ = {
+			isa = PBXGroup;
+			children = (
+				4F361364160C9816008584A0 /* NVPopupButtonCell.h */,
+				4F361365160C9816008584A0 /* NVPopupButtonCell.m */,
+			);
+			name = NVPopupButtonCell;
+			sourceTree = "<group>";
+		};
+		4FCEDE961615B7EA00122B18 /* NVSpinnerButton */ = {
 			isa = PBXGroup;
 			children = (
 				4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */,
 				4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */,
 			);
-			name = "Spinner Button";
+			name = NVSpinnerButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

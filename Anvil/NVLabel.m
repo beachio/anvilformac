@@ -34,16 +34,15 @@
     return self;
 }
 
-
-#pragma mark API
-
 - (void)setup {
-
+    
     [self setBackgroundColor:[NSColor clearColor]];
     [self setEditable:NO];
     [self setBordered:NO];
     [self setBezeled:NO];
 }
+
+#pragma mark API
 
 - (void)setWidth {
     
@@ -55,7 +54,6 @@
     [self setFrame:CGRectMake(frame.origin.x, frame.origin.y, width, frame.size.height)];
     [self setNeedsDisplay:YES];
 }
-
 
 - (void)setText:(NSString *)newText {
     
