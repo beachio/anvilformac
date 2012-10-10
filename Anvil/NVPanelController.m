@@ -197,7 +197,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     // TODO: about window
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Email Support" action:@selector(emailSupportMenuItemClicked:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(supportMenuItemClicked:) keyEquivalent:@""]];
     [settingsMenu addItem:[NSMenuItem separatorItem]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
@@ -206,12 +206,10 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return settingsMenu;
 }
 
-- (void)emailSupportMenuItemClicked:(id)sender {
-     
-    NSString *toEmail = [@"support@riothq.com" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *emailURL = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", toEmail]];
-     
-    [[NSWorkspace sharedWorkspace] openURL:emailURL];
+- (void)supportMenuItemClicked:(id)sender {
+    
+    NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
+    [[NSWorkspace sharedWorkspace] openURL:supportURL];
 }
      
 - (void)didClickShowAbout:(id)sender {
