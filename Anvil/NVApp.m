@@ -50,7 +50,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         self.name = [url lastPathComponent];
         [self faviconURL];
         
-        if (![self canBeRestarted]) {
+        if (![self isARackApp]) {
             
             // Check for index.html file
             
@@ -159,14 +159,11 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 - (void)createSymlink {
     
-    BOOL isRailsApp = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config.ru"].path isDirectory:nil];
 //    BOOL hasBuildFolder = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"Build"].path isDirectory:nil];
     
-    NSURL *normalizedSymlinkURL = [self symlinkURL];
-    
-    if (isRailsApp) {
+    if ([self isARackApp]) {
         
-            [[NSFileManager defaultManager] createSymbolicLinkAtURL:normalizedSymlinkURL withDestinationURL:self.url error:nil];
+            [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
     } else {
         
         // TODO: Bring this back in when Hammer is available.
@@ -178,8 +175,8 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 //            [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:realBuildURL error:nil];
 //        } else {
         
-            [[NSFileManager defaultManager] createDirectoryAtPath:normalizedSymlinkURL.path withIntermediateDirectories:YES attributes:nil error:nil];
-            NSURL *publicFolderURL = [normalizedSymlinkURL URLByAppendingPathComponent:@"Public"];
+            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
+            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
             [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
 //        }
     }
@@ -212,8 +209,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 #pragma mark - What can it be?
 
-// Is it a Rails app?
-- (BOOL)canBeRestarted {
+- (BOOL)isARackApp {
     
     return [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config.ru"].path isDirectory:nil];
 }

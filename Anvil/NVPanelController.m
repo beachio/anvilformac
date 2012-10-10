@@ -595,7 +595,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [cellView resizeSubviewsWithOldSize:cellView.frame.size];
     
-    cellView.showRestartButton = [app canBeRestarted];
+    cellView.showRestartButton = [app isARackApp];
     
     if (app.faviconURL) {
     

@@ -22,6 +22,6 @@
 - (NSURL *)browserURL;
 - (void)restart;
 - (void)renameTo:(NSString *)newName;
-- (BOOL)canBeRestarted;
+- (BOOL)isARackApp;
 
 @end
