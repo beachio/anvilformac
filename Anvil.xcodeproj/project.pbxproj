@@ -87,8 +87,6 @@
 		4FBFA38315C6F94900BA8209 /* NVPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38215C6F94900BA8209 /* NVPanelController.m */; };
 		4FBFA38A15C6F9F400BA8209 /* NVStatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */; };
 		4FBFA38D15C6FA7E00BA8209 /* NVBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */; };
-		4FBFA39015C6FC0C00BA8209 /* Status.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA38E15C6FC0C00BA8209 /* Status.png */; };
-		4FBFA39115C6FC0C00BA8209 /* StatusHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */; };
 		4FBFA39815C6FE7F00BA8209 /* NVPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA39715C6FE7F00BA8209 /* NVPanel.m */; };
 		4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA39915C7006A00BA8209 /* Panel.xib */; };
 		4FBFA3A515C7EE4F00BA8209 /* NVSiteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3A415C7EE4F00BA8209 /* NVSiteTableView.m */; };
@@ -227,8 +225,6 @@
 		4FBFA38915C6F9F400BA8209 /* NVStatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStatusItemView.m; sourceTree = "<group>"; };
 		4FBFA38B15C6FA7E00BA8209 /* NVBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVBackgroundView.h; sourceTree = "<group>"; };
 		4FBFA38C15C6FA7E00BA8209 /* NVBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVBackgroundView.m; sourceTree = "<group>"; };
-		4FBFA38E15C6FC0C00BA8209 /* Status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Status.png; sourceTree = "<group>"; };
-		4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusHighlighted.png; sourceTree = "<group>"; };
 		4FBFA39615C6FE7E00BA8209 /* NVPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPanel.h; sourceTree = "<group>"; };
 		4FBFA39715C6FE7F00BA8209 /* NVPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPanel.m; sourceTree = "<group>"; };
 		4FBFA39915C7006A00BA8209 /* Panel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Panel.xib; sourceTree = "<group>"; };
@@ -497,8 +493,6 @@
 				4F78B8AA1608AD8A006B0500 /* SwitchInactive@2x.png */,
 				A4E7A58C161CC1DA00D06622 /* SwitchActive.png */,
 				4FF0A99916209AEE006B8531 /* SwitchActive@2x.png */,
-				4FBFA38E15C6FC0C00BA8209 /* Status.png */,
-				4FBFA38F15C6FC0C00BA8209 /* StatusHighlighted.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -700,8 +694,6 @@
 				4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */,
 				4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */,
 				4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */,
-				4FBFA39015C6FC0C00BA8209 /* Status.png in Resources */,
-				4FBFA39115C6FC0C00BA8209 /* StatusHighlighted.png in Resources */,
 				4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */,
 				4F6DBFDE160630CC00D2F214 /* ContextualReveal.png in Resources */,
 				4F78B8B11608AD8A006B0500 /* AddButton.png in Resources */,
