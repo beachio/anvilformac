@@ -28,7 +28,7 @@
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) BOOL isShowingModal;
 @property (nonatomic) BOOL panelIsOpen;
-
+@property (atomic, strong) NSTrackingArea *trackingArea;
 @end
 
 @implementation NVPanelController
@@ -43,6 +43,63 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     if (self != nil) {
         
         _delegate = delegate;
+        
+        // Make a fully skinned panel
+        NSPanel *panel = (id)[self window];
+        
+        [panel setLevel:NSPopUpMenuWindowLevel];
+        [panel setOpaque:NO];
+        [panel setBackgroundColor:[NSColor clearColor]];
+        
+        self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
+        self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
+        
+        [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+        
+        self.appListTableView.menu = [self menuForTableView];
+        [self.appListTableView setAction:@selector(appListTableViewClicked:)];
+        
+        [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+        
+        self.appListTableView.delegate = self;
+        
+        [self.appListTableScrollView setWantsLayer:YES];
+        [self.appListTableScrollView.layer setOpaque:NO];
+        [self.appListTableScrollView.layer setCornerRadius:0];
+        [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
+        
+        NSShadow *shadow = [[NSShadow alloc] init];
+        [shadow setShadowColor:[NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4]];
+        [shadow setShadowOffset:NSMakeSize(0, -1)];
+        [shadow setShadowBlurRadius:0.0];
+        [self.switchLabel setTextShadow:shadow];
+        
+        self.addButton.image = [NSImage imageNamed:@"AddButton"];
+        self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
+        
+        self.switchView.delegate = self;
+        self.isEditing = NO;
+        
+        self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
+        
+        [self setupSettingsButton];
+        
+        [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
+        [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
+        [self.installPowButton setIsBold:NO];
+        [self.installPowButton setTextSize:12.0];
+        
+        [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
+        [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
+        [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
+        [self.noSitesAddASiteButton setTextSize:12.0];
+        [self.noSitesAddASiteButton setIsBold:NO];
+        
+        CGRect frame = self.welcomeView.frame;
+        [self.welcomeView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+        
+        frame = self.noAppsView.frame;
+        [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
     }
     return self;
 }
@@ -51,76 +108,27 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSControlTextDidChangeNotification object:self.searchField];
 }
 
+- (void)createTrackingArea {
+    
+    if (self.trackingArea) {
+        
+        [self.appListTableView removeTrackingArea:self.trackingArea];
+        self.trackingArea = nil;
+    }
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingInVisibleRect | NSTrackingActiveAlways);
+    self.trackingArea = [ [NSTrackingArea alloc] initWithRect:self.backgroundView.frame
+                                                      options:opts
+                                                        owner:self
+                                                     userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
+    [[self appListTableView] addTrackingArea:self.trackingArea];
+}
+
 #pragma mark -
 
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    
-    // Make a fully skinned panel
-    NSPanel *panel = (id)[self window];
-    
-    [panel setAcceptsMouseMovedEvents:YES];
-    [panel setLevel:NSPopUpMenuWindowLevel];
-    [panel setOpaque:NO];
-    [panel setBackgroundColor:[NSColor clearColor]];
-    
-    self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
-    self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
-    
-    [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
-    
-    self.appListTableView.menu = [self menuForTableView];
-    [self.appListTableView setAction:@selector(appListTableViewClicked:)];
-
-    [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
-    
-    self.appListTableView.delegate = self;
-    
-    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.backgroundView bounds]
-                                                 options:opts
-                                                   owner:self
-                                                userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
-    [[self appListTableView] addTrackingArea:trackingArea];
-    
-    [self.appListTableScrollView setWantsLayer:YES];
-    [self.appListTableScrollView.layer setOpaque:NO];
-    [self.appListTableScrollView.layer setCornerRadius:0];
-    [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
-    
-    NSShadow *shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:[NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4]];
-    [shadow setShadowOffset:NSMakeSize(0, -1)];
-    [shadow setShadowBlurRadius:0.0];
-    [self.switchLabel setTextShadow:shadow];
-    
-    self.addButton.image = [NSImage imageNamed:@"AddButton"];
-    self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
-    
-    self.switchView.delegate = self;
-    self.isEditing = NO;
-    
-    self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
-
-    [self setupSettingsButton];
-    
-    [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
-    [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
-    [self.installPowButton setIsBold:NO];
-    [self.installPowButton setTextSize:12.0];
-    
-    [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
-    [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
-    [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
-    [self.noSitesAddASiteButton setTextSize:12.0];
-    [self.noSitesAddASiteButton setIsBold:NO];
-    
-    CGRect frame = self.welcomeView.frame;
-    [self.welcomeView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
-    
-    frame = self.noAppsView.frame;
-    [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
 }
 
 #pragma mark - Setting the switch status
@@ -303,6 +311,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark - Public accessors
 
 - (BOOL)hasActivePanel {
+    
     return _hasActivePanel;
 }
 
@@ -387,26 +396,20 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)openPanel {
     
-//    [NSApp activateIgnoringOtherApps:YES];
-    [self.window becomeMainWindow];
-    
-    if (self.panelIsOpen) {
-        [self.appListTableView reloadData];
-        [self updatePanelHeightAndAnimate:YES];
-        return;
-    }
-    
-    [[self appListTableView] reloadData];
-    [self updatePanelHeightAndAnimate:NO];
-    
-    [self.window performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
-    [self.window makeKeyAndOrderFront:nil];
-    
+    [self.appListTableView reloadData];
     [self switchSwitchViewToPowStatus];
+    
+    [self updatePanelHeightAndAnimate:self.panelIsOpen];
+    self.panelIsOpen = YES;
+    
+    [self.window makeFirstResponder:nil];
+    [self.window makeKeyAndOrderFront:nil];
+    [self.window becomeMainWindow];
 }
 
 - (void)closePanel {
-
+    
+    self.panelIsOpen = NO;
     [[self window] setAlphaValue:0];
     
     dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{
@@ -496,6 +499,16 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     } else {
         [self.window setFrame:panelRect display:YES];
     }
+    
+    // Fuck you, Cocoa. Why doesn't createTrackingArea work here? Why?
+    // Is this some kind of race condition? Are you making me do this just to mess with me?
+    // I'll never know. I leave you with a haiku.
+    // Do not touch this bit -
+    // It has caused me much despair!
+    // This should do the trick.
+    [self createTrackingArea];
+    [self performSelector:@selector(createTrackingArea) withObject:NULL afterDelay:0.3];
+    [self performSelector:@selector(createTrackingArea) withObject:NULL afterDelay:1.0];
 }
 
 #pragma mark - Alternate panels
