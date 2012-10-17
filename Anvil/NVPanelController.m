@@ -28,6 +28,7 @@
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) BOOL isShowingModal;
 @property (nonatomic) BOOL panelIsOpen;
+@property (nonatomic, strong) NSTrackingArea *trackingArea;
 
 @end
 
@@ -76,13 +77,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
     
     self.appListTableView.delegate = self;
-    
-    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-    NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.backgroundView bounds]
-                                                 options:opts
-                                                   owner:self
-                                                userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
-    [[self appListTableView] addTrackingArea:trackingArea];
     
     [self.appListTableScrollView setWantsLayer:YES];
     [self.appListTableScrollView.layer setOpaque:NO];
@@ -403,9 +397,19 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.window makeKeyAndOrderFront:nil];
     
     [self switchSwitchViewToPowStatus];
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    self.trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.appListTableView bounds]
+                                                      options:opts
+                                                        owner:self
+                                                     userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
+    [[self appListTableView] addTrackingArea:self.trackingArea];
 }
 
 - (void)closePanel {
+    
+    [self.appListTableView removeTrackingArea:self.trackingArea];
+    self.trackingArea = nil;
 
     [[self window] setAlphaValue:0];
     
