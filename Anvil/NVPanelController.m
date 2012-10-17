@@ -399,17 +399,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self switchSwitchViewToPowStatus];
     
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-    self.trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.appListTableView bounds]
-                                                      options:opts
-                                                        owner:self
-                                                     userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
-    [[self appListTableView] addTrackingArea:self.trackingArea];
+    
+    [self addAppListTrackingArea];
 }
 
 - (void)closePanel {
     
-    [self.appListTableView removeTrackingArea:self.trackingArea];
-    self.trackingArea = nil;
+    [self removeAppListTrackingArea];
 
     [[self window] setAlphaValue:0];
     
@@ -433,6 +429,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
 
+    [self.appListTableView removeTrackingArea:self.trackingArea];
+    
     [self.appListTableView sizeToFit];
     
     NSWindow *panel = [self window];
@@ -500,6 +498,34 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     } else {
         [self.window setFrame:panelRect display:YES];
     }
+    
+}
+
+- (void)resetTrackingArea {
+    
+    [self removeAppListTrackingArea];
+    [self addAppListTrackingArea];
+}
+
+- (void)removeAppListTrackingArea {
+    
+    [self.appListTableView removeTrackingArea:self.trackingArea];
+    self.trackingArea = nil;
+}
+
+- (void)addAppListTrackingArea {
+    
+    if (self.trackingArea) {
+        
+        [self removeAppListTrackingArea];
+    }
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    self.trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.appListTableView bounds]
+                                                      options:opts
+                                                        owner:self
+                                                     userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
+    [[self appListTableView] addTrackingArea:self.trackingArea];
 }
 
 #pragma mark - Alternate panels
