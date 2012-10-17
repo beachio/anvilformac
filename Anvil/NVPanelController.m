@@ -427,8 +427,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
 
-    [self.appListTableView removeTrackingArea:self.trackingArea];
-    
     [self.appListTableView sizeToFit];
     
     NSWindow *panel = [self window];
@@ -497,6 +495,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         [self.window setFrame:panelRect display:YES];
     }
     
+    [self resetTrackingArea];
 }
 
 - (void)resetTrackingArea {
