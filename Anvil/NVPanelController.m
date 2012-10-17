@@ -28,7 +28,7 @@
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) BOOL isShowingModal;
 @property (nonatomic) BOOL panelIsOpen;
-@property (nonatomic, strong) NSTrackingArea *trackingArea;
+@property (atomic, strong) NSTrackingArea *trackingArea;
 
 @end
 
@@ -393,13 +393,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self appListTableView] reloadData];
     [self updatePanelHeightAndAnimate:NO];
     
-    [self.window performSelector:@selector(makeFirstResponder:) withObject:self.appListTableView afterDelay:0];
-    [self.window makeKeyAndOrderFront:nil];
+    [self.appListTableScrollView becomeFirstResponder]; /* Directly call become first responder */
+    [self.window makeKeyAndOrderFront:self]; /* Pass a controller as nil senders can be ignored? */
     
     [self switchSwitchViewToPowStatus];
     
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
-    self.trackingArea = [ [NSTrackingArea alloc] initWithRect:[self.appListTableView bounds]
+    self.trackingArea = [[NSTrackingArea alloc] initWithRect:[self.appListTableView bounds]
                                                       options:opts
                                                         owner:self
                                                      userInfo:[NSDictionary dictionaryWithObject:kPanelTrackingAreaIdentifier forKey:@"identifier"]];
