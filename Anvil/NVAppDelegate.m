@@ -34,8 +34,9 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
+    [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
     [self.panelController.appListTableView reloadData];
-//    [self.panelController setHasActivePanel:YES];
+    [self.panelController setHasActivePanel:YES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -73,8 +74,13 @@ void *kContextActivePanel = &kContextActivePanel;
         self.panelController.hasActivePanel = NO;
         [self menuItemRightClicked:sender];
     } else {
+        
         self.menubarController.showHighlightIcon = NO;
         self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
+        if (!self.panelController.hasActivePanel) {
+            // Read in apps if we're opening it
+            [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
+        }
         self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
     }
 }
@@ -137,6 +143,10 @@ void *kContextActivePanel = &kContextActivePanel;
     self.menubarController.showHighlightIcon = NO;
 }
 
+#pragma mark - Heights and things
+
+// This is used to calculate the height of the app's status item view.
+// That's how we position the app's window.
 - (CGRect)globalMenubarViewFrame {
     
     return self.menubarController.statusItemView.window.frame;

@@ -57,7 +57,7 @@
     self.switcherView.backgroundImage = switcherImage;
     [self addSubview:self.switcherView];
     
-    [self switchTo:YES withAnimation:NO];
+//    [self switchTo:YES withAnimation:NO];
 }
 
 - (void)turnOn {
@@ -75,13 +75,14 @@
     [self switchTo:NO withAnimation:YES];
 }
 
-- (void)switchTo:(BOOL)position withAnimation:(BOOL)useAnimation {
+- (void)switchToWithoutCallbacks:(BOOL)position {
     
     self.on = position;
+}
+
+- (void)switchToWithoutCallbacks:(BOOL)position withAnimation:(BOOL)useAnimation {
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(switchView:didSwitchTo:)]) {
-        [self.delegate switchView:self didSwitchTo:position];
-    }
+    self.on = position;
     
     NSRect firstViewFrame = self.switcherView.frame;
     NSMutableDictionary *newAnimations = [NSMutableDictionary dictionary];
@@ -89,7 +90,7 @@
     [newAnimations setObject:[NSValue valueWithRect:firstViewFrame] forKey:NSViewAnimationStartFrameKey];
     
     NSRect lastViewFrame = firstViewFrame;
-
+    
     BOOL retinaScreen = [NSScreen mainScreen].backingScaleFactor == 2.0;
     
     if (position) {
@@ -122,6 +123,23 @@
         
         self.switcherView.frame = lastViewFrame;
     }
+
+}
+
+- (void)switchTo:(BOOL)position withAnimation:(BOOL)useAnimation {
+    
+    self.on = position;
+    
+    BOOL shouldChange = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(switchView:shouldSwitchTo:)]) {
+        shouldChange = [self.delegate switchView:self shouldSwitchTo:position];
+    }
+    
+    if (!shouldChange) {
+        return;
+    }
+    
+    [self switchToWithoutCallbacks:position withAnimation:useAnimation];
 }
 
 #pragma mark - Mouse

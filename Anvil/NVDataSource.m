@@ -93,7 +93,25 @@ static NSString *const kAppsKey = @"apps";
         if([name isNotEqualTo:@".DS_Store"]) {
             NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"~/.pow/%@", name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
-            NVApp *thisApp = [[NVApp alloc] initWithURL:url];
+            NVApp *thisApp;
+            
+            if (self.apps.count == 0) {
+                thisApp = [[NVApp alloc] initWithURL:url];
+            } else {            
+                for (NVApp *app in self.apps) {
+                    
+                    NSString *path = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
+                    NSURL *expandedURL = [[NSURL URLWithString:path] URLByResolvingSymlinksInPath];
+                    
+                    if([app.url.path isEqualToString:expandedURL.path]) {
+                        thisApp = app;
+                    }
+                }
+                
+                if (!thisApp) {
+                    thisApp = [[NVApp alloc] initWithURL:url];
+                }
+            }
             [appsArray addObject:thisApp];
         }
     }

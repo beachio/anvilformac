@@ -236,6 +236,7 @@
 		4FBFA3B515C7F16300BA8209 /* NVLayeredImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLayeredImageView.m; sourceTree = "<group>"; };
 		4FBFA3B715C7F49200BA8209 /* NVDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVDataSource.h; sourceTree = "<group>"; };
 		4FBFA3B815C7F49200BA8209 /* NVDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVDataSource.m; sourceTree = "<group>"; };
+		4FCABA72166A655B00A30B3E /* Anvil.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Anvil.entitlements; sourceTree = "<group>"; };
 		4FCEDE9316159EA600122B18 /* CustomLoadingSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLoadingSpinner.h; sourceTree = "<group>"; };
 		4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoadingSpinner.m; sourceTree = "<group>"; };
 		4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSpinnerButton.h; sourceTree = "<group>"; };
@@ -401,6 +402,7 @@
 		4FBFA36015C6F85800BA8209 /* Anvil */ = {
 			isa = PBXGroup;
 			children = (
+				4FCABA72166A655B00A30B3E /* Anvil.entitlements */,
 				4FB9E80F1605FEC2005B50A4 /* Model */,
 				4FBABB0B161344D900D4174B /* Resources */,
 				4F78B8CB1608ADC0006B0500 /* Categories */,
@@ -877,6 +879,7 @@
 		4FBFA37515C6F85800BA8209 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -894,6 +897,7 @@
 		4FBFA37615C6F85800BA8209 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

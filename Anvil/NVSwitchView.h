@@ -21,6 +21,7 @@
 - (void)turnOn;
 - (void)turnOff;
 - (void)switchTo:(BOOL)position withAnimation:(BOOL)useAnimation;
+- (void)switchToWithoutCallbacks:(BOOL)position withAnimation:(BOOL)useAnimation;
 
 @end
 
@@ -30,5 +31,5 @@
 @optional
 //- (void)tableView:(NSTableView *)tableView didClickAddProjectButton:(NSButton *)button;
 //- (NSMenu *)tableView:(HMAppListTableView *)tableView menuForTableColumn:(NSInteger)column row:(NSInteger)row;
-- (void)switchView:(NVSwitchView *)switchView didSwitchTo:(BOOL)state;
+- (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state;
 @end

@@ -28,7 +28,10 @@
 @property (nonatomic) BOOL isEditing;
 @property (nonatomic) BOOL isShowingModal;
 @property (nonatomic) BOOL panelIsOpen;
+@property (nonatomic) BOOL isPowRunning;
 @property (atomic, strong) NSTrackingArea *trackingArea;
+@property (nonatomic) BOOL forceOpen;
+@property (nonatomic) BOOL awake;
 @end
 
 @implementation NVPanelController
@@ -127,17 +130,20 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark -
 
 - (void)awakeFromNib {
-    
+
     [super awakeFromNib];
+    if (!self.awake) {
+        [self switchSwitchViewToPowStatus];
+        self.awake = YES;
+    }
 }
 
 #pragma mark - Setting the switch status
 
-- (void)switchSwitchViewToPowStatus {
-    
+- (BOOL)checkWhetherPowIsRunning {
+        
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/curl"];
-    
     [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
     
     NSPipe *outputPipe = [NSPipe pipe];
@@ -149,10 +155,18 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
     NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    self.selectedRow = -1;
     
-    BOOL status = [pipeString length] > 0;
-    [self.switchView switchTo:status withAnimation:NO];
+    
+    return [pipeString length] > 0;
+}
+
+- (void)switchSwitchViewToPowStatus {
+    
+    self.selectedRow = -1;
+    BOOL status = [self checkWhetherPowIsRunning];
+    self.isPowRunning = status;
+    [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
+    [self.switchLabel setText: status ? @"ON" : @"OFF"];
 }
 
 - (void)setupSettingsButton {
@@ -197,115 +211,59 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     }
 }
 
-- (NSMenu *)buildSettingsMenu {
-    
-    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
-    
-    // TODO: about window
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(supportMenuItemClicked:) keyEquivalent:@""]];
-    [settingsMenu addItem:[NSMenuItem separatorItem]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
-    
-    return settingsMenu;
-}
+- (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state {
 
-- (void)supportMenuItemClicked:(id)sender {
-    
-    NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
-    [[NSWorkspace sharedWorkspace] openURL:supportURL];
-}
-     
-- (void)didClickShowAbout:(id)sender {
-    
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.window becomeMainWindow];
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
-}
-
-- (void)didClickCheckForUpdates:(id)sender {
-    
-    SUUpdater *updater = [[SUUpdater alloc] init];
-    [updater checkForUpdates:sender];
-}
-
-- (void)didClickQuit:(id)sender {
-    
-    [[NSApplication sharedApplication] terminate:nil];
-}
-
-- (void)didClickRestartPow:(id)sender {
-    
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/touch"];
-    [task setArguments:[NSArray arrayWithObjects:[@"~/.pow/restart.txt" stringByExpandingTildeInPath], nil]];
-    [task launch];
-}
-
-- (IBAction)didClickAddButton:(id)sender {
-    
-    NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
-    openPanel.delegate = self;
-    
-    NSURL *sitesURL = [NSURL URLWithString:[@"~/Sites" stringByExpandingTildeInPath]];
-    NSString *sitesURLString = [NSString stringWithFormat:@"file://%@", sitesURL.path];
-    [openPanel setCanChooseDirectories:YES];
-    openPanel.directoryURL = [NSURL URLWithString:sitesURLString];
-    
-    self.isShowingModal = YES;
-    
-    [self.addButton setEnabled:NO];
-    [self.noSitesAddASiteButton setEnabled:NO]; // This button needs a disabled style
-    
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.window becomeMainWindow];
-    
-    [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
-        
-        [self.addButton setEnabled:YES];
-        [self.noSitesAddASiteButton setEnabled:YES];
-        
-        self.isShowingModal = NO;
-        if (result == NSFileHandlingPanelCancelButton) {
-            return;
-        }
-        
-        NVDataSource *dataSource = [NVDataSource sharedDataSource];
-        [dataSource addAppWithURL:openPanel.URL];
-        [dataSource readInSavedAppDataFromDisk];
-        [self.appListTableView reloadData];
-        [self updatePanelHeightAndAnimate:YES];
-        
-        NSInteger indexOfNewlyAddedRow = [dataSource indexOfAppWithURL:openPanel.URL];
-        [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
-    }];
-}
-
-- (void)switchView:(NVSwitchView *)switchView didSwitchTo:(BOOL)state {
-
-    if (state) {
-        
-        [self.switchLabel setText:@"ON"];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath:@"/bin/launchctl"];
-        NSString *path = [@"~/Library/LaunchAgents/cx.pow.powd.plist" stringByExpandingTildeInPath];
-        [task setArguments:[NSArray arrayWithObjects:@"load", @"-Fw", path, nil]];
-        [task launch];
-    } else {
-
-        [self.switchLabel setText:@"OFF"];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath:@"/bin/launchctl"];
-        NSString *path = [@"~/Library/LaunchAgents/cx.pow.powd.plist" stringByExpandingTildeInPath];
-        [task setArguments:[NSArray arrayWithObjects:@"unload", path, nil]];
-        [task launch];
+    if (self.isPowRunning == state) {
+        return YES;
     }
+    
+    BOOL success = false;
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+
+    BOOL a, b;
+    
+    if (state) {
+        a = [self runTask:@"/bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
+        b = [self runTask:[NSString stringWithFormat:@"/bin/launchctl load %@/Library/LaunchAgents/cx.pow.powd.plist", NSHomeDirectory()] asRoot:NO];
+    } else {
+        a = [self runTask:@"/bin/launchctl unload /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
+        b = [self runTask:[NSString stringWithFormat:@"/bin/launchctl unload %@/Library/LaunchAgents/cx.pow.powd.plist", NSHomeDirectory()] asRoot:NO];
+    }
+    success = a & b;
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+
+    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
+
+    self.forceOpen = YES;
+    [self performSelector:@selector(turnOffForceOpen) withObject:nil afterDelay:0.5];
+    
+    // Don't change by yourself you plonker
+    return NO;
+}
+
+
+- (void)turnOffForceOpen {
+    
+    self.forceOpen = NO;
+}
+
+
+- (BOOL)runTask:(NSString *)task asRoot:(BOOL)asRoot {
+    
+    NSDictionary *error = [NSDictionary new];
+    NSString *script;
+    if (asRoot) {
+        script = [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", task];
+    } else {
+        script = [NSString stringWithFormat:@"do shell script \"%@\"", task];
+    }
+    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+    
+    return [appleScript executeAndReturnError:&error] ? YES : NO;
 }
 
 #pragma mark - Public accessors
@@ -339,12 +297,15 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)windowWillClose:(NSNotification *)notification {
     
-    self.hasActivePanel = NO;
+    if (!self.forceOpen) {
+        self.hasActivePanel = NO;
+    }
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification; {
 
-    if ([[self window] isVisible]) {
+    if ([[self window] isVisible] && !self.forceOpen) {
+
         self.hasActivePanel = NO;
     }
 }
@@ -398,24 +359,23 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [self.appListTableView reloadData];
     [self switchSwitchViewToPowStatus];
-    
+
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
     self.panelIsOpen = YES;
-    
+
     [self.window makeFirstResponder:nil];
-    [self.window makeKeyAndOrderFront:nil];
     [self.window becomeMainWindow];
+    [self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)closePanel {
     
     self.panelIsOpen = NO;
-    [[self window] setAlphaValue:0];
     
-    dispatch_after(dispatch_walltime(NULL, NSEC_PER_SEC * CLOSE_DURATION * 2), dispatch_get_main_queue(), ^{
-        
-        [self.window orderOut:nil];
-    });
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:(0.1)];
+    [self.window.animator setAlphaValue:0];
+    [NSAnimationContext endGrouping];
 }
 
 - (BOOL)isPowInstalled {
@@ -793,7 +753,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [app restart];
 }
 
--(void)setSelectionFromClick{
+- (void)setSelectionFromClick{
     
     NSInteger theClickedRow = [self.appListTableView clickedRow];
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:theClickedRow];
@@ -895,6 +855,94 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     [as2 executeAndReturnError:nil];
 
+}
+
+- (NSMenu *)buildSettingsMenu {
+    
+    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
+    
+    // TODO: about window
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(supportMenuItemClicked:) keyEquivalent:@""]];
+    [settingsMenu addItem:[NSMenuItem separatorItem]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+    
+    return settingsMenu;
+}
+
+- (void)supportMenuItemClicked:(id)sender {
+    
+    NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
+    [[NSWorkspace sharedWorkspace] openURL:supportURL];
+}
+
+- (void)didClickShowAbout:(id)sender {
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
+}
+
+- (void)didClickCheckForUpdates:(id)sender {
+    
+    SUUpdater *updater = [[SUUpdater alloc] init];
+    [updater checkForUpdates:sender];
+}
+
+- (void)didClickQuit:(id)sender {
+    
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
+- (void)didClickRestartPow:(id)sender {
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/touch"];
+    [task setArguments:[NSArray arrayWithObjects:[@"~/.pow/restart.txt" stringByExpandingTildeInPath], nil]];
+    [task launch];
+}
+
+- (IBAction)didClickAddButton:(id)sender {
+    
+    NSOpenPanel *openPanel = [[NSOpenPanel alloc] init];
+    openPanel.delegate = self;
+    
+    NSURL *sitesURL = [NSURL URLWithString:[@"~/Sites" stringByExpandingTildeInPath]];
+    NSString *sitesURLString = [NSString stringWithFormat:@"file://%@", sitesURL.path];
+    [openPanel setCanChooseDirectories:YES];
+    openPanel.directoryURL = [NSURL URLWithString:sitesURLString];
+    
+    self.isShowingModal = YES;
+    
+    [self.addButton setEnabled:NO];
+    [self.noSitesAddASiteButton setEnabled:NO]; // This button needs a disabled style
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+    
+    [openPanel beginSheetModalForWindow:nil completionHandler:^(NSInteger result) {
+        
+        [self.addButton setEnabled:YES];
+        [self.noSitesAddASiteButton setEnabled:YES];
+        
+        self.isShowingModal = NO;
+        if (result == NSFileHandlingPanelCancelButton) {
+            return;
+        }
+        
+        NVDataSource *dataSource = [NVDataSource sharedDataSource];
+        [dataSource addAppWithURL:openPanel.URL];
+        [dataSource readInSavedAppDataFromDisk];
+        [self.appListTableView reloadData];
+        [self updatePanelHeightAndAnimate:YES];
+        
+        NSInteger indexOfNewlyAddedRow = [dataSource indexOfAppWithURL:openPanel.URL];
+        [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
+    }];
 }
 
 @end

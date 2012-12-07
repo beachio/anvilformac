@@ -48,9 +48,6 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         }
         self.url = expandedURL;
         
-        // Prime the cache
-        [self faviconURL];
-        
         // Check for index.html file
         [self createIndexFileIfNonExistentAndNotARackApp];
     }
@@ -62,7 +59,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 - (NSURL *)faviconURL {
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
+
     // If we've cached this already, use the cache.
     if (self._faviconURL && [fileManager fileExistsAtPath:self._faviconURL.path]) {
         
