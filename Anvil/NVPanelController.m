@@ -40,10 +40,14 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier";
 static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier";
 
+#pragma mark - Initialization
+
 - (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
     
     self = [super initWithWindowNibName:@"Panel"];
     if (self != nil) {
+        
+        NSLog(@"initWithDelegate");
         
         _delegate = delegate;
         
@@ -107,10 +111,16 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSControlTextDidChangeNotification object:self.searchField];
+- (void)awakeFromNib {
+    
+    if (!self.awake) {
+        [super awakeFromNib];
+        [self switchSwitchViewToPowStatus];
+        self.awake = YES;
+    }
 }
 
+// Destroys and recreates the tracking area for this table.
 - (void)createTrackingArea {
     
     if (self.trackingArea) {
@@ -127,47 +137,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self appListTableView] addTrackingArea:self.trackingArea];
 }
 
-#pragma mark -
-
-- (void)awakeFromNib {
-
-    [super awakeFromNib];
-    if (!self.awake) {
-        [self switchSwitchViewToPowStatus];
-        self.awake = YES;
-    }
-}
-
-#pragma mark - Setting the switch status
-
-- (BOOL)checkWhetherPowIsRunning {
-        
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/curl"];
-    [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
-    
-    NSPipe *outputPipe = [NSPipe pipe];
-    [task setStandardInput:[NSPipe pipe]];
-    [task setStandardError:[NSPipe pipe]];
-    [task setStandardOutput:outputPipe];
-    [task launch];
-    [task waitUntilExit];
-    
-    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    
-    
-    return [pipeString length] > 0;
-}
-
-- (void)switchSwitchViewToPowStatus {
-    
-    self.selectedRow = -1;
-    BOOL status = [self checkWhetherPowIsRunning];
-    self.isPowRunning = status;
-    [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
-    [self.switchLabel setText: status ? @"ON" : @"OFF"];
-}
+#pragma mark - Generators
 
 - (void)setupSettingsButton {
     
@@ -193,6 +163,34 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[self.settingsButton cell] setArrowPosition:NSPopUpNoArrow];
     [[self.settingsButton cell] setUsesItemFromMenu:NO];
     [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
+}
+
+- (NSMenu *)buildSettingsMenu {
+    
+    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
+    
+    // TODO: about window
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(didClickSupportMenuItem:) keyEquivalent:@""]];
+    [settingsMenu addItem:[NSMenuItem separatorItem]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
+    
+    return settingsMenu;
+}
+
+#pragma mark - SwitchView and Pow
+
+- (void)switchSwitchViewToPowStatus {
+    
+    self.selectedRow = -1;
+    BOOL status = [self checkWhetherPowIsRunning];
+    self.isPowRunning = status;
+    [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
+    [self.switchLabel setText: status ? @"ON" : @"OFF"];
 }
 
 - (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
@@ -238,19 +236,13 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
     [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
 
-    self.forceOpen = YES;
-    [self performSelector:@selector(turnOffForceOpen) withObject:nil afterDelay:0.5];
+    [self forcePanelToBeOpen];
+    
+    [self performSelector:@selector(allowToBeClosed) withObject:nil afterDelay:0.5];
     
     // Don't change by yourself you plonker
     return NO;
 }
-
-
-- (void)turnOffForceOpen {
-    
-    self.forceOpen = NO;
-}
-
 
 - (BOOL)runTask:(NSString *)task asRoot:(BOOL)asRoot {
     
@@ -273,6 +265,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return _hasActivePanel;
 }
 
+// We're obvserving hasActivePanel everywhere using key/value observers.
+// That value determines whether or not we have an open panel using this method!
+// This should probably be based on methods instead. At least this way it only runs once.
 - (void)setHasActivePanel:(BOOL)flag {
     
     if (self.isShowingModal) {
@@ -334,35 +329,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 #pragma mark - Public methods
 
-- (NSRect)statusRectForWindow:(NSWindow *)window {
-    
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
-    NSRect statusRect = NSZeroRect;
-    
-    NVStatusItemView *statusItemView = nil;
-    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)]) {
-        statusItemView = [self.delegate statusItemViewForPanelController:self];
-    }
-    
-    if (statusItemView) {
-        statusRect = statusItemView.globalRect;
-        statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
-    } else {
-        statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
-        statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
-        statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
-    }
-    return statusRect;
-}
-
 - (void)openPanel {
     
     [self.appListTableView reloadData];
     [self switchSwitchViewToPowStatus];
-
+    
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
     self.panelIsOpen = YES;
-
+    
     [self.window makeFirstResponder:nil];
     [self.window becomeMainWindow];
     [self.window makeKeyAndOrderFront:nil];
@@ -386,6 +360,39 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:powPath isDirectory:&isDirectory];
     
     return isThere && !isDirectory;
+}
+
+- (void)forcePanelToBeOpen {
+    self.forceOpen = YES;
+}
+
+// When forced open, this allows the window to be closed again.
+- (void)allowToBeClosed {
+    
+    if (self.forceOpen) {
+        self.forceOpen = NO;
+    }
+}
+
+- (NSRect)statusRectForWindow:(NSWindow *)window {
+    
+    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
+    NSRect statusRect = NSZeroRect;
+    
+    NVStatusItemView *statusItemView = nil;
+    if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)]) {
+        statusItemView = [self.delegate statusItemViewForPanelController:self];
+    }
+    
+    if (statusItemView) {
+        statusRect = statusItemView.globalRect;
+        statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
+    } else {
+        statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
+        statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
+        statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
+    }
+    return statusRect;
 }
 
 #pragma mark - Sizing
@@ -497,34 +504,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return YES;
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent {
-    
-    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
-    NSInteger row = [self.appListTableView rowAtPoint:point];
-    
-    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
-        
-        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-    }
-}
-
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
     
     return [[[NVDataSource sharedDataSource] apps] count];
-}
-
-- (void)mouseExited:(NSEvent *)theEvent {
-
-    NSString *trackingAreaName = [theEvent.trackingArea.userInfo objectForKey:@"identifier"];
-    
-    if (trackingAreaName == kPanelTrackingAreaIdentifier) {
-        [self.appListTableView deselectRow:self.selectedRow];
-        
-        if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
-            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
-            [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
-        }
-    }
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
@@ -609,15 +591,35 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     return requestedRepresentationImage;
 }
 
-- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {
+#pragma mark - Mouse moving in the table view
+// Mouse movements are handled here for selecting rows
+
+- (void)mouseMoved:(NSEvent *)theEvent {
     
-    if (commandSelector == @selector(cancelOperation:)) {
+    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+    NSInteger row = [self.appListTableView rowAtPoint:point];
+    
+    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
         
-        self.isEditing = NO;
-        [self.appListTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.0];
+        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     }
-    return NO;
 }
+
+- (void)mouseExited:(NSEvent *)theEvent {
+    
+    NSString *trackingAreaName = [theEvent.trackingArea.userInfo objectForKey:@"identifier"];
+    
+    if (trackingAreaName == kPanelTrackingAreaIdentifier) {
+        [self.appListTableView deselectRow:self.selectedRow];
+        
+        if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
+            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+            [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+        }
+    }
+}
+
+#pragma mark - Renaming
 
 - (void)resizeTextField:(NVLabel *)textField {
     
@@ -636,6 +638,16 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     NSInteger width = (int)size.width + 8;
     
     [textField setFrame:CGRectMake(frame.origin.x, frame.origin.y, width, frame.size.height)];
+}
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {
+    
+    if (commandSelector == @selector(cancelOperation:)) {
+        
+        self.isEditing = NO;
+        [self.appListTableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.0];
+    }
+    return NO;
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj  {
@@ -708,51 +720,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     }
 }
 
-- (void)didClickRename:(id)sender {
-    
-    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
-    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
-    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
-    self.isEditing = YES;
-    [cell.textField setEnabled:YES];
-    [cell.textField becomeFirstResponder];
-}
-
-- (void)didClickOpenInTerminal:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/open"];
-    [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
-    [task launch];
-}
-
-- (void)didClickOpenInFinder:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-
-    [[NSWorkspace sharedWorkspace] openURL:app.url];
-}
-
-- (void)didClickOpenWithBrowser:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
-}
-
-- (IBAction)didClickRestart:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [app restart];
-}
-
 - (void)setSelectionFromClick{
     
     NSInteger theClickedRow = [self.appListTableView clickedRow];
@@ -760,56 +727,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
 }
 
-- (IBAction)didClickReallyDeleteButton:(id)sender {
-    
-    if (self.isEditing) {
-        
-        return;
-    }
-    
-    NSInteger clickedRow = self.appListTableView.selectedRow;
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
-    
-    [dataSource removeApp:app];
-    
-    self.selectedRow = -1;
-    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
-    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationEffectFade];
-    
-    [self updatePanelHeightAndAnimate:YES];
-}
-
-- (IBAction)didClickRestartButton:(id)sender {
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
-    
-    [app restart];
-    
-    NVSpinnerButton *restartButton = sender;
-    [restartButton showSpinnerFor:0.4];
-}
-
-- (IBAction)didClickInstallPowButton:(id)sender {
-    
-    // This just shows the Terminal now, so we don't really need these spinners.
-    // TODO: Bring these spinners back, but hide them when appropriate.
-    
-//    [self.installPowButton setEnabled:NO];
-//    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
-//    [self.installPowButton setHidden:YES];
-//    [self.welcomeView setAlphaValue:0.8];
-//    
-//    self.installingPowSpinner.hidden = NO;
-//    [self.installingPowSpinner setSpinning:YES];
-//    
-//    self.welcomePanelFirstLine.hidden = YES;
-//    self.welcomePanelSecondLine.hidden = YES;
-    
-    self.hasActivePanel = NO;
-
-    [self performSelectorInBackground:@selector(installPow:) withObject:nil];
-}
+#pragma mark - Pow 
 
 - (void)installPow:(id)sender {
 
@@ -857,24 +775,36 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 }
 
-- (NSMenu *)buildSettingsMenu {
-    
-    NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
-    
-    // TODO: about window
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(supportMenuItemClicked:) keyEquivalent:@""]];
-    [settingsMenu addItem:[NSMenuItem separatorItem]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
-    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
-    
-    return settingsMenu;
+- (void)restartPow:(id)sender {
+
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/touch"];
+    [task setArguments:[NSArray arrayWithObjects:[@"~/.pow/restart.txt" stringByExpandingTildeInPath], nil]];
+    [task launch];
 }
 
-- (void)supportMenuItemClicked:(id)sender {
+- (BOOL)checkWhetherPowIsRunning {
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/curl"];
+    [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
+    
+    NSPipe *outputPipe = [NSPipe pipe];
+    [task setStandardInput:[NSPipe pipe]];
+    [task setStandardError:[NSPipe pipe]];
+    [task setStandardOutput:outputPipe];
+    [task launch];
+    [task waitUntilExit];
+    
+    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    
+    return [pipeString length] > 0;
+}
+
+#pragma mark - Clicking
+
+- (void)didClickSupportMenuItem:(id)sender {
     
     NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
     [[NSWorkspace sharedWorkspace] openURL:supportURL];
@@ -900,10 +830,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)didClickRestartPow:(id)sender {
     
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/touch"];
-    [task setArguments:[NSArray arrayWithObjects:[@"~/.pow/restart.txt" stringByExpandingTildeInPath], nil]];
-    [task launch];
+    [self restartPow:self];
 }
 
 - (IBAction)didClickAddButton:(id)sender {
@@ -944,5 +871,108 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
     }];
 }
+
+- (void)didClickRename:(id)sender {
+    
+    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
+    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
+    self.isEditing = YES;
+    [cell.textField setEnabled:YES];
+    [cell.textField becomeFirstResponder];
+}
+
+- (void)didClickOpenInTerminal:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/open"];
+    [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
+    [task launch];
+}
+
+- (void)didClickOpenInFinder:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.url];
+}
+
+- (void)didClickOpenWithBrowser:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+}
+
+- (IBAction)didClickRestart:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [app restart];
+}
+
+- (IBAction)didClickReallyDeleteButton:(id)sender {
+    
+    if (self.isEditing) {
+        
+        return;
+    }
+    
+    NSInteger clickedRow = self.appListTableView.selectedRow;
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    
+    [dataSource removeApp:app];
+    
+    self.selectedRow = -1;
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
+    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationEffectFade];
+    
+    [self updatePanelHeightAndAnimate:YES];
+}
+
+- (IBAction)didClickRestartButton:(id)sender {
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
+    
+    [app restart];
+    
+    NVSpinnerButton *restartButton = sender;
+    [restartButton showSpinnerFor:0.4];
+}
+
+- (IBAction)didClickInstallPowButton:(id)sender {
+    
+    // This just shows the Terminal now, so we don't really need these spinners.
+    // TODO: Bring these spinners back, but hide them when appropriate.
+    
+    //    [self.installPowButton setEnabled:NO];
+    //    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
+    //    [self.installPowButton setHidden:YES];
+    //    [self.welcomeView setAlphaValue:0.8];
+    //
+    //    self.installingPowSpinner.hidden = NO;
+    //    [self.installingPowSpinner setSpinning:YES];
+    //
+    //    self.welcomePanelFirstLine.hidden = YES;
+    //    self.welcomePanelSecondLine.hidden = YES;
+    
+    self.hasActivePanel = NO;
+    
+    [self performSelectorInBackground:@selector(installPow:) withObject:nil];
+}
+
+#pragma mark - Deallocation
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSControlTextDidChangeNotification object:self.searchField];
+}
+
 
 @end
