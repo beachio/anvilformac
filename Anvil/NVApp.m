@@ -117,6 +117,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 #pragma mark - Actions
 
+// TODO: Push a change to Pow.
 - (void)createIndexFileIfNonExistentAndNotARackApp {
     
     if (![self isARackApp]) {
