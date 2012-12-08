@@ -29,7 +29,5 @@
 @protocol NVSwitchDelegate <NSWindowDelegate>
 
 @optional
-//- (void)tableView:(NSTableView *)tableView didClickAddProjectButton:(NSButton *)button;
-//- (NSMenu *)tableView:(HMAppListTableView *)tableView menuForTableColumn:(NSInteger)column row:(NSInteger)row;
 - (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state;
 @end

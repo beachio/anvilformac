@@ -56,9 +56,9 @@
     self.switcherView = [[NVStyledView alloc] initWithFrame:rect];
     self.switcherView.backgroundImage = switcherImage;
     [self addSubview:self.switcherView];
-    
-//    [self switchTo:YES withAnimation:NO];
 }
+
+# pragma mark - Switching
 
 - (void)turnOn {
     
@@ -73,11 +73,6 @@
 - (void)turnOff {
     
     [self switchTo:NO withAnimation:YES];
-}
-
-- (void)switchToWithoutCallbacks:(BOOL)position {
-    
-    self.on = position;
 }
 
 - (void)switchToWithoutCallbacks:(BOOL)position withAnimation:(BOOL)useAnimation {
