@@ -10,15 +10,9 @@
 @synthesize panelController = _panelController;
 @synthesize menubarController = _menubarController;
 
-#pragma mark -
-
-- (void)dealloc {
-    [_panelController removeObserver:self forKeyPath:@"hasActivePanel"];
-}
-
-#pragma mark -
-
 void *kContextActivePanel = &kContextActivePanel;
+
+#pragma mark - Observers
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
@@ -30,7 +24,7 @@ void *kContextActivePanel = &kContextActivePanel;
     }
 }
 
-#pragma mark - NSApplicationDelegate
+#pragma mark - NSApplicationDelegate activation, launching and terminating
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
@@ -52,15 +46,17 @@ void *kContextActivePanel = &kContextActivePanel;
     [self.dataSource readInSavedAppDataFromDisk];
 }
 
-- (NVDataSource *)dataSource {
-    
-    return [NVDataSource sharedDataSource];
-}
-
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     // Explicitly remove the icon from the menu bar
     self.menubarController = nil;
     return NSTerminateNow;
+}
+
+#pragma mark - dataSource
+
+- (NVDataSource *)dataSource {
+    
+    return [NVDataSource sharedDataSource];
 }
 
 #pragma mark - Actions
@@ -112,6 +108,8 @@ void *kContextActivePanel = &kContextActivePanel;
     return self.menubarController.statusItemView;
 }
 
+#pragma mark - Adding apps
+
 - (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
     
     [[NVDataSource sharedDataSource] addAppWithURL:url andName:name];
@@ -150,6 +148,12 @@ void *kContextActivePanel = &kContextActivePanel;
 - (CGRect)globalMenubarViewFrame {
     
     return self.menubarController.statusItemView.window.frame;
+}
+
+#pragma mark - deallocation
+
+- (void)dealloc {
+    [_panelController removeObserver:self forKeyPath:@"hasActivePanel"];
 }
 
 @end

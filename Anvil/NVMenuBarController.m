@@ -34,7 +34,6 @@
     [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
 }
 
-#pragma mark -
 #pragma mark Public accessors
 
 - (NSStatusItem *)statusItem {
@@ -42,7 +41,7 @@
     return self.statusItemView.statusItem;
 }
 
-#pragma mark -
+#pragma mark - Icon
 
 - (BOOL)hasActiveIcon {
     return self.statusItemView.isHighlighted;
@@ -61,6 +60,8 @@
     
     self.statusItemView.showHighlightIcon = showHighlightIcon;
 }
+
+#pragma mark - Dropping
 
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL {
     return YES;
