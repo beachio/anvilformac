@@ -47,8 +47,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     self = [super initWithWindowNibName:@"Panel"];
     if (self != nil) {
         
-        NSLog(@"initWithDelegate");
-        
         _delegate = delegate;
         
         // Make a fully skinned panel
@@ -350,6 +348,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [[NSAnimationContext currentContext] setDuration:(0.1)];
     [self.window.animator setAlphaValue:0];
     [NSAnimationContext endGrouping];
+    [self.window close];
 }
 
 - (BOOL)isPowInstalled {

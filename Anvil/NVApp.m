@@ -135,27 +135,15 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 }
 
 - (void)createSymlink {
-    
-//    BOOL hasBuildFolder = [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"Build"].path isDirectory:nil];
-    
+        
     if ([self isARackApp]) {
         
-            [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
+        [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
     } else {
         
-        // TODO: Bring this back in when Hammer is available.
-//        if (hasBuildFolder) {
-//            
-//            [[NSFileManager defaultManager] createDirectoryAtPath:normalizedSymlinkURL.path withIntermediateDirectories:YES attributes:nil error:nil];
-//            NSURL *publicFolderURL = [normalizedSymlinkURL URLByAppendingPathComponent:@"Public"];
-//            NSURL *realBuildURL = [self.url URLByAppendingPathComponent:@"Build"];
-//            [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:realBuildURL error:nil];
-//        } else {
-        
-            [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
-            NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
-            [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
-//        }
+        [[NSFileManager defaultManager] createDirectoryAtPath:[self symlinkURL].path withIntermediateDirectories:YES attributes:nil error:nil];
+        NSURL *publicFolderURL = [[self symlinkURL] URLByAppendingPathComponent:@"Public"];
+        [[NSFileManager defaultManager] createSymbolicLinkAtURL:publicFolderURL withDestinationURL:self.url error:nil];
     }
 }
 

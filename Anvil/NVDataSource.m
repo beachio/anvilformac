@@ -33,9 +33,9 @@ static NSString *const kAppsKey = @"apps";
     self = [super init];
     if (self) {
         
-        self.apps = [[NSArray alloc] init];
-        
-        [self addObserver:self forKeyPath:kAppsKey options:0 context:nil];
+        if (!self.apps) {
+            self.apps = [[NSArray alloc] init];
+        }
     }
     
     return self;
@@ -90,7 +90,8 @@ static NSString *const kAppsKey = @"apps";
     
     for (NSString* name in dirContents) {
         
-        if([name isNotEqualTo:@".DS_Store"]) {
+        if ([name isNotEqualTo:@".DS_Store"]) {
+            
             NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"~/.pow/%@", name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             
             NVApp *thisApp;
@@ -99,7 +100,7 @@ static NSString *const kAppsKey = @"apps";
                 thisApp = [[NVApp alloc] initWithURL:url];
             } else {            
                 for (NVApp *app in self.apps) {
-                    
+                                        
                     NSString *path = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
                     NSURL *expandedURL = [[NSURL URLWithString:path] URLByResolvingSymlinksInPath];
                     
@@ -118,6 +119,8 @@ static NSString *const kAppsKey = @"apps";
     
     self.apps = [NSArray arrayWithArray:appsArray];
 }
+
+# pragma mark Adding and removing apps
 
 - (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
     
@@ -139,20 +142,10 @@ static NSString *const kAppsKey = @"apps";
     [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
 }
 
-
 - (void)removeApp:(NVApp *)appToRemove {
     
     [appToRemove destroySymlink];
     [[self mutableArrayValueForKey:kAppsKey] removeObject:appToRemove];
 }
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    
-//    if ([keyPath isEqualToString:kAppsKey]) {
-//        [self writeOutAppDataToDisk];
-//    }
-}
-
-
 
 @end
