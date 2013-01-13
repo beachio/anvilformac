@@ -184,11 +184,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)switchSwitchViewToPowStatus {
     
-    self.selectedRow = -1;
-    BOOL status = [self checkWhetherPowIsRunning];
-    self.isPowRunning = status;
-    [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
-    [self.switchLabel setText: status ? @"ON" : @"OFF"];
+    if (self.hasActivePanel) {
+        self.selectedRow = -1;
+        BOOL status = [self checkWhetherPowIsRunning];
+        self.isPowRunning = status;
+
+        [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
+        [self.switchLabel setText: status ? @"ON" : @"OFF"];
+    }
 }
 
 - (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
@@ -221,7 +224,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     BOOL a, b;
     
     if (state) {
-        a = [self runTask:@"/bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
+        a = [self runTask:@"apachectl stop & /bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
         b = [self runTask:[NSString stringWithFormat:@"/bin/launchctl load %@/Library/LaunchAgents/cx.pow.powd.plist", NSHomeDirectory()] asRoot:NO];
     } else {
         a = [self runTask:@"/bin/launchctl unload /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
@@ -786,7 +789,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/curl"];
-    [task setArguments:[NSArray arrayWithObjects:@"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
+    [task setArguments:[NSArray arrayWithObjects:@"-I", @"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
     
     NSPipe *outputPipe = [NSPipe pipe];
     [task setStandardInput:[NSPipe pipe]];
@@ -795,42 +798,15 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [task launch];
     [task waitUntilExit];
     
-    NSData *pipeData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-    NSString *pipeString = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    
-    return [pipeString length] > 0;
+    /* Get the first line, check its status code. */
+    NSData *pipeData        = [[outputPipe fileHandleForReading] readDataToEndOfFile];
+    NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    NSArray *lines          = [pipeString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSString *responseCode  = [lines objectAtIndex:0];
+    return ([responseCode isEqualToString:@"HTTP/1.1 200 OK"]);
 }
 
-#pragma mark - Clicking
-
-- (void)didClickSupportMenuItem:(id)sender {
-    
-    NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
-    [[NSWorkspace sharedWorkspace] openURL:supportURL];
-}
-
-- (void)didClickShowAbout:(id)sender {
-    
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.window becomeMainWindow];
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
-}
-
-- (void)didClickCheckForUpdates:(id)sender {
-    
-    SUUpdater *updater = [[SUUpdater alloc] init];
-    [updater checkForUpdates:sender];
-}
-
-- (void)didClickQuit:(id)sender {
-    
-    [[NSApplication sharedApplication] terminate:nil];
-}
-
-- (void)didClickRestartPow:(id)sender {
-    
-    [self restartPow:self];
-}
+#pragma mark - Clicking and actions
 
 - (IBAction)didClickAddButton:(id)sender {
     
@@ -869,43 +845,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         NSInteger indexOfNewlyAddedRow = [dataSource indexOfAppWithURL:openPanel.URL];
         [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
     }];
-}
-
-- (void)didClickRename:(id)sender {
-    
-    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
-    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
-    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
-    self.isEditing = YES;
-    [cell.textField setEnabled:YES];
-    [cell.textField becomeFirstResponder];
-}
-
-- (void)didClickOpenInTerminal:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/open"];
-    [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
-    [task launch];
-}
-
-- (void)didClickOpenInFinder:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [[NSWorkspace sharedWorkspace] openURL:app.url];
-}
-
-- (void)didClickOpenWithBrowser:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
 - (IBAction)didClickRestart:(id)sender {
@@ -965,6 +904,74 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     self.hasActivePanel = NO;
     
     [self performSelectorInBackground:@selector(installPow:) withObject:nil];
+}
+
+#pragma mark - Menus
+
+- (void)didClickSupportMenuItem:(id)sender {
+    
+    NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
+    [[NSWorkspace sharedWorkspace] openURL:supportURL];
+}
+
+- (void)didClickShowAbout:(id)sender {
+    
+    [NSApp activateIgnoringOtherApps:YES];
+    [self.window becomeMainWindow];
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
+}
+
+- (void)didClickCheckForUpdates:(id)sender {
+    
+    SUUpdater *updater = [[SUUpdater alloc] init];
+    [updater checkForUpdates:sender];
+}
+
+- (void)didClickQuit:(id)sender {
+    
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
+- (void)didClickRestartPow:(id)sender {
+    
+    [self restartPow:self];
+}
+
+- (void)didClickRename:(id)sender {
+    
+    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
+    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+    NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
+    self.isEditing = YES;
+    [cell.textField setEnabled:YES];
+    [cell.textField becomeFirstResponder];
+}
+
+- (void)didClickOpenInTerminal:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/usr/bin/open"];
+    [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
+    [task launch];
+}
+
+- (void)didClickOpenInFinder:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.url];
+}
+
+- (void)didClickOpenWithBrowser:(id)sender {
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    
+    [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }
 
 #pragma mark - Deallocation
