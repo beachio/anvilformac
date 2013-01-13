@@ -184,11 +184,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)switchSwitchViewToPowStatus {
     
-    self.selectedRow = -1;
-    BOOL status = [self checkWhetherPowIsRunning];
-    self.isPowRunning = status;
-    [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
-    [self.switchLabel setText: status ? @"ON" : @"OFF"];
+    if (self.hasActivePanel) {
+        self.selectedRow = -1;
+        BOOL status = [self checkWhetherPowIsRunning];
+        self.isPowRunning = status;
+
+        [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
+        [self.switchLabel setText: status ? @"ON" : @"OFF"];
+    }
 }
 
 - (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
@@ -221,7 +224,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     BOOL a, b;
     
     if (state) {
-        a = [self runTask:@"/bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
+        a = [self runTask:@"apachectl stop & /bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
         b = [self runTask:[NSString stringWithFormat:@"/bin/launchctl load %@/Library/LaunchAgents/cx.pow.powd.plist", NSHomeDirectory()] asRoot:NO];
     } else {
         a = [self runTask:@"/bin/launchctl unload /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
