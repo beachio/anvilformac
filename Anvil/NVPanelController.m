@@ -105,6 +105,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         frame = self.noAppsView.frame;
         [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+        
     }
     return self;
 }
@@ -212,6 +213,10 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state {
 
+    if (!self.hasActivePanel) {
+        return NO;
+    }
+    
     if (self.isPowRunning == state) {
         return YES;
     }
@@ -236,6 +241,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.window becomeMainWindow];
 
     [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
 
     [self forcePanelToBeOpen];
     
