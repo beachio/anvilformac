@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380025530.824644"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
          landmarkName = "-togglePanel:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,7 +34,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026267.482055"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "37"
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026269.055566"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "50"
-         endingLineNumber = "50"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "-applicationShouldTerminate:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026270.616185"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
+         startingLineNumber = "62"
+         endingLineNumber = "62"
          landmarkName = "-dataSource"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026272.439986"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
          landmarkName = "-menuItemRightClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026274.119589"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
          landmarkName = "-statusItemViewForPanelController:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026275.750884"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "114"
-         endingLineNumber = "114"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
          landmarkName = "-addAppWithURL:andName:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026277.231961"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
+         startingLineNumber = "130"
+         endingLineNumber = "130"
          landmarkName = "-addAppWithURL:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026280.096891"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "140"
-         endingLineNumber = "140"
+         startingLineNumber = "144"
+         endingLineNumber = "144"
          landmarkName = "-menuDidClose:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380026282.12215"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "149"
-         endingLineNumber = "149"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
          landmarkName = "-globalMenubarViewFrame"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVAppDelegate.m"
-         timestampString = "380030631.304103"
+         timestampString = "380040318.928299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
+         startingLineNumber = "160"
+         endingLineNumber = "160"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>

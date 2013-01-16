@@ -22,15 +22,15 @@
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem {
     
-    self.pasteboardTypes = [NSArray arrayWithObjects:@"com.apple.pasteboard.promised-file-url", @"public.file-url", nil];
-    [self registerForDraggedTypes:self.pasteboardTypes];
-    
     CGFloat itemWidth = [statusItem length];
     CGFloat itemHeight = [[NSStatusBar systemStatusBar] thickness];
     NSRect itemRect = NSMakeRect(0.0, 0.0, itemWidth, itemHeight);
     self = [super initWithFrame:itemRect]; // Doesnt seem to set height
     
     if (self != nil) {
+        
+        self.pasteboardTypes = [NSArray arrayWithObjects:@"com.apple.pasteboard.promised-file-url", @"public.file-url", nil];
+        [self registerForDraggedTypes:self.pasteboardTypes];
         self.statusItem = statusItem;
         self.statusItem.view = self;
     }

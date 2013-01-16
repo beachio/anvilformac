@@ -28,7 +28,7 @@ void *kContextActivePanel = &kContextActivePanel;
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
 
-    [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.panelController.appListTableView reloadData];
     [self.panelController setHasActivePanel:YES];
 }
@@ -42,6 +42,10 @@ void *kContextActivePanel = &kContextActivePanel;
     [self.panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
     
     self.menubarController.delegate = self;
+
+    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+    [self.panelController.appListTableView reloadData];
+    [self.panelController setHasActivePanel:YES];
 
     [self.dataSource readInSavedAppDataFromDisk];
 }
