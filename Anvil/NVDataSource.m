@@ -81,39 +81,44 @@ static NSString *const kAppsKey = @"apps";
 - (void)readInSavedAppDataFromDisk {
     
     NSMutableArray *appsArray = [[NSMutableArray alloc] init];
-    
     NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];
+    NSError *error = nil;
+    NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
     
-    NSFileManager *fm = [NSFileManager defaultManager];
-    
-    NSArray *dirContents = [fm contentsOfDirectoryAtPath:path error:nil];
-    
-    for (NSString* name in dirContents) {
+    if(error) {
         
-        if ([name isNotEqualTo:@".DS_Store"]) {
+        NSLog(@"There was an error accessing ~/.pow! Please ensure your Pow setup is correct.");
+        return;
+    }
+    
+    for (NSString* symlinkName in dirContents) {
+        
+        if ([symlinkName isNotEqualTo:@".DS_Store"]) {
             
-            NSURL *url = [NSURL URLWithString:[[NSString stringWithFormat:@"~/.pow/%@", name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSString *encodedName = [[NSString stringWithFormat:@"~/.pow/%@", symlinkName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSURL *url = [NSURL URLWithString:encodedName];
+            NVApp *thisApp = nil;
             
-            NVApp *thisApp;
-            
-            if (self.apps.count == 0) {
-                thisApp = [[NVApp alloc] initWithURL:url];
-            } else {            
-                for (NVApp *app in self.apps) {
-                                        
-                    NSString *path = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
-                    NSURL *expandedURL = [[NSURL URLWithString:path] URLByResolvingSymlinksInPath];
-                    
-                    if([app.url.path isEqualToString:expandedURL.path]) {
-                        thisApp = app;
-                    }
-                }
-                
-                if (!thisApp) {
-                    thisApp = [[NVApp alloc] initWithURL:url];
+            if (!url) {
+                continue;
+            }
+
+            // See whether it exists already first. 
+            for (NVApp *app in self.apps) {
+                if([app.name isEqualToString:symlinkName]) {
+                    thisApp = app;
                 }
             }
-            [appsArray addObject:thisApp];
+            
+            // If not, let's add it!
+            if (!thisApp) {
+                thisApp = [[NVApp alloc] initWithURL:url];
+            }
+            
+            // thisApp can be false, or nil. initWithURL can return nil if it doesn't actually initialize properly. Bit of a gotcha.
+            if (thisApp) {
+                [appsArray addObject:thisApp];
+            }
         }
     }
     
@@ -122,17 +127,19 @@ static NSString *const kAppsKey = @"apps";
 
 # pragma mark Adding and removing apps
 
-- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
-    
-    NVApp *newApp = [[NVApp alloc] init];
-    newApp.name = name;
-    newApp.url = url;
-    [newApp createSymlink];
-    
-    [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
-}
+//- (NVApp *)addAppWithURL:(NSURL *)url andName:(NSString *)name {
+//    
+//    NVApp *newApp = [[NVApp alloc] init];
+//    newApp.name = name;
+//    newApp.url = url;
+//    [newApp createSymlink];
+//    
+//    [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
+//    
+//    return newApp;
+//}
 
-- (void)addAppWithURL:(NSURL *)url {
+- (NVApp *)addAppWithURL:(NSURL *)url {
     
     NVApp *newApp = [[NVApp alloc] init];
     newApp.name = [url lastPathComponent];
@@ -140,6 +147,8 @@ static NSString *const kAppsKey = @"apps";
     [newApp createSymlink];
     
     [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
+    
+    return newApp;
 }
 
 - (void)removeApp:(NVApp *)appToRemove {

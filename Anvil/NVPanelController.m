@@ -4,6 +4,7 @@
 #import "NVMenubarController.h"
 #import "NVTableRowView.h"
 #import "NVTableCellView.h"
+#import "NVAppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 #import <Sparkle/Sparkle.h>
 
@@ -49,6 +50,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         _delegate = delegate;
         
+        self.isEditing = NO;
+        self.switchView.delegate = self;
+        
         // Make a fully skinned panel
         NSPanel *panel = (id)[self window];
         
@@ -81,9 +85,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         self.addButton.image = [NSImage imageNamed:@"AddButton"];
         self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
-        
-        self.switchView.delegate = self;
-        self.isEditing = NO;
         
         self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
         
@@ -122,6 +123,10 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 // Destroys and recreates the tracking area for this table.
 - (void)createTrackingArea {
     
+    if (!self.hasActivePanel) {
+        return;
+    }
+    
     if (self.trackingArea) {
         
         [self.appListTableView removeTrackingArea:self.trackingArea];
@@ -140,8 +145,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)setupSettingsButton {
     
-    self.settingsButton.image = [NSImage imageNamed:@"Settings"];
-    self.settingsButton.alternateImage = [NSImage imageNamed:@"SettingsAlt"];
+    self.settingsButton.image           = [NSImage imageNamed:@"Settings"];
+    self.settingsButton.alternateImage  = [NSImage imageNamed:@"SettingsAlt"];
     
     NSMenu *settingsMenu = [self buildSettingsMenu];
     
@@ -151,7 +156,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     [self.settingsButton selectItem: nil];
     
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@""
-                                                  action:NULL keyEquivalent:@""];
+                                                  action:NULL
+                                           keyEquivalent:@""];
+    
     [item setImage:[NSImage imageNamed:@"Settings"]];
     [item setOnStateImage:nil];
     [item setMixedStateImage:nil];
@@ -406,6 +413,11 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark - Sizing
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
+    
+    if (!self.hasActivePanel) {
+        NSLog(@"An attempt to update the panel height was made while the panel was closed! :(");
+        return;
+    }
 
     [self.appListTableView sizeToFit];
     
@@ -447,7 +459,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         // In this case, appListTableView can actually be tall without being visible!
         // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
         // TODO: Clean up these numbers.
-        
 
         panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
         NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
@@ -842,14 +853,14 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
             return;
         }
         
+        [(NVAppDelegate *)[NSApp delegate] addAppWithURL:openPanel.URL];
         NVDataSource *dataSource = [NVDataSource sharedDataSource];
-        [dataSource addAppWithURL:openPanel.URL];
-        [dataSource readInSavedAppDataFromDisk];
         [self.appListTableView reloadData];
         [self updatePanelHeightAndAnimate:YES];
         
         NSInteger indexOfNewlyAddedRow = [dataSource indexOfAppWithURL:openPanel.URL];
         [self beginEditingRowAtIndex:[NSNumber numberWithInteger:indexOfNewlyAddedRow]];
+        
     }];
 }
 

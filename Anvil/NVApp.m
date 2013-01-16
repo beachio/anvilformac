@@ -22,18 +22,26 @@ static NSString *const kAppleTouchIconFileName = @"apple-touch-icon.png";
 static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-precomposed.png";
 
 - (id)initWithURL:(NSURL *)url {
-   
+       
     self = [super  init];
     if(self) {
         
         self.name = [url lastPathComponent];
     
-        // file:// Users/Elliott/a/b/c
         NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
+
+        if (!stringWithSymlinks) {
+            return false;
+        }
+        
         NSURL *expandedURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
         
+        if (!expandedURL) {
+            return false;
+        }
+        
         // TODO: Add , @"Build" to this array when Hammer is available.
-        NSArray *folderTypesArray = [[NSArray alloc] initWithObjects:@"Public", nil];
+        NSArray *folderTypesArray = [[NSArray alloc] initWithObjects:@"Public", @"Build", nil];
         
         for (NSString *folderName in folderTypesArray) {
             
@@ -47,9 +55,6 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
             }
         }
         self.url = expandedURL;
-        
-        // Check for index.html file
-        [self createIndexFileIfNonExistentAndNotARackApp];
     }
     return self;
 }
@@ -122,10 +127,10 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
     
     if (![self isARackApp]) {
         
-        NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];
+        NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];        
         BOOL indexHTMLExists = [[NSFileManager defaultManager] fileExistsAtPath:indexString];
         
-        if( !indexHTMLExists ){
+        if( !indexHTMLExists && indexString){
             
             NSURL *indexURL = [NSURL fileURLWithPath:indexString];
             NSString *dummyPagePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
@@ -177,6 +182,26 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 - (BOOL)isARackApp {
     
     return [[NSFileManager defaultManager] fileExistsAtPath:[self.url URLByAppendingPathComponent:@"config.ru"].path isDirectory:nil];
+}
+
+- (BOOL)needsAnIndexFile {
+    
+    if ([self isARackApp]) {
+        return false;
+    } else {
+        
+        NSString *indexString = [self.url.path stringByAppendingPathComponent:@"index.html"];
+        BOOL indexHTMLExists = [[NSFileManager defaultManager] fileExistsAtPath:indexString];
+        
+        assert(indexString);
+        
+        // If the file doesn't exist, and the URL is valid, yes. We need an index.html file.
+        if( !indexHTMLExists && indexString ){
+            return true;
+        }
+    }
+    // Probably not. Leave it alone.
+    return false;
 }
 
 @end

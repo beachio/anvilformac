@@ -23,5 +23,8 @@
 - (void)restart;
 - (void)renameTo:(NSString *)newName;
 - (BOOL)isARackApp;
+- (void)createIndexFileIfNonExistentAndNotARackApp;
+
+- (BOOL)needsAnIndexFile;
 
 @end

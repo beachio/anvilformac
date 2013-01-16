@@ -79,7 +79,7 @@ void *kContextActivePanel = &kContextActivePanel;
         self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
         if (!self.panelController.hasActivePanel) {
             // Read in apps if we're opening it
-            [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
+            [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
         }
         self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
     }
@@ -114,28 +114,56 @@ void *kContextActivePanel = &kContextActivePanel;
 
 #pragma mark - Adding apps
 
-- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
-    
-    [[NVDataSource sharedDataSource] addAppWithURL:url andName:name];
-    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-    
-    [self.panelController.appListTableView reloadData];
-    self.panelController.hasActivePanel = YES;
-    
-    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:url]];
-    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
-}
+//- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
+//    
+//    NVApp *addedApp = [[NVDataSource sharedDataSource] addAppWithURL:url andName:name];
+//    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+//    
+//    [self.panelController.appListTableView reloadData];
+//    self.panelController.hasActivePanel = YES;
+//    
+//    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:url]];
+//    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
+//
+//    
+//    NSAlert *indexPrompt = [[NSAlert alloc] init];
+//    [indexPrompt setInformativeText:@"Testing"];
+//    
+////    [indexPrompt beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:nil];
+//    
+//    if([indexPrompt runModal]) {
+//        NSLog(@"A");
+//    }
+//    
+//    if (![addedApp isARackApp]) {
+//        
+//        NSAlert *indexPrompt = [[NSAlert alloc] init];
+//        [indexPrompt setInformativeText:@"Testing"];
+//        
+//        [addedApp createIndexFileIfNonExistentAndNotARackApp];
+//    }
+//}
 
 - (void)addAppWithURL:(NSURL *)dropURL {
     
-    [[NVDataSource sharedDataSource] addAppWithURL:dropURL];
+    NVApp *addedApp = [[NVDataSource sharedDataSource] addAppWithURL:dropURL];
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     
-    [self.panelController.appListTableView reloadData];
     self.panelController.hasActivePanel = YES;
     
-    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:dropURL]];
-    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
+    if ([addedApp needsAnIndexFile]) {
+    
+        NSAlert *indexPrompt = [[NSAlert alloc] init];
+        [indexPrompt setInformativeText:@"It looks like you don't have an index.html file in this directory. Would you like one?"];
+        [indexPrompt addButtonWithTitle:@"Add an index.html file"];
+        [indexPrompt addButtonWithTitle:@"Don't add anything."];
+
+        BOOL doesWantAnIndexFile = [indexPrompt runModal];
+        if(doesWantAnIndexFile) {
+            
+            [addedApp createIndexFileIfNonExistentAndNotARackApp];
+        }
+    }
 }
 
 #pragma mark - NSMenuDelegate
