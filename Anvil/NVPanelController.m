@@ -43,22 +43,25 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 #pragma mark - Initialization
 
-- (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate {
+- (id)initWithWindowNibName:(NSString *)windowNibName {
     
-    self = [super initWithWindowNibName:@"Panel"];
+    self = [super initWithWindowNibName:windowNibName];
+    
     if (self != nil) {
         
-        _delegate = delegate;
-        
         self.isEditing = NO;
-        self.switchView.delegate = self;
         
         // Make a fully skinned panel
         NSPanel *panel = (id)[self window];
-        
+        [self window];
+
         [panel setLevel:NSPopUpMenuWindowLevel];
         [panel setOpaque:NO];
         [panel setBackgroundColor:[NSColor clearColor]];
+        
+        NSLog(@"%@", self.switchView);
+        
+        self.switchView.delegate = self;
         
         self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
         self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
@@ -83,6 +86,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         [shadow setShadowBlurRadius:0.0];
         [self.switchLabel setTextShadow:shadow];
         
+        
         self.addButton.image = [NSImage imageNamed:@"AddButton"];
         self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
         
@@ -106,8 +110,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         frame = self.noAppsView.frame;
         [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
-        
     }
+    
     return self;
 }
 

@@ -57,9 +57,9 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NVLabel *welcomePanelSecondLine;
 
 @property (nonatomic) BOOL hasActivePanel;
-@property (nonatomic, unsafe_unretained, readonly) id<NVPanelControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<NVPanelControllerDelegate> delegate;
 
-- (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate;
+//- (id)initWithDelegate:(id<NVPanelControllerDelegate>)delegate;
 
 - (void)openPanel;
 - (void)closePanel;
