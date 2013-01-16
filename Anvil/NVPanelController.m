@@ -338,7 +338,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)openPanel {
     
-    NSLog(@"openPanel");
     [self.appListTableView reloadData];
     [self switchSwitchViewToPowStatus];
     
@@ -352,7 +351,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)closePanel {
     
-    NSLog(@"closePanel");
     self.panelIsOpen = NO;
     
     [NSAnimationContext beginGrouping];

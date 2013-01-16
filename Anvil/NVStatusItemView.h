@@ -10,7 +10,7 @@
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem;
 
-@property (nonatomic, strong, readonly) NSStatusItem *statusItem;
+@property (strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, strong) NSImage *image;
 @property (nonatomic, strong) NSImage *alternateImage;
 @property (nonatomic, setter = setHighlighted:) BOOL isHighlighted;
