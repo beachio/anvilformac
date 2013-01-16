@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2843</string>
+			<string key="NS.object.0">2844</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSButton</string>
@@ -51,6 +51,7 @@
 				<string key="NSWindowClass">NVPanel</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
+				<string key="NSWindowContentMinSize">{256, 200}</string>
 				<object class="NSView" key="NSWindowView" id="982126346">
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
@@ -563,7 +564,10 @@
 					<reference key="NSNextKeyView" ref="160445123"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSMinSize">{256, 200}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
+				<bool key="NSAutorecalculatesContentBorderThicknessMinY">NO</bool>
+				<bool key="NSAutorecalculatesContentBorderThicknessMaxY">NO</bool>
 				<int key="NSWindowAnimationBehavior">4</int>
 				<int key="NSWindowCollectionBehavior">65</int>
 				<bool key="NSWindowIsRestorable">NO</bool>
@@ -1527,6 +1531,7 @@
 						<string key="didClickAddButton:">id</string>
 						<string key="didClickInstallPowButton:">id</string>
 						<string key="didClickReallyDeleteButton:">id</string>
+						<string key="didClickRestart:">id</string>
 						<string key="didClickRestartButton:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1540,6 +1545,10 @@
 						</object>
 						<object class="IBActionInfo" key="didClickReallyDeleteButton:">
 							<string key="name">didClickReallyDeleteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRestart:">
+							<string key="name">didClickRestart:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didClickRestartButton:">

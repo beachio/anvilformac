@@ -4,7 +4,7 @@
 @interface NVStatusItemView ()
 
 @property (nonatomic, strong) NSArray *pasteboardTypes;
-@property (nonatomic, strong) NSStatusItem *statusItem;
+@property (strong) NSStatusItem *statusItem;
 
 @end
 
@@ -83,6 +83,7 @@
 #pragma mark -
 
 - (void)drawRect:(NSRect)dirtyRect {
+    
 	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:NO];
         
     if (self.showHighlightIcon) {
@@ -106,6 +107,8 @@
     NSPoint iconPoint = NSMakePoint(iconX, iconY);
         
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];
+    
+    [self.statusItem.view setNeedsDisplay:YES];
 }
 
 #pragma mark -
