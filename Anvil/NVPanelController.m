@@ -300,17 +300,17 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)windowDidResignKey:(NSNotification *)notification; {
 
-    if ([[self window] isVisible] && !self.forceOpen) {
+//    if ([[self window] isVisible] && !self.forceOpen) {
 
         self.hasActivePanel = NO;
-    }
+//    }
 }
 
 - (void)windowDidResize:(NSNotification *)notification {
     
     NSWindow *panel = [notification object];
 
-    NSRect statusRect = [self statusRectForWindow:panel];
+    NSRect statusRect = [self statusRect];
     NSRect panelRect = [panel frame];
 
     CGFloat statusX = roundf(NSMidX(statusRect));
@@ -332,6 +332,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)openPanel {
     
+    NSLog(@"openPanel");
     [self.appListTableView reloadData];
     [self switchSwitchViewToPowStatus];
     
@@ -345,6 +346,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)closePanel {
     
+    NSLog(@"closePanel");
     self.panelIsOpen = NO;
     
     [NSAnimationContext beginGrouping];
@@ -376,7 +378,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     }
 }
 
-- (NSRect)statusRectForWindow:(NSWindow *)window {
+- (NSRect)statusRect {
     
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     NSRect statusRect = NSZeroRect;
@@ -405,7 +407,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSWindow *panel = [self window];
     NSRect panelRect = panel.frame;
-    NSRect statusRect = [self statusRectForWindow:panel];
+    NSRect statusRect = [self statusRect];
     
     NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
 

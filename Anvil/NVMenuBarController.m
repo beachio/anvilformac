@@ -11,20 +11,21 @@
 
 @implementation NVMenubarController
 
-@synthesize statusItemView = _statusItemView;
+@synthesize statusItemView;
 
 #pragma mark -
 
 - (id)init {
     self = [super init];
     if (self != nil) {
+        
         NSStatusItem *statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:STATUS_ITEM_VIEW_WIDTH];
-        _statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
-        _statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
-        _statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconAlt"];
-        _statusItemView.action = @selector(togglePanel:);
-        _statusItemView.rightClickAction = @selector(menuItemRightClicked:);
-        _statusItemView.delegate = self;
+        statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
+        statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
+        statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconAlt"];
+        statusItemView.action = @selector(togglePanel:);
+        statusItemView.rightClickAction = @selector(menuItemRightClicked:);
+        statusItemView.delegate = self;
     }
     return self;
 }
@@ -44,10 +45,12 @@
 #pragma mark - Icon
 
 - (BOOL)hasActiveIcon {
+    
     return self.statusItemView.isHighlighted;
 }
 
 - (void)setHasActiveIcon:(BOOL)flag {
+    
     self.statusItemView.isHighlighted = flag;
 }
 
@@ -64,6 +67,7 @@
 #pragma mark - Dropping
 
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL {
+    
     return YES;
 }
 
