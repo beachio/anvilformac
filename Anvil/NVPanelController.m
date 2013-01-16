@@ -53,63 +53,64 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         
         // Make a fully skinned panel
         NSPanel *panel = (id)[self window];
-        [self window];
 
         [panel setLevel:NSPopUpMenuWindowLevel];
         [panel setOpaque:NO];
         [panel setBackgroundColor:[NSColor clearColor]];
-        
-        NSLog(@"%@", self.switchView);
         
         self.switchView.delegate = self;
         
         self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
         self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
         
-        [self.backgroundView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+        self.backgroundView.backgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
         
         self.appListTableView.menu = [self menuForTableView];
-        [self.appListTableView setAction:@selector(appListTableViewClicked:)];
-        
-        [self.appListTableView setBackgroundColor:[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1]];
+        self.appListTableView.action = @selector(appListTableViewClicked:);
+        self.appListTableView.backgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
         
         self.appListTableView.delegate = self;
         
-        [self.appListTableScrollView setWantsLayer:YES];
-        [self.appListTableScrollView.layer setOpaque:NO];
-        [self.appListTableScrollView.layer setCornerRadius:0];
-        [self.appListTableScrollView setBackgroundColor:[NSColor clearColor]];
+        self.appListTableScrollView.wantsLayer = YES;
+        self.appListTableScrollView.layer.opaque = NO;
+        self.appListTableScrollView.layer.cornerRadius = 0;
+        self.appListTableScrollView.backgroundColor = [NSColor clearColor];
         
         NSShadow *shadow = [[NSShadow alloc] init];
-        [shadow setShadowColor:[NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4]];
-        [shadow setShadowOffset:NSMakeSize(0, -1)];
-        [shadow setShadowBlurRadius:0.0];
-        [self.switchLabel setTextShadow:shadow];
+        shadow.shadowColor = [NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4];
+        shadow.shadowOffset = NSMakeSize(0, -1);
+        shadow.shadowBlurRadius = 0.0;
+        self.switchLabel.textShadow = shadow;
         
-        
-        self.addButton.image = [NSImage imageNamed:@"AddButton"];
-        self.addButton.alternateImage = [NSImage imageNamed:@"AddButtonPushed"];
+        self.addButton.image            = [NSImage imageNamed:@"AddButton"];
+        self.addButton.alternateImage   = [NSImage imageNamed:@"AddButtonPushed"];
         
         self.settingsDivider.backgroundImage = [NSImage imageNamed:@"TitlebarSplit"];
         
         [self setupSettingsButton];
         
-        [self.installPowButton setImage:[NSImage imageNamed:@"BlueButton"]];
-        [self.installPowButton setAlternateImage:[NSImage imageNamed:@"BlueButtonPushed"]];
-        [self.installPowButton setIsBold:NO];
-        [self.installPowButton setTextSize:12.0];
+        self.installPowButton.image = [NSImage imageNamed:@"BlueButton"];
+        self.installPowButton.alternateImage = [NSImage imageNamed:@"BlueButtonPushed"];
+        self.installPowButton.isBold = NO;
+        self.installPowButton.textSize = 12.0;
         
-        [self.noSitesAddASiteButton setImage:[NSImage imageNamed:@"BlueButtonAdd"]];
-        [self.noSitesAddASiteButton setAlternateImage:[NSImage imageNamed:@"BlueButtonAddPushed"]];
+        self.noSitesAddASiteButton.image = [NSImage imageNamed:@"BlueButtonAdd"];
+        self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"BlueButtonAddPushed"];
         [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
-        [self.noSitesAddASiteButton setTextSize:12.0];
-        [self.noSitesAddASiteButton setIsBold:NO];
+        self.noSitesAddASiteButton.textSize = 12.0;
+        self.noSitesAddASiteButton.isBold = NO;
         
         CGRect frame = self.welcomeView.frame;
-        [self.welcomeView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+        [self.welcomeView setFrame:CGRectMake(frame.origin.x,
+                                              self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
+                                              frame.size.width,
+                                              frame.size.height)];
         
         frame = self.noAppsView.frame;
-        [self.noAppsView setFrame:CGRectMake(frame.origin.x, self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT, frame.size.width, frame.size.height)];
+        [self.noAppsView setFrame:CGRectMake(frame.origin.x,
+                                             self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
+                                             frame.size.width,
+                                             frame.size.height)];
     }
     
     return self;
@@ -154,25 +155,25 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     
     NSMenu *settingsMenu = [self buildSettingsMenu];
     
-    [self.settingsButton setMenu:settingsMenu];
-    [self.settingsButton setPreferredEdge:NSMaxYEdge];
-    [self.settingsButton setPullsDown:YES];
-    [self.settingsButton selectItem: nil];
+    self.settingsButton.menu = settingsMenu;
+    self.settingsButton.preferredEdge = NSMaxYEdge;
+    self.settingsButton.pullsDown = YES;
+    [self.settingsButton selectItem:nil];
     
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@""
                                                   action:NULL
                                            keyEquivalent:@""];
+    item.image = [NSImage imageNamed:@"Settings"];
+    item.onStateImage = nil;
+    item.mixedStateImage = nil;
     
-    [item setImage:[NSImage imageNamed:@"Settings"]];
-    [item setOnStateImage:nil];
-    [item setMixedStateImage:nil];
-    [[self.settingsButton cell] setMenuItem:item];
-    
-    [[self.settingsButton cell] setBordered:NO];
-    [[self.settingsButton cell] setImagePosition:NSImageOnly];
-    [[self.settingsButton cell] setArrowPosition:NSPopUpNoArrow];
-    [[self.settingsButton cell] setUsesItemFromMenu:NO];
-    [[self.settingsButton cell] setAlternateImage:[NSImage imageNamed:@"SettingsAlt"]];
+    NSPopUpButtonCell *cell = [self.settingsButton cell];
+    cell.menuItem = item;
+    cell.bordered = NO;
+    cell.imagePosition = NSImageOnly;
+    cell.arrowPosition = NSPopUpNoArrow;
+    cell.usesItemFromMenu = NO;
+    cell.alternateImage = [NSImage imageNamed:@"SettingsAlt"];
 }
 
 - (NSMenu *)buildSettingsMenu {
@@ -202,7 +203,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
         self.isPowRunning = status;
 
         [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
-        [self.switchLabel setText: status ? @"ON" : @"OFF"];
+        self.switchLabel.text = status ? @"ON" : @"OFF";
     }
 }
 
@@ -317,10 +318,9 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (void)windowDidResignKey:(NSNotification *)notification; {
 
-//    if ([[self window] isVisible] && !self.forceOpen) {
-
+    if ([[self window] isVisible] && !self.forceOpen) {
         self.hasActivePanel = NO;
-//    }
+    }
 }
 
 - (void)windowDidResize:(NSNotification *)notification {
@@ -342,6 +342,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 #pragma mark - Keyboard
 
 - (void)cancelOperation:(id)sender {
+    
     self.hasActivePanel = NO;
 }
 

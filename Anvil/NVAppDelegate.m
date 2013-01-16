@@ -30,7 +30,6 @@ void *kContextActivePanel = &kContextActivePanel;
 
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.panelController.appListTableView reloadData];
-    [self.panelController setHasActivePanel:YES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -46,7 +45,6 @@ void *kContextActivePanel = &kContextActivePanel;
 
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.panelController.appListTableView reloadData];
-    [self.panelController setHasActivePanel:YES];
 
     [self.dataSource readInSavedAppDataFromDisk];
 }
@@ -114,36 +112,6 @@ void *kContextActivePanel = &kContextActivePanel;
 }
 
 #pragma mark - Adding apps
-
-//- (void)addAppWithURL:(NSURL *)url andName:(NSString *)name {
-//    
-//    NVApp *addedApp = [[NVDataSource sharedDataSource] addAppWithURL:url andName:name];
-//    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-//    
-//    [self.panelController.appListTableView reloadData];
-//    self.panelController.hasActivePanel = YES;
-//    
-//    NSNumber *indexOfNewlyAddedRow = [NSNumber numberWithInteger:[[NVDataSource sharedDataSource] indexOfAppWithURL:url]];
-//    [self.panelController performSelector:@selector(beginEditingRowAtIndex:) withObject:indexOfNewlyAddedRow afterDelay:0.4];
-//
-//    
-//    NSAlert *indexPrompt = [[NSAlert alloc] init];
-//    [indexPrompt setInformativeText:@"Testing"];
-//    
-////    [indexPrompt beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:nil];
-//    
-//    if([indexPrompt runModal]) {
-//        NSLog(@"A");
-//    }
-//    
-//    if (![addedApp isARackApp]) {
-//        
-//        NSAlert *indexPrompt = [[NSAlert alloc] init];
-//        [indexPrompt setInformativeText:@"Testing"];
-//        
-//        [addedApp createIndexFileIfNonExistentAndNotARackApp];
-//    }
-//}
 
 - (void)addAppWithURL:(NSURL *)dropURL {
     
