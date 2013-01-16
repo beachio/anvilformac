@@ -10,10 +10,10 @@
     NVStatusItemView *_statusItemView;
 }
 
-@property (assign, nonatomic) BOOL showHighlightIcon; //Added this as to not mess with hasActiveIcon
+@property (readwrite, nonatomic) BOOL showHighlightIcon; //Added this as to not mess with hasActiveIcon
 @property (assign, nonatomic) BOOL hasActiveIcon;
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
-@property (nonatomic, strong) NVStatusItemView *statusItemView;
+@property (nonatomic, strong, readonly) NVStatusItemView *statusItemView;
 @property (assign, nonatomic) id <NVStatusItemViewDelegate> delegate;
 
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL;

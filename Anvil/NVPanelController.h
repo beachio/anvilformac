@@ -63,7 +63,7 @@
 
 - (void)openPanel;
 - (void)closePanel;
-- (NSRect)statusRect;
+- (NSRect)statusRectForWindow:(NSWindow *)window;
 - (NSMenu *)buildSettingsMenu;
 - (void)beginEditingRowAtIndex:(NSNumber *)index;
 
