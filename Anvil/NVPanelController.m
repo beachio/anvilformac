@@ -909,20 +909,6 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (IBAction)didClickInstallPowButton:(id)sender {
     
-    // This just shows the Terminal now, so we don't really need these spinners.
-    // TODO: Bring these spinners back, but hide them when appropriate.
-    
-    //    [self.installPowButton setEnabled:NO];
-    //    [self.welcomePanelHeader setStringValue:@"Installing Pow..."];
-    //    [self.installPowButton setHidden:YES];
-    //    [self.welcomeView setAlphaValue:0.8];
-    //
-    //    self.installingPowSpinner.hidden = NO;
-    //    [self.installingPowSpinner setSpinning:YES];
-    //
-    //    self.welcomePanelFirstLine.hidden = YES;
-    //    self.welcomePanelSecondLine.hidden = YES;
-    
     self.hasActivePanel = NO;
     
     [self performSelectorInBackground:@selector(installPow:) withObject:nil];

@@ -127,18 +127,6 @@ static NSString *const kAppsKey = @"apps";
 
 # pragma mark Adding and removing apps
 
-//- (NVApp *)addAppWithURL:(NSURL *)url andName:(NSString *)name {
-//    
-//    NVApp *newApp = [[NVApp alloc] init];
-//    newApp.name = name;
-//    newApp.url = url;
-//    [newApp createSymlink];
-//    
-//    [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
-//    
-//    return newApp;
-//}
-
 - (NVApp *)addAppWithURL:(NSURL *)url {
     
     NVApp *newApp = [[NVApp alloc] init];

@@ -126,7 +126,6 @@
             
         }else{
             
-            // TODO: Ask Red whether he tested this! These were "!= NSNotFound"
             if (self.leftCapWidth != 0 || self.topCapHeight != 0) {
                 
                 [backgroundImageToDraw drawInRect:rect withLeftCapWidth:self.leftCapWidth topCapHeight:self.topCapHeight];
