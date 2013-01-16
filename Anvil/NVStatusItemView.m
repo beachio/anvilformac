@@ -108,7 +108,7 @@
         
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];
     
-    [self.statusItem.view setNeedsDisplay:YES];
+    [self setNeedsDisplay:YES];
 }
 
 #pragma mark -
