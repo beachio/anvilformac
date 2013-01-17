@@ -19,32 +19,10 @@
 @implementation NVSiteTableView
 
 
-- (id)init {
-    
-    self = [super init];
-    return self;
-}
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-    }
-    
-    return self;
-}
-
 - (void)awakeFromNib {
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
     [self setRowHeight:32.0];
 }
-
-- (void)drawRect:(NSRect)dirtyRect {
-    // Drawing code here.
-    [super drawRect:dirtyRect];
-}
-
 
 @end

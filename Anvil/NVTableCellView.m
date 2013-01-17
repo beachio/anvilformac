@@ -11,31 +11,20 @@
 
 @implementation NVTableCellView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-
-    }
-    
-    return self;
-}
-
 - (void)awakeFromNib {
     
     // Initialization code here.
     self.backgroundStyle = NSBackgroundStyleLowered;
         
-    [self.deleteButton setStringValue:@""];
+    self.deleteButton.stringValue = @"";
     
-    [self.restartButton setImage:[NSImage imageNamed:@"Restart"]];
-    [self.restartButton setAlternateImage:[NSImage imageNamed:@"RestartAlt"]];
-    [self.restartButton setStringValue:@""];
+    self.restartButton.image = [NSImage imageNamed:@"Restart"];
+    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartAlt"];
+    self.restartButton.stringValue = @"";
     
     [self.restartButton setHidden:YES];
     [self.deleteButton setHidden:YES];
-    
+        
     [self.siteLabel setWidth];
     self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
                                        self.siteLabel.frame.origin.y,
@@ -45,24 +34,33 @@
     [self.localLabel sizeToFit];
     [self.siteLabel setEditable:YES];
     
+    
+    
     NSImage *reallyDeleteButtonImage = [[NSImage imageNamed:@"DeleteButton"] stretchableImageWithEdgeInsets:BFEdgeInsetsMake(1.0, 5.0, 1.0, 5.0)];
 
     [self.reallyDeleteButton.cell setImageScaling:NSImageScaleAxesIndependently];
     
-    [self.reallyDeleteButton setImage:reallyDeleteButtonImage];
-    
-    NSImage *deleteButtonAlternateImage = [[NSImage imageNamed:@"DeleteButtonPushed"] stretchableImageWithEdgeInsets:BFEdgeInsetsMake(1.0, 5.0,1.0, 5.0)];
-    [self.reallyDeleteButton setAlternateImage:deleteButtonAlternateImage];
+    self.reallyDeleteButton.image = reallyDeleteButtonImage;
+    NSImage *deleteButtonAlternateImage = [[NSImage imageNamed:@"DeleteButtonPushed"]
+                                           stretchableImageWithEdgeInsets:BFEdgeInsetsMake(1.0, 5.0,1.0, 5.0)];
+    self.reallyDeleteButton.alternateImage = deleteButtonAlternateImage;
 
 }
 
 - (IBAction)didClickDeleteButton:(id)sender {
     
-    [self showReallyDeleteButton];
+    NSInteger count = [[NSApp currentEvent] clickCount];
+    
+    // Double clicks. Pass the message through.
+    if (count == 1) {
+        [self showReallyDeleteButton];
+    } else if (count == 2) {
+        [self.reallyDeleteButton performClick:sender];
+    }
 }
 
 - (void)showReallyDeleteButton {
-        
+
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.1];
     [[self.reallyDeleteButton animator] setHidden:NO];
@@ -70,7 +68,7 @@
 }
 
 - (void)hideReallyDeleteButton {
-    
+
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.05];
     [self.reallyDeleteButton setHidden:YES];

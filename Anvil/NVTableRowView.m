@@ -19,16 +19,6 @@
 
 @implementation NVTableRowView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
 - (NSGradient *)backgroundGradient {
     
     NSColor *highlightBackgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
@@ -46,7 +36,6 @@
     
     return gradient;
 }
-
 
 - (void)highlight {
     
@@ -88,7 +77,7 @@
 - (void)setSelected:(BOOL)selected {
     
     [super setSelected:selected];
-    [self setNeedsDisplay:YES];
+    self.needsDisplay = YES;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

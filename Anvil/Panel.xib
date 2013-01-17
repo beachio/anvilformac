@@ -70,6 +70,7 @@
 											<array class="NSMutableArray" key="NSSubviews"/>
 											<string key="NSFrameSize">{256, 489}</string>
 											<reference key="NSSuperview" ref="984136381"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="162184344"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
@@ -173,7 +174,7 @@
 											<int key="NSColumnAutoresizingStyle">5</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
-											<bool key="NSAllowsTypeSelect">YES</bool>
+											<bool key="NSAllowsTypeSelect">NO</bool>
 											<int key="NSTableViewSelectionHighlightStyle">1</int>
 											<int key="NSTableViewDraggingDestinationStyle">1</int>
 											<int key="NSTableViewGroupRowStyle">1</int>
@@ -181,6 +182,7 @@
 									</array>
 									<string key="NSFrameSize">{256, 489}</string>
 									<reference key="NSSuperview" ref="244901842"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="936322405"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<reference key="NSDocView" ref="936322405"/>
@@ -192,6 +194,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{224, 17}, {15, 102}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="201252280"/>
 									<string key="NSReuseIdentifierKey">_NS:58</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -204,7 +207,7 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{0, 473}, {256, 16}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -216,6 +219,7 @@
 							</array>
 							<string key="NSFrame">{{1, 102}, {256, 489}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="984136381"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133680</int>
@@ -232,6 +236,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{122, 625}, {12, 5}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="483366631"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">NVStyledView</string>
@@ -245,6 +250,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{34, 1}, {3, 33}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="331158961"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NVStyledView</string>
@@ -254,6 +260,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{-1, 1}, {36, 33}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="509103600"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -286,6 +293,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{226, 7}, {22, 21}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="493408294"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -311,6 +319,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{83, 7}, {24, 17}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="295544388"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -343,6 +352,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{45, 10}, {24, 12}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1067363560"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NVSwitchView</string>
@@ -350,6 +360,7 @@
 							</array>
 							<string key="NSFrame">{{0, 591}, {256, 34}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="287973955"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSHuggingPriority">{250, 250}</string>
@@ -365,6 +376,7 @@
 									<int key="NSvFlags">-2147483380</int>
 									<string key="NSFrame">{{108, 58}, {38, 38}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="214138300"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">CustomLoadingSpinner</string>
@@ -374,6 +386,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{73, 19}, {109, 29}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="244901842"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -399,6 +412,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{29, 58}, {197, 24}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="518626533"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -426,6 +440,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{15, 67}, {225, 32}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="968973789"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -449,6 +464,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{53, 106}, {149, 17}}</string>
 									<reference key="NSSuperview" ref="1004212260"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="366578607"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -474,6 +490,7 @@
 							</array>
 							<string key="NSFrame">{{0, 141}, {256, 145}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="696102038"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">NVStyledView</string>
@@ -487,6 +504,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{78, 39}, {101, 29}}</string>
 									<reference key="NSSuperview" ref="493408294"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1004212260"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -512,6 +530,7 @@
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{30, 84}, {197, 19}}</string>
 									<reference key="NSSuperview" ref="493408294"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="680952245"/>
 									<string key="NSReuseIdentifierKey">_NS:1535</string>
 									<bool key="NSEnabled">YES</bool>
@@ -533,6 +552,7 @@
 							</array>
 							<string key="NSFrame">{{0, 339}, {256, 145}}</string>
 							<reference key="NSSuperview" ref="982126346"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="719046758"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSClassName">NVStyledView</string>
@@ -540,9 +560,10 @@
 					</array>
 					<string key="NSFrameSize">{256, 630}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="160445123"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{256, 200}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSAutorecalculatesContentBorderThicknessMinY">NO</bool>
@@ -1439,7 +1460,326 @@
 			<nil key="sourceID"/>
 			<int key="maxID">577</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">CustomLoadingSpinner</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CustomLoadingSpinner.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVBackgroundView</string>
+					<string key="superclassName">NVStyledView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">titlebarPointImageView</string>
+						<string key="NS.object.0">NVStyledView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">titlebarPointImageView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">titlebarPointImageView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVBackgroundView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVLabel</string>
+					<string key="superclassName">NSTextField</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">textField</string>
+						<string key="NS.object.0">NSTextField</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">textField</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">textField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVLabel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVLayeredImageView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVLayeredImageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVPanel</string>
+					<string key="superclassName">NSPanel</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVPanel.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVPanelController</string>
+					<string key="superclassName">NSWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didClickAddButton:">id</string>
+						<string key="didClickInstallPowButton:">id</string>
+						<string key="didClickReallyDeleteButton:">id</string>
+						<string key="didClickRestartButton:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didClickAddButton:">
+							<string key="name">didClickAddButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickInstallPowButton:">
+							<string key="name">didClickInstallPowButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickReallyDeleteButton:">
+							<string key="name">didClickReallyDeleteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didClickRestartButton:">
+							<string key="name">didClickRestartButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="addButton">NSButton</string>
+						<string key="appListTableScrollView">NSScrollView</string>
+						<string key="appListTableView">NSTableView</string>
+						<string key="backgroundView">NVBackgroundView</string>
+						<string key="headerIconView">NVStyledView</string>
+						<string key="headerView">NVStyledView</string>
+						<string key="installPowButton">NVStyledButton</string>
+						<string key="installingPowSpinner">CustomLoadingSpinner</string>
+						<string key="noAppsView">NVStyledView</string>
+						<string key="noSitesAddASiteButton">NVStyledButton</string>
+						<string key="searchField">NSSearchField</string>
+						<string key="settingsButton">NSPopUpButton</string>
+						<string key="settingsDivider">NVStyledView</string>
+						<string key="switchLabel">NVLabel</string>
+						<string key="switchView">NVSwitchView</string>
+						<string key="textField">NSTextField</string>
+						<string key="welcomePanelFirstLine">NVLabel</string>
+						<string key="welcomePanelHeader">NVLabel</string>
+						<string key="welcomePanelSecondLine">NVLabel</string>
+						<string key="welcomeView">NVStyledView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="addButton">
+							<string key="name">addButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="appListTableScrollView">
+							<string key="name">appListTableScrollView</string>
+							<string key="candidateClassName">NSScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="appListTableView">
+							<string key="name">appListTableView</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="backgroundView">
+							<string key="name">backgroundView</string>
+							<string key="candidateClassName">NVBackgroundView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerIconView">
+							<string key="name">headerIconView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerView">
+							<string key="name">headerView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="installPowButton">
+							<string key="name">installPowButton</string>
+							<string key="candidateClassName">NVStyledButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="installingPowSpinner">
+							<string key="name">installingPowSpinner</string>
+							<string key="candidateClassName">CustomLoadingSpinner</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="noAppsView">
+							<string key="name">noAppsView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="noSitesAddASiteButton">
+							<string key="name">noSitesAddASiteButton</string>
+							<string key="candidateClassName">NVStyledButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="searchField">
+							<string key="name">searchField</string>
+							<string key="candidateClassName">NSSearchField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="settingsButton">
+							<string key="name">settingsButton</string>
+							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="settingsDivider">
+							<string key="name">settingsDivider</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="switchLabel">
+							<string key="name">switchLabel</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="switchView">
+							<string key="name">switchView</string>
+							<string key="candidateClassName">NVSwitchView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="textField">
+							<string key="name">textField</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="welcomePanelFirstLine">
+							<string key="name">welcomePanelFirstLine</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="welcomePanelHeader">
+							<string key="name">welcomePanelHeader</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="welcomePanelSecondLine">
+							<string key="name">welcomePanelSecondLine</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="welcomeView">
+							<string key="name">welcomeView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVPanelController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVPopupButtonCell</string>
+					<string key="superclassName">NSPopUpButtonCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVPopupButtonCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVSiteTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="noSitesView">NVStyledView</string>
+						<string key="welcomeView">NVStyledView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="noSitesView">
+							<string key="name">noSitesView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="welcomeView">
+							<string key="name">welcomeView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVSiteTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVSpinnerButton</string>
+					<string key="superclassName">NVStyledButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVSpinnerButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVStyledButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVStyledButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVStyledView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVStyledView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVSwitchView</string>
+					<string key="superclassName">NVStyledView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="backgroundView">NVStyledView</string>
+						<string key="switcherView">NVStyledView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="backgroundView">
+							<string key="name">backgroundView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="switcherView">
+							<string key="name">switcherView</string>
+							<string key="candidateClassName">NVStyledView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVSwitchView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NVTableCellView</string>
+					<string key="superclassName">NSTableCellView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="deleteButton">NSButton</string>
+						<string key="faviconImageView">NVLayeredImageView</string>
+						<string key="localLabel">NVLabel</string>
+						<string key="reallyDeleteButton">NSButton</string>
+						<string key="restartButton">NVSpinnerButton</string>
+						<string key="siteLabel">NVLabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="deleteButton">
+							<string key="name">deleteButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="faviconImageView">
+							<string key="name">faviconImageView</string>
+							<string key="candidateClassName">NVLayeredImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="localLabel">
+							<string key="name">localLabel</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="reallyDeleteButton">
+							<string key="name">reallyDeleteButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="restartButton">
+							<string key="name">restartButton</string>
+							<string key="candidateClassName">NVSpinnerButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="siteLabel">
+							<string key="name">siteLabel</string>
+							<string key="candidateClassName">NVLabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NVTableCellView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
