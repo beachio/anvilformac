@@ -41,6 +41,8 @@ static NSString *const kAppListTableCellIdentifier = @"appListTableCellIdentifie
 static NSString *const kAppListTableRowIdentifier = @"appListTableRowIdentifier";
 static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier";
 
+static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist";
+
 #pragma mark - Initialization
 
 - (id)initWithWindowNibName:(NSString *)windowNibName {
@@ -266,15 +268,15 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 - (BOOL)runTask:(NSString *)task asRoot:(BOOL)asRoot {
     
     NSDictionary *error = [NSDictionary new];
-    NSString *script;
+    NSString *script = [NSString stringWithFormat:@"do shell script \"%@\"", task];
     if (asRoot) {
-        script = [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", task];
-    } else {
-        script = [NSString stringWithFormat:@"do shell script \"%@\"", task];
+        script = [script stringByAppendingString:@" with administrator privileges"];
     }
-    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
-    
-    return [appleScript executeAndReturnError:&error] ? YES : NO;
+    [[[NSAppleScript new] initWithSource:script] executeAndReturnError:&error];
+    if (error.count > 0) {
+        NSLog(@"Error running Applescript: %@", error);
+    }
+    return !error;
 }
 
 #pragma mark - Public accessors
@@ -328,7 +330,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     NSWindow *panel = [notification object];
 
     NSRect statusRect = [self statusRect];
-    NSRect panelRect = [panel frame];
+    NSRect panelRect = panel.frame;
 
     CGFloat statusX = roundf(NSMidX(statusRect));
     CGFloat panelX = statusX - NSMinX(panelRect);
@@ -336,7 +338,7 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
     self.backgroundView.arrowX = panelX;
     
     NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 5;
-    [self.appListTableScrollView setFrame:NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight)];
+    self.appListTableScrollView.frame = NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight);
 }
 
 #pragma mark - Keyboard
@@ -374,11 +376,8 @@ static NSString *const kPanelTrackingAreaIdentifier = @"panelTrackingIdentifier"
 
 - (BOOL)isPowInstalled {
     
-    //    NSString *powPath = [@"~/.pow" stringByExpandingTildeInPath];
-    NSString *powPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist";
     BOOL isDirectory;
-    BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:powPath isDirectory:&isDirectory];
-    
+    BOOL isThere = [[NSFileManager defaultManager] fileExistsAtPath:kPowPath isDirectory:&isDirectory];
     return isThere && !isDirectory;
 }
 
