@@ -15,7 +15,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - Observers
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-
+    
     if (context == kContextActivePanel) {
         self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
     }
@@ -27,26 +27,15 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - NSApplicationDelegate activation, launching and terminating
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-
-    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-    [self.panelController.appListTableView reloadData];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     // Install icon into the menu bar
-    self.menubarController = [[NVMenubarController alloc] init];
-    
-    self.panelController = [[NVPanelController alloc] initWithWindowNibName:@"Panel"];
-    self.panelController.delegate = self;
-    [self.panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
-    
+    self.menubarController = [[NVMenubarController alloc] init];    
     self.menubarController.delegate = self;
-
-    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-    [self.panelController.appListTableView reloadData];
-
-    [self.dataSource readInSavedAppDataFromDisk];
+//    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+//    [self.panelController.appListTableView reloadData];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
@@ -62,6 +51,16 @@ void *kContextActivePanel = &kContextActivePanel;
     return [NVDataSource sharedDataSource];
 }
 
+- (NVPanelController *)panelController {
+    
+    if (!_panelController) {
+        _panelController = [[NVPanelController alloc] initWithWindowNibName:@"Panel"];
+        [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
+        _panelController.delegate = self;
+    }
+    return _panelController;
+}
+
 #pragma mark - Actions
 
 - (IBAction)togglePanel:(id)sender {
@@ -70,7 +69,7 @@ void *kContextActivePanel = &kContextActivePanel;
     
     if ([theEvent modifierFlags] & NSControlKeyMask) {
         
-        self.panelController.hasActivePanel = NO;
+        [self panelController].hasActivePanel = NO;
         [self menuItemRightClicked:sender];
     } else {
         
@@ -98,9 +97,9 @@ void *kContextActivePanel = &kContextActivePanel;
     for (NSMenuItem *item in settingsMenu.itemArray) {
         [item setTarget:self.panelController];
     }
-
+    
     [settingsMenu removeItemAtIndex:0]; // Remove the blank one from 0
-        
+    
     [self.menubarController.statusItem popUpStatusItemMenu:settingsMenu];
 }
 
@@ -121,14 +120,14 @@ void *kContextActivePanel = &kContextActivePanel;
     self.panelController.hasActivePanel = YES;
     
     if ([addedApp needsAnIndexFile]) {
-    
+        
         NSAlert *indexPrompt = [[NSAlert alloc] init];
         indexPrompt.messageText = @"Caution, 404 ahead!";
         indexPrompt.informativeText = @"It looks like you don't have an index.html file in this directory. Would you like one?";
         
         [indexPrompt addButtonWithTitle:@"Add an index.html file"];
         [indexPrompt addButtonWithTitle:@"Don't add anything."];
-
+        
         NSInteger result = [indexPrompt runModal];
         BOOL doesWantAnIndexFile = result == NSAlertFirstButtonReturn;
         
@@ -158,6 +157,7 @@ void *kContextActivePanel = &kContextActivePanel;
 #pragma mark - deallocation
 
 - (void)dealloc {
+    
     [_panelController removeObserver:self forKeyPath:@"hasActivePanel"];
 }
 
