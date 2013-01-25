@@ -22,11 +22,15 @@ void *kContextActivePanel = &kContextActivePanel;
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+    [self.menubarController.statusItemView setNeedsDisplay:YES];
 }
 
 #pragma mark - NSApplicationDelegate activation, launching and terminating
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
+    
+    // This fixes the final switch view bug.
+    [self.menubarController.statusItemView setNeedsDisplay:YES];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -34,8 +38,7 @@ void *kContextActivePanel = &kContextActivePanel;
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];    
     self.menubarController.delegate = self;
-//    [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-//    [self.panelController.appListTableView reloadData];
+    [self.menubarController.statusItemView setNeedsDisplay:YES];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
