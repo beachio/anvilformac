@@ -33,6 +33,7 @@
 @property (atomic, strong) NSTrackingArea *trackingArea;
 @property (nonatomic) BOOL forceOpen;
 @property (nonatomic) BOOL awake;
+@property (nonatomic) NSTimer *powCheckerTimer;
 @end
 
 @implementation NVPanelController
@@ -124,6 +125,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [super awakeFromNib];
         [self switchSwitchViewToPowStatus];
         self.awake = YES;
+        
+        self.powCheckerTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(switchSwitchViewToPowStatus) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
     }
 }
 
@@ -361,6 +365,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self.window makeFirstResponder:nil];
     [self.window becomeMainWindow];
     [self.window makeKeyAndOrderFront:nil];
+    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
 }
 
 - (void)closePanel {
@@ -810,7 +816,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/curl"];
-    [task setArguments:[NSArray arrayWithObjects:@"-I", @"--silent", @"-H", @"host:pow", @"localhost:80/status.json", nil]];
+    [task setArguments:[NSArray arrayWithObjects:@"-I", @"--silent", @"--connect-timeout", @"5", @"-H", @"host:pow", @"localhost:20559/status.json", nil]];
     
     NSPipe *outputPipe = [NSPipe pipe];
     [task setStandardInput:[NSPipe pipe]];
@@ -984,6 +990,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 #pragma mark - Deallocation
 
 - (void)dealloc {
+    
+    [self.powCheckerTimer invalidate];
+    self.powCheckerTimer = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSControlTextDidChangeNotification object:self.searchField];
 }
 

@@ -128,8 +128,8 @@ void *kContextActivePanel = &kContextActivePanel;
         indexPrompt.messageText = @"Caution, 404 ahead!";
         indexPrompt.informativeText = @"It looks like you don't have an index.html file in this directory. Would you like one?";
         
-        [indexPrompt addButtonWithTitle:@"Add an index.html file"];
-        [indexPrompt addButtonWithTitle:@"Don't add anything."];
+        [indexPrompt addButtonWithTitle:@"Add index.html"];
+        [indexPrompt addButtonWithTitle:@"Don't Add Anything"];
         
         NSInteger result = [indexPrompt runModal];
         BOOL doesWantAnIndexFile = result == NSAlertFirstButtonReturn;
