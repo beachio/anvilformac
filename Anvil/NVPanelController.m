@@ -34,6 +34,8 @@
 @property (nonatomic) BOOL forceOpen;
 @property (nonatomic) BOOL awake;
 @property (nonatomic) NSTimer *powCheckerTimer;
+@property (nonatomic) NSInteger indexOfRowBeingEdited;
+
 @end
 
 @implementation NVPanelController
@@ -213,22 +215,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     }
 }
 
-- (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
-    
-    NSInteger index = [indexNumber integerValue];
-
-    if (index > -1 && index < self.appListTableView.numberOfRows) {
-        
-        NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:index];
-        [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
-        
-        NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:index makeIfNecessary:YES];
-        self.isEditing = YES;
-        [cell.textField setEnabled:YES];
-        [cell.textField becomeFirstResponder];
-    }
-}
-
 - (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state {
 
     if (!self.hasActivePanel) {
@@ -247,7 +233,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     BOOL a, b;
     
     if (state) {
-        a = [self runTask:@"apachectl stop & /bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
+        a = [self runTask:@"/bin/launchctl load /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
         b = [self runTask:[NSString stringWithFormat:@"/bin/launchctl load %@/Library/LaunchAgents/cx.pow.powd.plist", NSHomeDirectory()] asRoot:NO];
     } else {
         a = [self runTask:@"/bin/launchctl unload /Library/LaunchDaemons/cx.pow.firewall.plist" asRoot:YES];
@@ -679,9 +665,35 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     return NO;
 }
 
+- (void)controlTextDidBeginEditing:(NSNotification *)obj {
+    
+    
+}
+
+- (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
+    
+    NSInteger index = [indexNumber integerValue];
+    
+    if (index > -1 && index < self.appListTableView.numberOfRows) {
+        
+        NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:index];
+        [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+        
+        NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:index makeIfNecessary:YES];
+        self.isEditing = YES;
+        
+        self.indexOfRowBeingEdited = index;
+        
+        [cell.textField setEnabled:YES];
+        [cell.textField becomeFirstResponder];
+    }
+}
+
 - (void)controlTextDidChange:(NSNotification *)obj  {
     
-    NVTableCellView *tableCellView = [self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO];
+    NVLabel *label = [obj object];
+    NVTableCellView *tableCellView = (NVTableCellView *)[label superview];
+    
     tableCellView.localLabel.hidden =  YES;
     
     [self resizeTextField: [obj object]];
@@ -690,15 +702,17 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
     
     self.isEditing = NO;
-
-    NSTextField *textField = (NSTextField *)obj.object;
-    NSInteger selectedIndex = self.selectedRow;
+    NVLabel *label = [obj object];
     
-    NVTableCellView *tableCellView = [self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO];
+    NVTableCellView *tableCellView = (NVTableCellView *)[label superview];
     tableCellView.localLabel.hidden =  NO;
     
-    NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:selectedIndex];
-    [app renameTo:textField.stringValue];
+    if (self.indexOfRowBeingEdited != -1) {
+        NVApp *app = (NVApp *)[[NVDataSource sharedDataSource].apps objectAtIndex:self.indexOfRowBeingEdited];
+        [app renameTo:label.stringValue];
+    }
+
+    self.indexOfRowBeingEdited = -1;
     
     [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
     [self.appListTableView reloadData];
@@ -830,7 +844,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
     NSArray *lines          = [pipeString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     NSString *responseCode  = [lines objectAtIndex:0];
-    return ([responseCode isEqualToString:@"HTTP/1.1 200 OK"]);
+    
+    BOOL powIsRunning = [responseCode rangeOfString:@"200"].location != NSNotFound;
+    return powIsRunning;
 }
 
 #pragma mark - Clicking and actions
@@ -955,6 +971,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
     [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
     NVTableCellView *cell = (NVTableCellView *)[self.appListTableView viewAtColumn:0 row:self.appListTableView.clickedRow makeIfNecessary:YES];
+    self.indexOfRowBeingEdited = self.appListTableView.clickedRow;
+    
     self.isEditing = YES;
     [cell.textField setEnabled:YES];
     [cell.textField becomeFirstResponder];
