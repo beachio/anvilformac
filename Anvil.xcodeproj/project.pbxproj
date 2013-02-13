@@ -272,6 +272,13 @@
 			path = 404;
 			sourceTree = "<group>";
 		};
+		4F38B81C16CC47700004C0F5 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		4F78B8961608AD3F006B0500 /* NVStyledView */ = {
 			isa = PBXGroup;
 			children = (
@@ -402,6 +409,7 @@
 		4FBFA36015C6F85800BA8209 /* Anvil */ = {
 			isa = PBXGroup;
 			children = (
+				4F38B81C16CC47700004C0F5 /* Libraries */,
 				4FCABA72166A655B00A30B3E /* Anvil.entitlements */,
 				4FB9E80F1605FEC2005B50A4 /* Model */,
 				4FBABB0B161344D900D4174B /* Resources */,

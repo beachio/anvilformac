@@ -734,6 +734,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [menu addItem:openInFinderMenuItem];
     NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
     [menu addItem:openInTerminalMenuItem];
+    
+    NSMenuItem *xipIOMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open using xip.io" action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
+    [menu addItem:xipIOMenuItem];
 
     [menu addItem:[NSMenuItem separatorItem]];
     
@@ -744,6 +747,34 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     return menu;
 }
+
+- (void)didClickOpenInXipIo:(id)sender {
+    
+    NSInteger clickedRow = self.appListTableView.selectedRow;
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+
+    NSTask *ipTask = [[NSTask alloc] init];
+    ipTask.launchPath = @"/usr/sbin/ipconfig";
+    ipTask.arguments = @[@"getifaddr", @"en1"];
+    NSPipe *pipe = [[NSPipe alloc] init];;
+    ipTask.standardOutput = pipe;
+    [ipTask launch];
+    [ipTask waitUntilExit];
+    
+    NSData *pipeData        = [[pipe fileHandleForReading] readDataToEndOfFile];
+    NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+    
+    NSString *ipAddress = [pipeString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, ipAddress];
+    
+    NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
+    [[NSWorkspace sharedWorkspace] openURL:ipURL];
+    
+    self.hasActivePanel = NO;
+}
+
 
 - (void)appListTableViewClicked:(id)sender {
     
