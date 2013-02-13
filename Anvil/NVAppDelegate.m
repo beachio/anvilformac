@@ -38,8 +38,27 @@ void *kContextActivePanel = &kContextActivePanel;
     // Install icon into the menu bar
     self.menubarController = [[NVMenubarController alloc] init];    
     self.menubarController.delegate = self;
-    [self.menubarController.statusItemView setNeedsDisplay:YES];
+    self.menubarController.statusItemView.needsDisplay = YES;
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
+                                                           selector: @selector(receiveWakeNote:)
+                                                               name: NSWorkspaceDidWakeNotification object: NULL];
 }
+
+- (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
+    
+    self.menubarController.statusItemView.needsDisplay = YES;
+}
+
+- (void)applicationWillUpdate:(NSNotification *)notification {
+
+    self.menubarController.statusItemView.needsDisplay = YES;
+}
+    
+- (void)receiveWakeNote:(id)sender {
+    
+    self.menubarController.statusItemView.needsDisplay = YES;
+}  
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     // Explicitly remove the icon from the menu bar

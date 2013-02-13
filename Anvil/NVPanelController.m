@@ -530,20 +530,26 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         return;
     }
     
-    [self.appListTableView deselectRow:self.selectedRow];
+    int i = 0;
     
-    if (self.selectedRow > -1 && self.selectedRow < self.appListTableView.numberOfRows) {
-        [[self.appListTableView rowViewAtRow:self.selectedRow makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
-        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] setNeedsDisplay:YES];
-        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] hideControls];
-    }
-
-    self.selectedRow = [self.appListTableView selectedRow];
-    
-    if ([self.appListTableView selectedRow] > -1) {
+    while (i < self.appListTableView.numberOfRows) {
         
-        [[self.appListTableView viewAtColumn:0 row:self.selectedRow makeIfNecessary:NO] showControls];
-        [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setNeedsDisplay:YES];
+        NSTableCellView *view = [self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO];
+        
+        if (view && i == self.appListTableView.selectedRow) {
+            
+            [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] showControls];
+            [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setNeedsDisplay:YES];
+        } else {
+            
+            [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+            [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] setNeedsDisplay:YES];
+            [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+        }
+        
+        self.selectedRow = self.appListTableView.selectedRow;
+        
+        i++;
     }
 }
 

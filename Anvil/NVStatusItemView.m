@@ -124,6 +124,13 @@
     [NSApp sendAction:self.rightClickAction to:self.target from:self];
 }
 
+- (BOOL)needsDisplay {
+    
+    // Not gonna lie. This 
+    NSLog(@"needs display?");
+    return YES;
+}
+
 #pragma mark -
 #pragma mark Accessors
 
