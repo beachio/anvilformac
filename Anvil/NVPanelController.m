@@ -743,6 +743,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(didClickRename:) keyEquivalent:@""];
     [menu addItem:renameMenuItem];
     
+    NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(didClickRemove:) keyEquivalent:@""];
+    [menu addItem:removeMenuItem];
+    
     [menu setAutoenablesItems:NO];
     
     return menu;
@@ -754,25 +757,35 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
 
-    NSTask *ipTask = [[NSTask alloc] init];
-    ipTask.launchPath = @"/usr/sbin/ipconfig";
-    ipTask.arguments = @[@"getifaddr", @"en1"];
-    NSPipe *pipe = [[NSPipe alloc] init];;
-    ipTask.standardOutput = pipe;
-    [ipTask launch];
-    [ipTask waitUntilExit];
+    // Cycle through ethernet and AirPort looking for our IP.
+    for (NSString *interface in @[@"en1", @"en0"]) {
+        
+        NSTask *ipTask = [[NSTask alloc] init];
+        ipTask.launchPath = @"/usr/sbin/ipconfig";
+        ipTask.arguments = @[@"getifaddr", interface];
+        NSPipe *pipe = [[NSPipe alloc] init];;
+        ipTask.standardOutput = pipe;
+        [ipTask launch];
+        [ipTask waitUntilExit];
+        
+        NSData *pipeData        = [[pipe fileHandleForReading] readDataToEndOfFile];
+        NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
+        
+        // It's blank when it's not assigned
+        if ([pipeString length] > 0) {
+            
+            NSString *ipAddress = [pipeString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, ipAddress];
+            
+            NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
+            [[NSWorkspace sharedWorkspace] openURL:ipURL];
+        
+            self.hasActivePanel = NO;
+            break;
+        }
+        
+    }
     
-    NSData *pipeData        = [[pipe fileHandleForReading] readDataToEndOfFile];
-    NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    
-    NSString *ipAddress = [pipeString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
-    NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, ipAddress];
-    
-    NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
-    [[NSWorkspace sharedWorkspace] openURL:ipURL];
-    
-    self.hasActivePanel = NO;
 }
 
 
@@ -1013,6 +1026,21 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     self.isEditing = YES;
     [cell.textField setEnabled:YES];
     [cell.textField becomeFirstResponder];
+}
+
+- (void)didClickRemove:(id)sender {
+    
+    NSInteger clickedRow = self.appListTableView.selectedRow;
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    
+    [dataSource removeApp:app];
+    
+    self.selectedRow = -1;
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
+    [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationEffectFade];
+    
+    [self updatePanelHeightAndAnimate:YES];
 }
 
 - (void)didClickOpenInTerminal:(id)sender {

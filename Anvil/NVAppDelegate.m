@@ -54,7 +54,7 @@ void *kContextActivePanel = &kContextActivePanel;
 
     self.menubarController.statusItemView.needsDisplay = YES;
 }
-    
+
 - (void)receiveWakeNote:(id)sender {
     
     self.menubarController.statusItemView.needsDisplay = YES;
