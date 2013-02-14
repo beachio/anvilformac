@@ -535,6 +535,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     self.appListTableView.menu = nil;
     self.appListTableView.menu = [self menuForTableView];
     
+    [self clearRows];
+}
+
+- (void)clearRows {
+    
     int i = 0;
     
     while (i < self.appListTableView.numberOfRows) {
@@ -627,9 +632,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
     if (!self.isEditing && row != [self.appListTableView selectedRow]) {
-        
+    
         [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     }
+    
+    self.appListTableView.needsDisplay = YES;
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
@@ -637,15 +644,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSString *trackingAreaName = [theEvent.trackingArea.userInfo objectForKey:@"identifier"];
     
     if (trackingAreaName == kPanelTrackingAreaIdentifier) {
-        
+
         [self.appListTableView deselectRow:self.selectedRow];
-        
-        if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
-            
-            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor redColor]];
-            [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
-            self.appListTableView.needsDisplay = YES;
-        }
+        NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:-1];
+        [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+        self.selectedRow = -1;
+        [self clearRows];
+        self.appListTableView.needsDisplay = YES;
     }
 }
 
