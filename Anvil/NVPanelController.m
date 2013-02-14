@@ -35,6 +35,7 @@
 @property (nonatomic) BOOL awake;
 @property (nonatomic) NSTimer *powCheckerTimer;
 @property (nonatomic) NSInteger indexOfRowBeingEdited;
+@property (strong, nonatomic) NSString *ip;
 
 @end
 
@@ -346,6 +347,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self switchSwitchViewToPowStatus];
     
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
+    
     self.panelIsOpen = YES;
     
     [self.window makeFirstResponder:nil];
@@ -525,10 +527,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-
+    
     if (self.isEditing) {
         return;
     }
+    
+    self.appListTableView.menu = nil;
+    self.appListTableView.menu = [self menuForTableView];
     
     int i = 0;
     
@@ -538,6 +543,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         if (view && i == self.appListTableView.selectedRow) {
             
+            [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
             [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] showControls];
             [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setNeedsDisplay:YES];
         } else {
@@ -631,11 +637,14 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSString *trackingAreaName = [theEvent.trackingArea.userInfo objectForKey:@"identifier"];
     
     if (trackingAreaName == kPanelTrackingAreaIdentifier) {
+        
         [self.appListTableView deselectRow:self.selectedRow];
         
         if (!self.isEditing && [self.appListTableView selectedRow] > -1) {
-            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
+            
+            [[self.appListTableView rowViewAtRow:[self.appListTableView selectedRow] makeIfNecessary:NO] setBackgroundColor:[NSColor redColor]];
             [[self.appListTableView viewAtColumn:0 row:[self.appListTableView selectedRow] makeIfNecessary:NO] hideControls];
+            self.appListTableView.needsDisplay = YES;
         }
     }
 }
@@ -735,8 +744,30 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
     [menu addItem:openInTerminalMenuItem];
     
-    NSMenuItem *xipIOMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open using xip.io" action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
-    [menu addItem:xipIOMenuItem];
+    if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1 && [self ipAddress]) {
+        
+        [menu addItem:[NSMenuItem separatorItem]];
+        
+        NVDataSource *dataSource = [NVDataSource sharedDataSource];
+
+        NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
+
+        NSString *ipMenuItemName = [NSString stringWithFormat:@"%@.%@.xip.io", app.name, [self ipAddress]];
+        NSMenuItem *xipIOMenuItem = [[NSMenuItem alloc] initWithTitle:ipMenuItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
+        xipIOMenuItem.enabled = NO;
+        xipIOMenuItem.indentationLevel = 0;
+        [menu addItem:xipIOMenuItem];
+        
+        NSString *copyItemName = @"Copy to Clipboard";
+        NSMenuItem *copyItem = [[NSMenuItem alloc] initWithTitle:copyItemName action:@selector(didClickCopyXipIo:) keyEquivalent:@""];
+        copyItem.indentationLevel = 1;
+        [menu addItem:copyItem];
+
+        NSString *openItemName = @"Open in Browser";
+        NSMenuItem *openItem = [[NSMenuItem alloc] initWithTitle:openItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
+        openItem.indentationLevel = 1;
+        [menu addItem:openItem];
+    }
 
     [menu addItem:[NSMenuItem separatorItem]];
     
@@ -751,12 +782,42 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     return menu;
 }
 
+- (void)didClickCopyXipIo:(id)sender {
+    
+    NSInteger clickedRow = self.appListTableView.selectedRow;
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    
+    NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, [self ipAddress]];
+    
+    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+    [pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
+    [pboard setString:xipString forType:NSStringPboardType];
+    
+    self.hasActivePanel = NO;
+}
+
 - (void)didClickOpenInXipIo:(id)sender {
     
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
 
+    NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, [self ipAddress]];
+
+    NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
+    [[NSWorkspace sharedWorkspace] openURL:ipURL];
+
+    self.hasActivePanel = NO;    
+}
+
+- (NSString *)ipAddress {
+    
+    if ([self.ip isNotEqualTo:nil]) {
+        
+        return self.ip;
+    }
+    
     // Cycle through ethernet and AirPort looking for our IP.
     for (NSString *interface in @[@"en1", @"en0"]) {
         
@@ -774,18 +835,15 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         // It's blank when it's not assigned
         if ([pipeString length] > 0) {
             
-            NSString *ipAddress = [pipeString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, ipAddress];
-            
-            NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
-            [[NSWorkspace sharedWorkspace] openURL:ipURL];
-        
-            self.hasActivePanel = NO;
-            break;
+            NSString *ip = [pipeString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            self.ip = ip;
+            return ip;
         }
         
     }
     
+    self.ip = false;
+    return false;
 }
 
 
