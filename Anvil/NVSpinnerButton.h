@@ -10,6 +10,7 @@
 
 @interface NVSpinnerButton : NVStyledButton
 
+- (BOOL)isSpinning;
 - (void)showSpinnerFor:(double)time;
 
 @end

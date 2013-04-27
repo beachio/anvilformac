@@ -744,34 +744,41 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
     
-    NSMenuItem *openInFinderMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Finder" action:@selector(didClickOpenInFinder:) keyEquivalent:@""];
-    [menu addItem:openInFinderMenuItem];
-    NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
-    [menu addItem:openInTerminalMenuItem];
-    
-    if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1 && [self ipAddress]) {
-        
-        [menu addItem:[NSMenuItem separatorItem]];
+    if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1) {
         
         NVDataSource *dataSource = [NVDataSource sharedDataSource];
-
         NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
-
-        NSString *ipMenuItemName = [NSString stringWithFormat:@"%@.%@.xip.io", app.name, [self ipAddress]];
-        NSMenuItem *xipIOMenuItem = [[NSMenuItem alloc] initWithTitle:ipMenuItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
-        xipIOMenuItem.enabled = NO;
-        xipIOMenuItem.indentationLevel = 0;
-        [menu addItem:xipIOMenuItem];
         
-        NSString *copyItemName = @"Copy to Clipboard";
-        NSMenuItem *copyItem = [[NSMenuItem alloc] initWithTitle:copyItemName action:@selector(didClickCopyXipIo:) keyEquivalent:@""];
-        copyItem.indentationLevel = 1;
-        [menu addItem:copyItem];
+        if (app.isARackApp) {
+            NSMenuItem *restartApp = [[NSMenuItem alloc] initWithTitle:@"Restart" action:@selector(didClickRestartButton:) keyEquivalent:@""];
+            [menu addItem:restartApp];
+        }
+        
+        NSMenuItem *openInFinderMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Finder" action:@selector(didClickOpenInFinder:) keyEquivalent:@""];
+        [menu addItem:openInFinderMenuItem];
+        NSMenuItem *openInTerminalMenuItem = [[NSMenuItem alloc] initWithTitle:@"Open in Terminal" action:@selector(didClickOpenInTerminal:) keyEquivalent:@""];
+        [menu addItem:openInTerminalMenuItem];
 
-        NSString *openItemName = @"Open in Browser";
-        NSMenuItem *openItem = [[NSMenuItem alloc] initWithTitle:openItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
-        openItem.indentationLevel = 1;
-        [menu addItem:openItem];
+        
+        if ([self ipAddress]) {
+            [menu addItem:[NSMenuItem separatorItem]];
+            
+            NSString *ipMenuItemName = [NSString stringWithFormat:@"%@.%@.xip.io", app.name, [self ipAddress]];
+            NSMenuItem *xipIOMenuItem = [[NSMenuItem alloc] initWithTitle:ipMenuItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
+            xipIOMenuItem.enabled = NO;
+            xipIOMenuItem.indentationLevel = 0;
+            [menu addItem:xipIOMenuItem];
+            
+            NSString *copyItemName = @"Copy to Clipboard";
+            NSMenuItem *copyItem = [[NSMenuItem alloc] initWithTitle:copyItemName action:@selector(didClickCopyXipIo:) keyEquivalent:@""];
+            copyItem.indentationLevel = 1;
+            [menu addItem:copyItem];
+
+            NSString *openItemName = @"Open in Browser";
+            NSMenuItem *openItem = [[NSMenuItem alloc] initWithTitle:openItemName action:@selector(didClickOpenInXipIo:) keyEquivalent:@""];
+            openItem.indentationLevel = 1;
+            [menu addItem:openItem];
+        }
     }
 
     [menu addItem:[NSMenuItem separatorItem]];
@@ -1003,13 +1010,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     }];
 }
 
-- (IBAction)didClickRestart:(id)sender {
-    
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-    
-    [app restart];
-}
+//- (IBAction)didClickRestart:(id)sender {
+//    
+//    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+//    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+//    
+//    [app restart];
+//}
 
 - (IBAction)didClickReallyDeleteButton:(id)sender {
     
@@ -1037,7 +1044,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     [app restart];
     
-    NVSpinnerButton *restartButton = sender;
+    NVTableCellView *cellView = [self.appListTableView viewAtColumn:0 row:self.appListTableView.selectedRow makeIfNecessary:NO];
+    NVSpinnerButton *restartButton = cellView.restartButton;
     [restartButton showSpinnerFor:0.4];
 }
 

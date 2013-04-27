@@ -9,10 +9,22 @@
 #import "NVSpinnerButton.h"
 #import "CustomLoadingSpinner.h"
 
+@interface NVSpinnerButton ()
+
+@property BOOL spinning;
+
+@end
+
 @implementation NVSpinnerButton
+
+- (BOOL)isSpinning {
+    
+    return self.spinning;
+}
 
 - (void)showSpinnerFor:(double)time {
     
+    self.spinning = YES;
     self.hidden = YES;
     CGFloat inset = 4;
     CGRect frame = CGRectMake(self.frame.origin.x + inset / 2, self.frame.origin.y + inset / 2, self.frame.size.width - inset, self.frame.size.width - inset);
@@ -24,7 +36,8 @@
 }
 
 - (void)hideSpinner:(id)sender {
-    
+
+    self.spinning = NO;
     CustomLoadingSpinner *spinner = sender;
     [spinner setSpinning:NO];
     spinner.hidden = YES;

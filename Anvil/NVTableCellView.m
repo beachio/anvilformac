@@ -114,7 +114,7 @@
     
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.1];
-    if (self.showRestartButton) {
+    if (self.showRestartButton && ![self.restartButton isSpinning]) {
         [[self.restartButton animator] setHidden:NO];
     }
     [[self.deleteButton animator] setHidden:NO];

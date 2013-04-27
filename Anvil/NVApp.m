@@ -160,11 +160,20 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 - (void)restart {
     
+
+    NSURL *tmpDirectoryURL = [self.url URLByAppendingPathComponent:@"tmp"];
+    NSError *tmpDirectoryError = nil;
+    [[NSFileManager defaultManager] createDirectoryAtURL:tmpDirectoryURL withIntermediateDirectories:YES attributes:nil error:&tmpDirectoryError];
+
     NSURL *url = [self.url URLByAppendingPathComponent:@"tmp/restart.txt"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        
+        [[NSFileManager defaultManager] createFileAtPath:url.path contents:nil attributes:nil];
+    }
     
     NSError *error = nil;
     NSDictionary *revisionDict = [NSDictionary dictionaryWithObject:[NSDate date] forKey:NSFileModificationDate];
-    
     [[NSFileManager defaultManager] setAttributes:revisionDict ofItemAtPath:url.path error:&error];
 }
 
