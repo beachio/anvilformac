@@ -126,8 +126,6 @@
 
 - (BOOL)needsDisplay {
     
-    // Not gonna lie. This 
-    NSLog(@"needs display?");
     return YES;
 }
 
