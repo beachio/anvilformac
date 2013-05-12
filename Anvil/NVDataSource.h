@@ -20,5 +20,6 @@
 - (void)removeApp:(NVApp *)appToRemove;
 - (NVApp *)findAppWithURL:(NSURL *)url;
 - (NSInteger)indexOfAppWithURL:(NSURL *)url;
+- (NSInteger *)numberOfHammerSites;
 
 @end

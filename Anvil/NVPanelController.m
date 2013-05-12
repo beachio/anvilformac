@@ -5,6 +5,7 @@
 #import "NVTableRowView.h"
 #import "NVTableCellView.h"
 #import "NVAppDelegate.h"
+#import "NVGroupHeaderTableRowView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <Sparkle/Sparkle.h>
 
@@ -424,6 +425,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSRect statusRect = [self statusRect];
     
     NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
+    
+    if ([self hammerGroupHeaderRowNumber] >= 0) {
+        panelHeight -= 16;
+    }
 
     // Set our maximum height
     NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
@@ -522,8 +527,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-    
-    return [[[NVDataSource sharedDataSource] apps] count];
+
+    return [[[NVDataSource sharedDataSource] apps] count] + 1;
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
@@ -566,7 +571,15 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    NVApp *app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
+    NVApp *app;
+    if (row < [self hammerGroupHeaderRowNumber]) {
+        app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
+    } else if (row > [self hammerGroupHeaderRowNumber]){
+        app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row - 1];
+    } else {
+        
+        return nil;
+    }
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
     [cellView.siteLabel setText:app.name];
@@ -598,9 +611,36 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     return cellView;
 }
 
+- (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row {
+    
+    return row == [self hammerGroupHeaderRowNumber];
+}
+
+- (double)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    
+    if (row == [self hammerGroupHeaderRowNumber]) {
+        return 16;
+    } else {
+        return 32;
+    }
+}
+
+- (NSInteger)hammerGroupHeaderRowNumber {
+    
+    int number = (int)[NVDataSource sharedDataSource].apps.count - (int)[NVDataSource sharedDataSource].numberOfHammerSites;
+    return number;
+}
+
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
     NVTableRowView *rowView = (NVTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
+
+    if (row == [self hammerGroupHeaderRowNumber]) {
+        
+        NVGroupHeaderTableRowView *rowView = [[NVGroupHeaderTableRowView alloc] init];
+        return rowView;
+    }
+    
     if (rowView == nil) {
         
         rowView = [[NVTableRowView alloc] init];
@@ -747,7 +787,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1) {
         
         NVDataSource *dataSource = [NVDataSource sharedDataSource];
-        NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
+        NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
         
         if (app.isARackApp) {
             NSMenuItem *restartApp = [[NSMenuItem alloc] initWithTitle:@"Restart" action:@selector(didClickRestartButton:) keyEquivalent:@""];
@@ -875,12 +915,26 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     } else {
         
         NVDataSource *dataSource = [NVDataSource sharedDataSource];
-        NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+        NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
         
         [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
         
         self.hasActivePanel = NO;
     }
+}
+
+- (NVApp *)appForSelectedRow:(NSInteger)selectedRow {
+    
+    NSInteger realRowIndex = selectedRow;
+
+    if (selectedRow > [self hammerGroupHeaderRowNumber]) {
+
+        realRowIndex -= 1;
+    }
+    
+    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+    NVApp *app = [dataSource.apps objectAtIndex:realRowIndex];
+    return app;
 }
 
 - (void)setSelectionFromClick{
@@ -1027,7 +1081,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [dataSource removeApp:app];
     
@@ -1040,7 +1094,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (IBAction)didClickRestartButton:(id)sender {
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.selectedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [app restart];
     
@@ -1103,7 +1157,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [dataSource removeApp:app];
     
@@ -1117,7 +1171,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)didClickOpenInTerminal:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/open"];
@@ -1128,7 +1182,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)didClickOpenInFinder:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.url];
 }
@@ -1136,7 +1190,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)didClickOpenWithBrowser:(id)sender {
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
 }

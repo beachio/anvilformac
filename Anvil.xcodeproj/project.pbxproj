@@ -70,6 +70,7 @@
 		4FAC9A711614AB1300C260B4 /* BlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A6B1614AB1300C260B4 /* BlueButton.png */; };
 		4FAC9A721614AB1300C260B4 /* BlueButtonAddPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A6C1614AB1300C260B4 /* BlueButtonAddPushed.png */; };
 		4FAC9A741614B2CC00C260B4 /* BlueButtonPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FAC9A731614B2CC00C260B4 /* BlueButtonPushed.png */; };
+		4FB35C471740113600107F30 /* NVGroupHeaderTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35C461740113600107F30 /* NVGroupHeaderTableRowView.m */; };
 		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
@@ -195,6 +196,8 @@
 		4FAC9A6B1614AB1300C260B4 /* BlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButton.png; sourceTree = "<group>"; };
 		4FAC9A6C1614AB1300C260B4 /* BlueButtonAddPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButtonAddPushed.png; sourceTree = "<group>"; };
 		4FAC9A731614B2CC00C260B4 /* BlueButtonPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueButtonPushed.png; sourceTree = "<group>"; };
+		4FB35C451740113600107F30 /* NVGroupHeaderTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVGroupHeaderTableRowView.h; sourceTree = "<group>"; };
+		4FB35C461740113600107F30 /* NVGroupHeaderTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVGroupHeaderTableRowView.m; sourceTree = "<group>"; };
 		4FB9E80B1605FEBE005B50A4 /* NVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVApp.h; sourceTree = "<group>"; };
 		4FB9E80C1605FEBE005B50A4 /* NVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVApp.m; sourceTree = "<group>"; };
 		4FB9E81016061096005B50A4 /* NVTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableRowView.h; sourceTree = "<group>"; };
@@ -319,6 +322,15 @@
 				4F78B8E31608C585006B0500 /* NVSwitchView.m */,
 			);
 			name = NVSwitchView;
+			sourceTree = "<group>";
+		};
+		4FB35C441740111900107F30 /* NVGroupHeaderTableRow */ = {
+			isa = PBXGroup;
+			children = (
+				4FB35C451740113600107F30 /* NVGroupHeaderTableRowView.h */,
+				4FB35C461740113600107F30 /* NVGroupHeaderTableRowView.m */,
+			);
+			name = NVGroupHeaderTableRow;
 			sourceTree = "<group>";
 		};
 		4FB9E80F1605FEC2005B50A4 /* Model */ = {
@@ -532,6 +544,7 @@
 		4FBFA3A015C7ED5300BA8209 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FB35C441740111900107F30 /* NVGroupHeaderTableRow */,
 				4FC8A0F8162587A000D335E0 /* CustomLoadingSpinner */,
 				4FCEDE961615B7EA00122B18 /* NVSpinnerButton */,
 				4FBFA3C115C7F50400BA8209 /* NVLayeredImageVivew */,
@@ -802,6 +815,7 @@
 				4F08AF9D1614885600D446C2 /* NVStyledButton.m in Sources */,
 				4FCEDE9516159EA600122B18 /* CustomLoadingSpinner.m in Sources */,
 				4FCEDE991615B7F700122B18 /* NVSpinnerButton.m in Sources */,
+				4FB35C471740113600107F30 /* NVGroupHeaderTableRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
