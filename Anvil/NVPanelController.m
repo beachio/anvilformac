@@ -551,7 +551,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         NSTableCellView *view = [self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO];
         
-        if (view && i == self.appListTableView.selectedRow) {
+        if (view && i == self.appListTableView.selectedRow && i < [self hammerGroupHeaderRowNumber]) {
             
             [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
             [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] showControls];
@@ -784,6 +784,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
     
+    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
+    [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
+    
     if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1) {
         
         NVDataSource *dataSource = [NVDataSource sharedDataSource];
@@ -821,14 +824,16 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         }
     }
 
-    [menu addItem:[NSMenuItem separatorItem]];
-    
-    NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(didClickRename:) keyEquivalent:@""];
-    [menu addItem:renameMenuItem];
-    
-    NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(didClickRemove:) keyEquivalent:@""];
-    [menu addItem:removeMenuItem];
-    
+
+    if (self.appListTableView.selectedRow < [self hammerGroupHeaderRowNumber]) {
+        
+        [menu addItem:[NSMenuItem separatorItem]];
+        
+        NSMenuItem *renameMenuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(didClickRename:) keyEquivalent:@""];
+        NSMenuItem *removeMenuItem = [[NSMenuItem alloc] initWithTitle:@"Remove" action:@selector(didClickRemove:) keyEquivalent:@""];
+        [menu addItem:renameMenuItem];
+        [menu addItem:removeMenuItem];
+    }
     [menu setAutoenablesItems:NO];
     
     return menu;
@@ -933,7 +938,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     }
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:realRowIndex];
+    NVApp *app;
+    if (realRowIndex < dataSource.apps.count) {
+        app = [dataSource.apps objectAtIndex:realRowIndex];
+    } else {
+        return nil;
+    }
     return app;
 }
 

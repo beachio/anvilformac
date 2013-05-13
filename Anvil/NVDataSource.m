@@ -98,6 +98,29 @@ static NSString *const kAppsKey = @"apps";
     }
     
     
+    NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];
+    NSError *error = nil;
+    NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
+    
+    if(error) {
+        
+        NSLog(@"There was an error accessing ~/.pow! Please ensure your Pow setup is correct.");
+    } else {
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        for (NSString* symlinkName in dirContents) {
+            
+            if ([symlinkName hasSuffix:@".hammer"]) {
+                
+                NSString *symlinkPath = [path stringByAppendingPathComponent:symlinkName];
+                
+                [fileManager removeItemAtPath:symlinkPath error:nil];
+            }
+        }
+    }
+
+    
+    
     NSDictionary *appsDictionary = [appsPlistDictionary valueForKey:@"apps"];
     
     NSArray *urlArray = [appsDictionary valueForKey:@"rootDirectoryURL"];
@@ -107,13 +130,17 @@ static NSString *const kAppsKey = @"apps";
         NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingString:@".hammer"];
         NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
         
+        
+        NSLog(@"%@", [NSURL URLWithString:localFileURL]);
         NVApp *newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
+        assert(newApp);
         newApp.name = name;
         [newApp createSymlink];
     }
     
     return urlArray;
 }
+
 
 - (NSInteger *)numberOfHammerSites {
     

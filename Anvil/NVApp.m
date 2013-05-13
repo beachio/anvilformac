@@ -31,13 +31,16 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         NSString *stringWithSymlinks = [NSString stringWithFormat:@"file://%@", [url.path stringByExpandingTildeInPath]];
 
         if (!stringWithSymlinks) {
+            
             return false;
         }
         
-        NSURL *expandedURL = [[NSURL URLWithString:stringWithSymlinks] URLByResolvingSymlinksInPath];
+        NSString *unescapedPath = [url.path stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *expandedURL = [[NSURL URLWithString:unescapedPath] URLByResolvingSymlinksInPath];
         
         if (!expandedURL) {
-            return false;
+            
+            expandedURL = [NSURL fileURLWithPath:unescapedPath];
         }
         
         // TODO: Add , @"Build" to this array when Hammer is available.
@@ -54,6 +57,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
                 expandedURL = publicURL;
             }
         }
+
         self.url = expandedURL;
     }
     return self;
@@ -140,7 +144,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 }
 
 - (void)createSymlink {
-        
+    
     if ([self isARackApp]) {
         
         [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];
