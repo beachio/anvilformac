@@ -52,6 +52,7 @@
 - (void)setHasActiveIcon:(BOOL)flag {
     
     self.statusItemView.isHighlighted = flag;
+    self.statusItemView.showHighlightIcon = flag;
 }
 
 - (BOOL)showHighlightIcon {

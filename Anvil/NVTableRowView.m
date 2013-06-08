@@ -90,7 +90,9 @@
     
     if (self.selected) {
         
-        [[self backgroundGradient] drawInRect:self.bounds angle:0];
+        [[NSColor colorWithDeviceRed:253.0/255.0 green:253.0/255.0 blue:253.0/255.0 alpha:1.0] set];
+        NSRectFill(self.bounds);
+//        [[self backgroundGradient] drawInRect:self.bounds angle:0];
     }
     
     // Top and bottom borders for rows

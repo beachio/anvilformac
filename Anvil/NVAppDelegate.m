@@ -95,7 +95,7 @@ void *kContextActivePanel = &kContextActivePanel;
         [self menuItemRightClicked:sender];
     } else {
         
-        self.menubarController.showHighlightIcon = NO;
+        self.menubarController.showHighlightIcon = !self.menubarController.hasActiveIcon;
         self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
         if (!self.panelController.hasActivePanel) {
             // Read in apps if we're opening it

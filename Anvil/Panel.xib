@@ -208,6 +208,7 @@
 									<string key="NSFrame">{{0, 473}, {256, 16}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
+									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -251,7 +252,7 @@
 									<string key="NSFrame">{{1, 2}, {36, 33}}</string>
 									<reference key="NSSuperview" ref="483366631"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSNextKeyView" ref="331158961"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="461502948">
@@ -854,7 +855,7 @@
 								<object class="NSTextField" id="585778320">
 									<reference key="NSNextResponder" ref="162184344"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{30, 8}, {40, 17}}</string>
+									<string key="NSFrame">{{32, 9}, {40, 17}}</string>
 									<reference key="NSSuperview" ref="162184344"/>
 									<reference key="NSNextKeyView" ref="1030250157"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -1714,6 +1715,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NVTableCellView</string>
 					<string key="superclassName">NSTableCellView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">didClickDeleteButton:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">didClickDeleteButton:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">didClickDeleteButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="deleteButton">NVStyledButton</string>
 						<string key="faviconImageView">NVLayeredImageView</string>

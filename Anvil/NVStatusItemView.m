@@ -32,6 +32,7 @@
         self.pasteboardTypes = [NSArray arrayWithObjects:@"com.apple.pasteboard.promised-file-url", @"public.file-url", nil];
         [self registerForDraggedTypes:self.pasteboardTypes];
         self.statusItem = statusItem;
+        self.statusItem.highlightMode = NO;
         self.statusItem.view = self;
     }
     
@@ -84,19 +85,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     
-	[self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:NO];
-        
-    if (self.showHighlightIcon) {
-        
-        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"AppleAquaColorVariant"] == 6) {
-            [[NSColor colorWithPatternImage:[NSImage imageNamed:@"GraphiteHighlight"]] setFill];
-        }
-        else {
-            [[NSColor colorWithPatternImage:[NSImage imageNamed:@"AquaHighlight"]] setFill];
-        }
-           
-        NSRectFill(dirtyRect);
-    }
+    [super drawRect:dirtyRect];
+    
+    [self.statusItem drawStatusBarBackgroundInRect:dirtyRect withHighlight:self.showHighlightIcon];
     
     NSImage *icon = self.showHighlightIcon ? self.alternateImage : self.image;
     NSSize iconSize = [icon size];
@@ -105,7 +96,13 @@
     CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2);
     CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
     NSPoint iconPoint = NSMakePoint(iconX, iconY);
-        
+    
+    if (self.showHighlightIcon) {
+        icon = self.alternateImage;
+    } else {
+        icon = self.image;
+    }
+    
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];
     
     [self setNeedsDisplay:YES];
@@ -133,6 +130,7 @@
 #pragma mark Accessors
 
 - (void)setHighlighted:(BOOL)newFlag {
+    
     if (_isHighlighted == newFlag) return;
     _isHighlighted = newFlag;
     [self setNeedsDisplay:YES];
