@@ -26,5 +26,7 @@ static inline BFEdgeInsets BFEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat b
 
 @interface BFImage : NSImage
 - (id)initWithImage:(NSImage *)image insets:(BFEdgeInsets)insets;
++ (NSImage *)imageFrom:(NSImage *)image withDimensions:(NSSize)size andInsets:(BFEdgeInsets)insets;
++ (NSImage *)compositeImageForImageNamed:(NSString *)imageName atSize:(NSSize)size andInsets:(BFEdgeInsets)insets;\
 @property (assign) BFEdgeInsets stretchInsets;
 @end

@@ -113,7 +113,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 - (NSURL *)symlinkURL {
     
     NSString *powPath = [@"~/.pow/" stringByExpandingTildeInPath];
-    NSString *urlString = [NSString stringWithFormat:@"file://%@/%@", powPath, [[self.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString]];
+    NSString *urlString = [NSString stringWithFormat:@"file://%@/%@", powPath, [[self.name stringByReplacingOccurrencesOfString:@" " withString:@"-"] lowercaseString]];
     
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [NSURL URLWithString:urlString];

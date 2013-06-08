@@ -12,14 +12,15 @@
 #import "CustomLoadingSpinner.h"
 
 @interface NVStyledButton ()
-
 @property (atomic) BFEdgeInsets insets;
-
+@property BOOL hovered;
 @end
 
 @implementation NVStyledButton
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
+    self.hovered = NO;
     self.textSize = 11.0;
     self.insets = BFEdgeInsetsMake(1.0, 5.0, 1.0, 5.0);
     self.isBold = YES;
@@ -28,16 +29,16 @@
                                                                  options:opts
                                                                    owner:self
                                                                 userInfo:nil];
-    [self  addTrackingArea:trackingArea];
+    [self addTrackingArea:trackingArea];
 }
 
-- (void)setInsetsWithTop:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom left:(CGFloat)left {
-    
+- (void)setInsetsWithTop:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom left:(CGFloat)left
+{
     self.insets = BFEdgeInsetsMake(top, left, bottom, right);
 }
 
-- (BFEdgeInsets)insetsOrDefaults {
-    
+- (BFEdgeInsets)insetsOrDefaults
+{
     BFEdgeInsets myInsets;
     if (self.insets.top == 0.0 && self.insets.right == 0.0 && self.insets.bottom == 0.0 && self.insets.left == 0.0) {
         myInsets = BFEdgeInsetsMake(1.0, 5.0, 1.0, 5.0);
@@ -47,13 +48,17 @@
     return myInsets;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    
+- (void)drawRect:(NSRect)dirtyRect
+{
     NSImage *image = nil;
     if ([self state]) {
         image = [self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
     } else {
-        image = [self.image stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+        if (self.hovered) {
+            image = [self.hoverImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+        } else {
+            image = [self.image stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+        }
     }
     [image setFlipped:YES];
     
@@ -90,13 +95,23 @@
         bounds.origin.y -= 2;
     }
     
+    if (self.textOffset != 0) {
+        bounds.origin.y += self.textOffset;
+    }
+    
     bounds.size.height = textHeight;
         
     [self.title drawInRect:bounds withAttributes:att];
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
-    
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    self.hovered = YES;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
     if (!self.isEnabled) {
         return;
     }
@@ -105,20 +120,22 @@
     [super mouseDown:theEvent];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
-    
+- (void)mouseUp:(NSEvent *)theEvent
+{
     self.state = NSOffState;
     [super mouseUp:theEvent];
 }
 
-- (void)draggingExited:(id<NSDraggingInfo>)sender {
-    
+- (void)draggingExited:(id<NSDraggingInfo>)sender
+{
     self.state = NSOffState;
     [super draggingExited:sender];
 }
 
-- (void)mouseExited:(NSEvent *)theEvent {
-    
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    self.hovered = NO;
+    [self setNeedsDisplay:YES];    
     self.state = NSOffState;
     [super mouseExited:theEvent];
 }

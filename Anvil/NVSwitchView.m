@@ -26,9 +26,11 @@
     NSImage *backgroundImage = nil;
     
     if (retinaScreen) {
+        
         switcherImage = [NSImage imageNamed:@"Switch@2x.png"];
         backgroundImage = [NSImage imageNamed:@"SwitchInactive@2x.png"];
     } else {
+        
         switcherImage = [NSImage imageNamed:@"Switch.png"];
         backgroundImage = [NSImage imageNamed:@"SwitchInactive.png"];
     }
@@ -50,9 +52,9 @@
     
     self.backgroundView = [[NVStyledView alloc] initWithFrame:backgroundViewRect];
     self.backgroundView.backgroundImage = backgroundImage;
-    
     [self addSubview:self.backgroundView];
 
+    rect.origin.y += 1;
     self.switcherView = [[NVStyledView alloc] initWithFrame:rect];
     self.switcherView.backgroundImage = switcherImage;
     [self addSubview:self.switcherView];

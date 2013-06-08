@@ -6,6 +6,7 @@
 #import "NVTableCellView.h"
 #import "NVAppDelegate.h"
 #import "NVGroupHeaderTableRowView.h"
+#import "NVGroupHeaderTableCellView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <Sparkle/Sparkle.h>
 
@@ -82,6 +83,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.appListTableScrollView.layer.opaque = NO;
         self.appListTableScrollView.layer.cornerRadius = 0;
         self.appListTableScrollView.backgroundColor = [NSColor clearColor];
+        [self.appListTableView setIntercellSpacing:NSMakeSize(0, 0)];
         
         NSShadow *shadow = [[NSShadow alloc] init];
         shadow.shadowColor = [NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4];
@@ -160,8 +162,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)setupSettingsButton {
     
-    self.settingsButton.image           = [NSImage imageNamed:@"Settings"];
-    self.settingsButton.alternateImage  = [NSImage imageNamed:@"SettingsAlt"];
+    self.settingsButton.image           = [NSImage imageNamed:@"SettingsButton"];
+    self.settingsButton.alternateImage  = [NSImage imageNamed:@"SettingsButtonPushed"];
     
     NSMenu *settingsMenu = [self buildSettingsMenu];
     
@@ -173,7 +175,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@""
                                                   action:NULL
                                            keyEquivalent:@""];
-    item.image = [NSImage imageNamed:@"Settings"];
+    item.image = [NSImage imageNamed:@"SettingsButton"];
     item.onStateImage = nil;
     item.mixedStateImage = nil;
     
@@ -183,7 +185,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cell.imagePosition = NSImageOnly;
     cell.arrowPosition = NSPopUpNoArrow;
     cell.usesItemFromMenu = NO;
-    cell.alternateImage = [NSImage imageNamed:@"SettingsAlt"];
+    cell.alternateImage = [NSImage imageNamed:@"SettingsButtonPushed"];
 }
 
 - (NSMenu *)buildSettingsMenu {
@@ -427,6 +429,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
     
     if ([self hammerGroupHeaderRowNumber] >= 0) {
+        
         panelHeight -= 16;
     }
 
@@ -573,12 +576,14 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NVApp *app;
     if (row < [self hammerGroupHeaderRowNumber]) {
+        
         app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
     } else if (row > [self hammerGroupHeaderRowNumber]){
+        
         app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row - 1];
     } else {
         
-        return nil;
+        return [[NVGroupHeaderTableCellView alloc] init];
     }
     
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
@@ -604,7 +609,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                                                             withSize:NSMakeSize(16, 16)];
     } else {
         
-        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
+//        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
         cellView.faviconImageView.foregroundImage = nil;
     }
 
@@ -618,10 +623,18 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (double)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     
-    if (row == [self hammerGroupHeaderRowNumber]) {
-        return 16;
+    NSInteger groupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    if (row == (groupHeaderRowNumber + 1)) {
+        
+        return 31;
+    } else if (row == groupHeaderRowNumber - 1) {
+        
+        return 31;
+    } else if (row == groupHeaderRowNumber) {
+        
+        return 26;
     } else {
-        return 32;
+        return 33;
     }
 }
 
@@ -635,7 +648,14 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NVTableRowView *rowView = (NVTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
 
-    if (row == [self hammerGroupHeaderRowNumber]) {
+    NSInteger groupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    if (row == (groupHeaderRowNumber + 1)) {
+
+        rowView.hideTopBorder = YES;
+    } else if (row == groupHeaderRowNumber - 1) {
+        
+        rowView.hideBottomBorder = YES;
+    } else if (row == groupHeaderRowNumber) {
         
         NVGroupHeaderTableRowView *rowView = [[NVGroupHeaderTableRowView alloc] init];
         return rowView;

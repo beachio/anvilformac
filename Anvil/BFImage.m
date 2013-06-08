@@ -14,11 +14,11 @@
 - (NSImage *)stretchableImageWithLeftCapWidth:(CGFloat)leftCapWidth topCapHeight:(CGFloat)topCapHeight {
     BFEdgeInsets insets = BFEdgeInsetsMake(topCapHeight, leftCapWidth, topCapHeight, leftCapWidth);
     BFImage *newImage = [[BFImage alloc] initWithImage:self insets:insets];
-    return [newImage autorelease];
+    return newImage;
 }
 - (NSImage *)stretchableImageWithEdgeInsets:(BFEdgeInsets)insets {
     BFImage *newImage = [[BFImage alloc] initWithImage:self insets:insets];
-    return [newImage autorelease];
+    return newImage;
 }
 @end
 
@@ -49,13 +49,6 @@
     return self;
 }
 
-- (void)dealloc {
-    self.sliceImages = nil;
-    [_cachedImage release]; _cachedImage = nil;
-    
-    [super dealloc];
-}
-
 #pragma mark - Internal Methods
 
 - (NSImage *)sliceFromRect:(NSRect)rect  {
@@ -65,9 +58,9 @@
         toRect.origin = NSZeroPoint;
         [newImage lockFocus];
         [self drawInRect:toRect fromRect:rect operation:NSCompositeCopy fraction:1.0f];
-        [newImage unlockFocus];        
+        [newImage unlockFocus];
     }
-    return [newImage autorelease];
+    return newImage;
 }
 
 - (void)setSliceImages:(NSArray *)sliceImages {
@@ -75,8 +68,8 @@
         if (_sliceImages == sliceImages) {
             return;
         }
-        [_sliceImages autorelease];
-        _sliceImages = [sliceImages retain];
+        
+        _sliceImages = sliceImages;
     }
 }
 
@@ -106,17 +99,18 @@
             
             NSArray *slices = [NSArray arrayWithObjects:topLeft, topEdge, topRight, leftEdge, center, rightEdge, bottomLeft, bottomEdge, bottomRight, nil];
             
-            _sliceImages = [slices retain];
+            _sliceImages = slices;
             
             self.slicing = NO;
         }
-        return [[_sliceImages retain] autorelease];
+        return _sliceImages;
     }
 }
 
 #pragma mark - Slices Drawing
 
 - (void)drawInRect:(NSRect)dstSpacePortionRect fromRect:(NSRect)srcSpacePortionRect operation:(NSCompositingOperation)op fraction:(CGFloat)requestedAlpha respectFlipped:(BOOL)respectContextIsFlipped hints:(NSDictionary *)hints {
+    
     if (self.slicing) {
         [super drawInRect:dstSpacePortionRect fromRect:srcSpacePortionRect operation:op fraction:requestedAlpha respectFlipped:respectContextIsFlipped hints:hints];
         return;
@@ -138,8 +132,8 @@
     
     NSImage *imageToCache = [[NSImage alloc] initWithSize:self.cachedImageSize];
     [imageToCache lockFocus];
-    NSDrawNinePartImage(dstSpacePortionRect, 
-                        [slices objectAtIndex:0], 
+    NSDrawNinePartImage(dstSpacePortionRect,
+                        [slices objectAtIndex:0],
                         [slices objectAtIndex:1],
                         [slices objectAtIndex:2],
                         [slices objectAtIndex:3],
@@ -151,7 +145,7 @@
                         NSCompositeSourceOver, 1.0f, NO);
     [imageToCache unlockFocus];
     
-    self.cachedImage = [imageToCache autorelease];
+    self.cachedImage = imageToCache;
     
     [self.cachedImage drawInRect:NSMakeRect(0, 0, self.cachedImageSize.width, self.cachedImageSize.height)
                         fromRect:NSZeroRect
@@ -165,8 +159,8 @@
         return;
     }
     NSArray *slices = self.sliceImages;
-    NSDrawNinePartImage(rect, 
-                        [slices objectAtIndex:0], 
+    NSDrawNinePartImage(rect,
+                        [slices objectAtIndex:0],
                         [slices objectAtIndex:1],
                         [slices objectAtIndex:2],
                         [slices objectAtIndex:3],
@@ -176,6 +170,26 @@
                         [slices objectAtIndex:7],
                         [slices objectAtIndex:8],
                         NSCompositeSourceOver, 1.0f, NO);
+}
+
++ (NSImage *)imageFrom:(NSImage *)image withDimensions:(NSSize)size andInsets:(BFEdgeInsets)insets {
+    
+    NSImage *compositeImage = [[NSImage alloc] initWithSize:size];
+    [compositeImage lockFocus];
+    BFImage *bfImage = [[BFImage alloc] initWithImage:image insets:insets];
+    [bfImage drawInRect:NSMakeRect(0, 0, size.width, size.height) fromRect:NSZeroRect operation:NSCompositeClear fraction:1.0];
+    [compositeImage unlockFocus];
+    return compositeImage;
+}
+
++ (NSImage *)compositeImageForImageNamed:(NSString *)imageName atSize:(NSSize)size andInsets:(BFEdgeInsets)insets {
+    
+    NSImage *compositeImage = [[NSImage alloc] initWithSize:size];
+    [compositeImage lockFocus];
+    BFImage *bfImage = [[BFImage alloc] initWithImage:[NSImage imageNamed:imageName] insets:insets];
+    [bfImage drawInRect:NSMakeRect(0, 0, size.width, size.height) fromRect:NSZeroRect operation:NSCompositeClear fraction:1.0];
+    [compositeImage unlockFocus];
+    return compositeImage;
 }
 
 @end

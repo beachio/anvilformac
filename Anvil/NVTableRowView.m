@@ -85,7 +85,11 @@
     self.backgroundColor = nil;
     [super drawRect:dirtyRect];
     
+//    [[NSColor colorWithDeviceRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0] set];
+//    NSRectFill(dirtyRect);
+    
     if (self.selected) {
+        
         [[self backgroundGradient] drawInRect:self.bounds angle:0];
     }
     
@@ -99,21 +103,23 @@
     NSInteger ownRowNumber = [tableView rowForView:self];
     NSInteger numberOfRows = [tableView numberOfRows];
     
-    if (ownRowNumber < numberOfRows-1) {
+    if (ownRowNumber < numberOfRows-1 && !self.hideBottomBorder) {
         NSRect bottomDrawingRect = [self frame];
         bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
         bottomDrawingRect.size.height = 1.0;
-        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:1.0] set];
+        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
         NSRectFill(bottomDrawingRect);
     }
     
-    if (ownRowNumber > 0) {
+    if (ownRowNumber > 0 && !self.hideTopBorder) {
         NSRect topDrawingRect = [self frame];
         topDrawingRect.origin.y = 0;
         topDrawingRect.size.height = 1;
-        [[NSColor whiteColor] set];
+//        [[NSColor whiteColor] set];
+        [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
         NSRectFill (topDrawingRect);
     }
+    
 }
 
 @end

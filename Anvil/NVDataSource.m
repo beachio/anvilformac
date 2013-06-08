@@ -130,8 +130,6 @@ static NSString *const kAppsKey = @"apps";
         NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingString:@".hammer"];
         NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
         
-        
-        NSLog(@"%@", [NSURL URLWithString:localFileURL]);
         NVApp *newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
         assert(newApp);
         newApp.name = name;

@@ -7,7 +7,8 @@
 //
 
 #import "NVGroupHeaderTableRowView.h"
-#import "NVLabel.h"
+#import "BFImage.h"
+#import "NSImage+Additions.h"
 
 @implementation NVGroupHeaderTableRowView
 
@@ -15,12 +16,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-        
-        NVLabel *label = [[NVLabel alloc] initWithFrame:NSMakeRect(3, 2, 120, 16)];
-        [label setFont:[NSFont systemFontOfSize:11.0]];
-        [label setStringValue:@"Hammer sites"];
-        [self addSubview:label];
+
     }
     
     return self;
@@ -32,14 +28,28 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [super drawRect:dirtyRect];
+//    [super drawRect:dirtyRect];
     
-    NSImage *titleBarImage = [NSImage imageNamed:@"Titlebar"];
-    
-    NSRect adjustedDirtyRect = dirtyRect;
-    adjustedDirtyRect.origin.y = -10;
-    [titleBarImage drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
-    
+//    // TODO: Check retina
+//    NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader"];
+//    
+//    NSRect adjustedDirtyRect = dirtyRect;
+//    adjustedDirtyRect.origin.y = -10;
+//    [titleBarImage drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
+//
+//    [[NSColor blackColor] set];
+//    NSRectFill(dirtyRect);
+//
+//    NSImage *titleBarImage = [[NSImage imageNamed:@"HammerHeader.png"] image];
+//    
+//    [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
+//    [titleBarImage drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
+////    [titleBarImage drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0 respectFlipped:YES hints:nil];
+//    [[NSColor whiteColor] set];
+//    NSRectFill(dirtyRect);
+////    NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader.png"];
+//    [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
+
 }
 
 @end

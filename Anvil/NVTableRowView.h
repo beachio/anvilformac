@@ -10,4 +10,7 @@
 
 @interface NVTableRowView : NSTableRowView
 
+@property BOOL hideTopBorder;
+@property BOOL hideBottomBorder;
+
 @end
