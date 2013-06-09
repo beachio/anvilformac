@@ -26,6 +26,11 @@
 
 }
 
+- (BOOL)isOpaque {
+    
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
 //    [super drawRect:dirtyRect];
@@ -37,7 +42,7 @@
 //    adjustedDirtyRect.origin.y = -10;
 //    [titleBarImage drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
 //
-//    [[NSColor blackColor] set];
+//    [[NSColor darkGrayColor] set];
 //    NSRectFill(dirtyRect);
 //
 //    NSImage *titleBarImage = [[NSImage imageNamed:@"HammerHeader.png"] image];

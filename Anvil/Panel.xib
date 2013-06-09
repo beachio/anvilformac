@@ -71,7 +71,7 @@
 											<string key="NSFrameSize">{256, 489}</string>
 											<reference key="NSSuperview" ref="984136381"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="162184344"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -167,7 +167,7 @@
 													<bytes key="NSWhite">MC41AA</bytes>
 												</object>
 											</object>
-											<double key="NSRowHeight">28</double>
+											<double key="NSRowHeight">100</double>
 											<int key="NSTvFlags">373293056</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
@@ -208,7 +208,6 @@
 									<string key="NSFrame">{{0, 473}, {256, 16}}</string>
 									<reference key="NSSuperview" ref="244901842"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -227,7 +226,7 @@
 							<reference key="NSVScroller" ref="8845446"/>
 							<reference key="NSHScroller" ref="201252280"/>
 							<reference key="NSContentView" ref="984136381"/>
-							<bytes key="NSScrollAmts">QSAAAEEgAABB8AAAQfAAAA</bytes>
+							<bytes key="NSScrollAmts">QSAAAEEgAABCzAAAQswAAA</bytes>
 							<double key="NSMinMagnification">0.25</double>
 							<double key="NSMaxMagnification">4</double>
 							<double key="NSMagnification">1</double>
@@ -266,11 +265,11 @@
 										<int key="NSButtonFlags2">130</int>
 										<object class="NSCustomResource" key="NSNormalImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">Settings</string>
+											<string key="NSResourceName">SettingsButton</string>
 										</object>
 										<object class="NSCustomResource" key="NSAlternateImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">SettingsAlt</string>
+											<string key="NSResourceName">SettingsButtonPushed</string>
 										</object>
 										<string key="NSAlternateContents"/>
 										<string key="NSKeyEquivalent"/>
@@ -554,7 +553,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="160445123"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{256, 200}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSAutorecalculatesContentBorderThicknessMinY">NO</bool>
@@ -1434,7 +1433,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">577</int>
+			<int key="maxID">578</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1715,17 +1714,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NVTableCellView</string>
 					<string key="superclassName">NSTableCellView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">didClickDeleteButton:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">didClickDeleteButton:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">didClickDeleteButton:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="deleteButton">NVStyledButton</string>
 						<string key="faviconImageView">NVLayeredImageView</string>
@@ -1780,8 +1768,8 @@
 			<string key="DeletePushed">{18, 19}</string>
 			<string key="Restart">{18, 19}</string>
 			<string key="RestartPushed">{18, 19}</string>
-			<string key="Settings">{13, 14}</string>
-			<string key="SettingsAlt">{13, 14}</string>
+			<string key="SettingsButton">{22, 21}</string>
+			<string key="SettingsButtonPushed">{22, 21}</string>
 		</dictionary>
 	</data>
 </archive>

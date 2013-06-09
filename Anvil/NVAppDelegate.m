@@ -43,6 +43,18 @@ void *kContextActivePanel = &kContextActivePanel;
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
                                                            selector: @selector(receiveWakeNote:)
                                                                name: NSWorkspaceDidWakeNotification object: NULL];
+    
+    [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
+    
+    // Initialize it
+    [self panelController];
+    NSTimer *mainLoopTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(readSites) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:mainLoopTimer forMode:NSEventTrackingRunLoopMode];
+}
+
+- (void)readSites {
+    
+    [[NVDataSource sharedDataSource] performSelectorInBackground:@selector(readInSavedAppDataFromDisk) withObject:nil];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
@@ -76,6 +88,7 @@ void *kContextActivePanel = &kContextActivePanel;
 - (NVPanelController *)panelController {
     
     if (!_panelController) {
+        
         _panelController = [[NVPanelController alloc] initWithWindowNibName:@"Panel"];
         [_panelController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
         _panelController.delegate = self;
@@ -99,7 +112,7 @@ void *kContextActivePanel = &kContextActivePanel;
         self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
         if (!self.panelController.hasActivePanel) {
             // Read in apps if we're opening it
-            [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
+//            [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
         }
         self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
     }

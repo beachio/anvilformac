@@ -18,24 +18,24 @@
 
 
 @implementation NVTableRowView
-
-- (NSGradient *)backgroundGradient {
-    
-    NSColor *highlightBackgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
-    
-    NSColor *middleColor = nil;
-    NSGradient *gradient;
-    
-    if (!self.mouseIsDown) {
-        middleColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.7];
-        gradient = [[NSGradient alloc] initWithColorsAndLocations:highlightBackgroundColor, 0.0, middleColor, 0.5, highlightBackgroundColor, 1.0, nil];
-    } else {
-        middleColor = [NSColor colorWithCalibratedWhite:0.9 alpha:0.8];
-        gradient = [[NSGradient alloc] initWithColorsAndLocations:highlightBackgroundColor, 0.0, middleColor, 0.3, middleColor, 0.7, highlightBackgroundColor, 1.0, nil];
-    }
-    
-    return gradient;
-}
+//
+//- (NSGradient *)backgroundGradient {
+//    
+//    NSColor *highlightBackgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
+//    
+//    NSColor *middleColor = nil;
+//    NSGradient *gradient;
+//    
+//    if (!self.mouseIsDown) {
+//        middleColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.7];
+//        gradient = [[NSGradient alloc] initWithColorsAndLocations:highlightBackgroundColor, 0.0, middleColor, 0.5, highlightBackgroundColor, 1.0, nil];
+//    } else {
+//        middleColor = [NSColor colorWithCalibratedWhite:0.9 alpha:0.8];
+//        gradient = [[NSGradient alloc] initWithColorsAndLocations:highlightBackgroundColor, 0.0, middleColor, 0.3, middleColor, 0.7, highlightBackgroundColor, 1.0, nil];
+//    }
+//    
+//    return gradient;
+//}
 
 - (void)highlight {
     
@@ -85,14 +85,10 @@
     self.backgroundColor = nil;
     [super drawRect:dirtyRect];
     
-//    [[NSColor colorWithDeviceRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0] set];
-//    NSRectFill(dirtyRect);
-    
     if (self.selected) {
         
         [[NSColor colorWithDeviceRed:253.0/255.0 green:253.0/255.0 blue:253.0/255.0 alpha:1.0] set];
         NSRectFill(self.bounds);
-//        [[self backgroundGradient] drawInRect:self.bounds angle:0];
     }
     
     // Top and bottom borders for rows
@@ -106,6 +102,7 @@
     NSInteger numberOfRows = [tableView numberOfRows];
     
     if (ownRowNumber < numberOfRows-1 && !self.hideBottomBorder) {
+        
         NSRect bottomDrawingRect = [self frame];
         bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
         bottomDrawingRect.size.height = 1.0;
@@ -114,10 +111,10 @@
     }
     
     if (ownRowNumber > 0 && !self.hideTopBorder) {
+        
         NSRect topDrawingRect = [self frame];
         topDrawingRect.origin.y = 0;
         topDrawingRect.size.height = 1;
-//        [[NSColor whiteColor] set];
         [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
         NSRectFill (topDrawingRect);
     }

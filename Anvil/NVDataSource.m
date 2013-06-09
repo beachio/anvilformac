@@ -139,7 +139,6 @@ static NSString *const kAppsKey = @"apps";
     return urlArray;
 }
 
-
 - (NSInteger *)numberOfHammerSites {
     
     // TODO: Un-magick

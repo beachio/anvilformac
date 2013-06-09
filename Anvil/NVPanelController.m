@@ -39,6 +39,8 @@
 @property (nonatomic) NSInteger indexOfRowBeingEdited;
 @property (strong, nonatomic) NSString *ip;
 
+@property (strong, nonatomic) NSFileHandle *taskOutput;
+
 @end
 
 @implementation NVPanelController
@@ -120,6 +122,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                              self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
                                              frame.size.width,
                                              frame.size.height)];
+        
+        self.isPowRunning = YES;
+        [self performSelectorInBackground:@selector(checkWhetherPowIsRunning) withObject:nil];
     }
     
     return self;
@@ -128,7 +133,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)awakeFromNib {
     
     if (!self.awake) {
+        
         [super awakeFromNib];
+        [self.appListTableView reloadData];
         [self switchSwitchViewToPowStatus];
         self.awake = YES;
         
@@ -211,11 +218,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     if (self.hasActivePanel) {
         self.selectedRow = -1;
-        BOOL status = [self checkWhetherPowIsRunning];
-        self.isPowRunning = status;
+//        BOOL status = [self checkWhetherPowIsRunning];
+//        self.isPowRunning = status;
 
-        [self.switchView switchToWithoutCallbacks:status withAnimation:YES];
-        self.switchLabel.text = status ? @"ON" : @"OFF";
+        [self.switchView switchToWithoutCallbacks:self.isPowRunning withAnimation:YES];
+        self.switchLabel.text = self.isPowRunning ? @"ON" : @"OFF";
     }
 }
 
@@ -248,8 +255,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [NSApp activateIgnoringOtherApps:YES];
     [self.window becomeMainWindow];
 
-    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
-    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
+    [self checkWhetherPowIsRunning];
+    
+    [self performSelector:@selector(checkWhetherPowIsRunning) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(checkWhetherPowIsRunning) withObject:nil afterDelay:2.0];
 
     [self forcePanelToBeOpen];
     
@@ -331,8 +340,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
     self.backgroundView.arrowX = panelX;
     
+    // TODO: Make this clip with rounded corners
     NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 5;
-    self.appListTableScrollView.frame = NSMakeRect(1, 1, PANEL_WIDTH - 2, appListHeight);
+    self.appListTableScrollView.frame = NSMakeRect(0, 0, PANEL_WIDTH + 1, appListHeight);
 }
 
 #pragma mark - Keyboard
@@ -347,7 +357,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)openPanel {
     
     [self.appListTableView reloadData];
-    [self switchSwitchViewToPowStatus];
+//    [self switchSwitchViewToPowStatus];
+    [self checkWhetherPowIsRunning];
     
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
     
@@ -413,6 +424,16 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 #pragma mark - Sizing
 
+- (NSInteger *)numberOfNonHammerSites {
+    
+    return [NVDataSource sharedDataSource].apps.count;
+}
+
+- (BOOL)hasHammerSites {
+    
+    return (int)[NVDataSource sharedDataSource].numberOfHammerSites > 0;
+}
+
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
     
     if (!self.hasActivePanel) {
@@ -428,9 +449,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
     
-    if ([self hammerGroupHeaderRowNumber] >= 0) {
+    if ([self hasHammerSites]) {
         
-        panelHeight -= 16;
+        // THE MAGIC NUMBER
+        // TODO: Make this cleverer about the actual difference in heights.
+        panelHeight -= 11;
     }
 
     // Set our maximum height
@@ -531,7 +554,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
 
-    return [[[NVDataSource sharedDataSource] apps] count] + 1;
+    NSInteger sites = [[[NVDataSource sharedDataSource] apps] count];
+    if ([self hammerGroupHeaderRowNumber] < sites) {
+        
+        sites += 1;
+    }
+    
+    return sites;
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
@@ -575,13 +604,16 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
     NVApp *app;
-    if (row < [self hammerGroupHeaderRowNumber]) {
+    
+    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    if (row < hammerGroupHeaderRowNumber) {
         
         app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
-    } else if (row > [self hammerGroupHeaderRowNumber]){
+        
+    } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
         app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row - 1];
-    } else {
+    } else if (row == hammerGroupHeaderRowNumber){
         
         return [[NVGroupHeaderTableCellView alloc] init];
     }
@@ -634,6 +666,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         return 26;
     } else {
+        
         return 33;
     }
 }
@@ -641,25 +674,27 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (NSInteger)hammerGroupHeaderRowNumber {
     
     int number = (int)[NVDataSource sharedDataSource].apps.count - (int)[NVDataSource sharedDataSource].numberOfHammerSites;
+
+    if ((int)[NVDataSource sharedDataSource].numberOfHammerSites == 0) {
+        
+        return number + 100;
+    }
+    
     return number;
 }
 
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
-    NVTableRowView *rowView = (NVTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
-
+    // Hammer sites bar
     NSInteger groupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
-    if (row == (groupHeaderRowNumber + 1)) {
-
-        rowView.hideTopBorder = YES;
-    } else if (row == groupHeaderRowNumber - 1) {
-        
-        rowView.hideBottomBorder = YES;
-    } else if (row == groupHeaderRowNumber) {
+    
+    if (row == groupHeaderRowNumber) {
         
         NVGroupHeaderTableRowView *rowView = [[NVGroupHeaderTableRowView alloc] init];
         return rowView;
     }
+    
+    NVTableRowView *rowView = (NVTableRowView *)[tableView makeViewWithIdentifier:kAppListTableRowIdentifier owner:self];
     
     if (rowView == nil) {
         
@@ -667,6 +702,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         rowView.identifier = kAppListTableRowIdentifier;
     }
     
+    rowView.hideTopBorder    = (row == (groupHeaderRowNumber + 1));
+    rowView.hideBottomBorder = (row == (groupHeaderRowNumber - 1));
+
     return rowView;
 }
 
@@ -923,7 +961,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     return false;
 }
 
-
 - (void)appListTableViewClicked:(id)sender {
     
     if (self.appListTableView.clickedRow != self.appListTableView.selectedRow) {
@@ -939,12 +976,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [NSMenu popUpContextMenu:self.appListTableView.menu withEvent:theEvent forView:self.appListTableView];
     } else {
         
-        NVDataSource *dataSource = [NVDataSource sharedDataSource];
         NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
         
-        [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
-        
-        self.hasActivePanel = NO;
+        if (app) {
+            [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+            self.hasActivePanel = NO;
+        }
     }
 }
 
@@ -952,9 +989,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSInteger realRowIndex = selectedRow;
 
-    if (selectedRow > [self hammerGroupHeaderRowNumber]) {
+    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    if (selectedRow > hammerGroupHeaderRowNumber) {
 
         realRowIndex -= 1;
+    } else if(selectedRow == hammerGroupHeaderRowNumber) {
+        
+        return nil;
     }
     
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
@@ -1031,7 +1072,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 }
 
 - (BOOL)checkWhetherPowIsRunning {
-    
+
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/curl"];
     [task setArguments:[NSArray arrayWithObjects:@"-I", @"--silent", @"--connect-timeout", @"5", @"-H", @"host:pow", @"localhost:20559/status.json", nil]];
@@ -1041,16 +1082,46 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [task setStandardError:[NSPipe pipe]];
     [task setStandardOutput:outputPipe];
     [task launch];
-    [task waitUntilExit];
+//    [task waitUntilExit];
     
-    /* Get the first line, check its status code. */
-    NSData *pipeData        = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-    NSString *pipeString    = [[NSString alloc] initWithData:pipeData encoding:NSUTF8StringEncoding];
-    NSArray *lines          = [pipeString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    NSString *responseCode  = [lines objectAtIndex:0];
+    self.taskOutput = [outputPipe fileHandleForReading];
     
-    BOOL powIsRunning = [responseCode rangeOfString:@"200"].location != NSNotFound;
-    return powIsRunning;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskDataAvailable:) name:NSFileHandleReadCompletionNotification object:self.taskOutput];
+    [self.taskOutput readInBackgroundAndNotify];
+    
+    return NO;
+}
+
+- (void)taskDataAvailable:(NSNotification *)notification {
+    
+    NSData *incomingData = [[notification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    if (incomingData && [incomingData length])
+    {
+        self.isPowRunning = YES;
+    } else {
+        self.isPowRunning = NO;
+    }
+    
+    [self switchSwitchViewToPowStatus];
+}
+
+- (void)taskCompleted:(NSNotification *)notification {
+
+    NSLog(@"Task complete!");
+    
+    int exitCode = [[notification object] terminationStatus];
+    
+    if (exitCode != 0)
+        NSLog(@"Error: Task exited with code %d", exitCode);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Do whatever else you need to do when the task finished
+    
+//    BOOL powIsRunning = [responseCode rangeOfString:@"200"].location != NSNotFound;
+//    self.isPowRunning = powIsRunning;
+//    [self switchSwitchViewToPowStatus];
+//    
+//    return powIsRunning;
+
 }
 
 #pragma mark - Clicking and actions
