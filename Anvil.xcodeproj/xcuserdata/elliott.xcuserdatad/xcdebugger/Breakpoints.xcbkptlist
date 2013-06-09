@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.m"
-         timestampString = "392463862.563644"
+         timestampString = "392469222.539046"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "356"
-         endingLineNumber = "356"
+         startingLineNumber = "360"
+         endingLineNumber = "360"
          landmarkName = "-openPanel"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.m"
-         timestampString = "392463862.563644"
+         timestampString = "392469222.539046"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "372"
-         endingLineNumber = "372"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
          landmarkName = "@implementation NVPanelController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.m"
-         timestampString = "392465144.411318"
+         timestampString = "392472487.290146"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "859"
-         endingLineNumber = "859"
+         startingLineNumber = "868"
+         endingLineNumber = "868"
          landmarkName = "-menuForTableView"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVApp.m"
-         timestampString = "390115013.156493"
+         timestampString = "392469337.873833"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "146"
-         endingLineNumber = "146"
+         startingLineNumber = "147"
+         endingLineNumber = "147"
          landmarkName = "-createSymlink"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.m"
-         timestampString = "392465144.411318"
+         timestampString = "392472704.018653"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "610"
-         endingLineNumber = "610"
+         startingLineNumber = "618"
+         endingLineNumber = "618"
          landmarkName = "-tableView:viewForTableColumn:row:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Anvil/NVPanelController.m"
-         timestampString = "392465144.411318"
+         timestampString = "392472617.347774"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "613"
-         endingLineNumber = "613"
+         startingLineNumber = "621"
+         endingLineNumber = "621"
          landmarkName = "-tableView:viewForTableColumn:row:"
          landmarkType = "5">
       </FileBreakpoint>

@@ -10,7 +10,8 @@
 
 @interface NVDataSource ()
 
-@property (strong, readwrite, nonatomic) NSArray *apps;
+@property (strong, readwrite, nonatomic) NSMutableArray *apps;
+@property (strong, readwrite, nonatomic) NSMutableArray *hammerApps;
 @property NSInteger _numberOfHammerSites;
 
 @end
@@ -35,8 +36,10 @@ static NSString *const kAppsKey = @"apps";
     if (self) {
         
         if (!self.apps) {
-            self.apps = [[NSArray alloc] init];
+            self.apps = [[NSMutableArray alloc] init];
         }
+        
+        self.hammerApps = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -112,29 +115,51 @@ static NSString *const kAppsKey = @"apps";
             
             if ([symlinkName hasSuffix:@".hammer"]) {
                 
-                NSString *symlinkPath = [path stringByAppendingPathComponent:symlinkName];
-                
-                [fileManager removeItemAtPath:symlinkPath error:nil];
+//                NSString *symlinkPath = [path stringByAppendingPathComponent:symlinkName];
+//                [fileManager removeItemAtPath:symlinkPath error:nil];
             }
         }
     }
 
-    
-    
     NSDictionary *appsDictionary = [appsPlistDictionary valueForKey:@"apps"];
     
     NSArray *urlArray = [appsDictionary valueForKey:@"rootDirectoryURL"];
+    
+    NSLog(@"%ld", self.hammerApps.count);
     
     for (NSDictionary *siteDictionary in appsDictionary) {
         
         NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingString:@".hammer"];
         NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
         
-        NVApp *newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
-        assert(newApp);
-        newApp.name = name;
-        [newApp createSymlink];
+        NVApp *newApp;
+        for (NVApp *app in self.hammerApps) {
+            
+            if ([[app.url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] isEqualTo:localFileURL]) {
+                
+                if ([[app.name pathExtension] isEqualTo:@"hammer"]) {
+                    NSLog(@"Using an existin gsite for %@", app.name);
+                    newApp = app;
+                }
+            }
+        }
+        
+        if (!newApp) {
+            
+            newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
+            assert(newApp);
+            newApp.name = name;
+            [newApp createSymlink];
+            NSLog(@"Creating new app: %@", name);
+            
+//            [self.apps addObject:newApp];
+            [self.hammerApps addObject:newApp];
+        }
+        
     }
+    
+//    NSLog(@"Total Hammer apps: %ld", newHammerApps.count);
+//    self.hammerApps = newHammerApps;
     
     return urlArray;
 }
@@ -142,7 +167,9 @@ static NSString *const kAppsKey = @"apps";
 - (NSInteger *)numberOfHammerSites {
     
     // TODO: Un-magick
-    return self._numberOfHammerSites;
+//    return self._numberOfHammerSites;
+//    NSLog(@"DataSource hamerApps.count: %ld", self.hammerApps.count);
+    return self.hammerApps.count;
 }
 
 - (NSInteger)hammerGroupHeaderRowNumber {
@@ -177,33 +204,48 @@ static NSString *const kAppsKey = @"apps";
             if (!url) {
                 continue;
             }
+            
+            NSLog(@"Found %@", encodedName);
 
             // See whether it exists already first. 
             for (NVApp *app in self.apps) {
                 if([app.name isEqualToString:symlinkName]) {
+                    
+                    NSLog(@"- Existing app: %@", thisApp.name);
                     thisApp = app;
                 }
             }
             
             // If not, let's add it!
             if (!thisApp) {
+                
+                NSLog(@"- New app.");
                 thisApp = [[NVApp alloc] initWithURL:url];
             }
             
             // thisApp can be false, or nil. initWithURL can return nil if it doesn't actually initialize properly. Bit of a gotcha.
             if (thisApp) {
                 
+                NSLog(@"Adding to an array: %@", thisApp.name);
+                
                 if ([thisApp.name hasSuffix:@".hammer"]) {
+                    
+                    NSLog(@"Adding to hammerAppsArray (%ld)", hammerAppsArray.count);
                     [hammerAppsArray addObject:thisApp];
                 } else {
                     [appsArray addObject:thisApp];
                 }
+            
+                
             }
         }
     }
     
+    NSLog(@"Setting hammerApps to %ld", hammerAppsArray.count);
+    self.hammerApps = hammerAppsArray;
     self._numberOfHammerSites = [hammerAppsArray count];
-    self.apps = [NSArray arrayWithArray:[appsArray arrayByAddingObjectsFromArray:hammerAppsArray]];
+//    self.apps = [NSMutableArray arrayWithArray:[appsArray arrayByAddingObjectsFromArray:hammerAppsArray]];
+    self.apps = appsArray;
 }
 
 # pragma mark Adding and removing apps
@@ -222,6 +264,7 @@ static NSString *const kAppsKey = @"apps";
 
 - (void)removeApp:(NVApp *)appToRemove {
     
+    NSLog(@"Removing %@", appToRemove.name);
     [appToRemove destroySymlink];
     [[self mutableArrayValueForKey:kAppsKey] removeObject:appToRemove];
 }

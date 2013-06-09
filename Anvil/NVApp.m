@@ -24,6 +24,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 - (id)initWithURL:(NSURL *)url {
        
     self = [super  init];
+    
     if(self) {
         
         self.name = [url lastPathComponent];
@@ -158,7 +159,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 - (void)destroySymlink {
     
-    NSError *error = nil;    
+    NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtURL:[self symlinkURL] error:&error];
 }
 

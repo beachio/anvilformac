@@ -110,10 +110,10 @@ void *kContextActivePanel = &kContextActivePanel;
         
         self.menubarController.showHighlightIcon = !self.menubarController.hasActiveIcon;
         self.menubarController.hasActiveIcon = !self.menubarController.hasActiveIcon;
-        if (!self.panelController.hasActivePanel) {
+//        if (!self.panelController.hasActivePanel) {
             // Read in apps if we're opening it
 //            [[NVDataSource sharedDataSource] readInSavedAppDataFromDisk];
-        }
+//        }
         self.panelController.hasActivePanel = self.menubarController.hasActiveIcon;
     }
 }

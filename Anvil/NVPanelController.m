@@ -38,6 +38,7 @@
 @property (nonatomic) NSTimer *powCheckerTimer;
 @property (nonatomic) NSInteger indexOfRowBeingEdited;
 @property (strong, nonatomic) NSString *ip;
+@property (strong, nonatomic) NVDataSource *dataSource;
 
 @property (strong, nonatomic) NSFileHandle *taskOutput;
 
@@ -58,6 +59,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     self = [super initWithWindowNibName:windowNibName];
     
     if (self != nil) {
+        
+        self.dataSource = [NVDataSource sharedDataSource];
         
         self.isEditing = NO;
         
@@ -357,11 +360,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (void)openPanel {
     
     [self.appListTableView reloadData];
-//    [self switchSwitchViewToPowStatus];
     [self checkWhetherPowIsRunning];
-    
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
-    
     self.panelIsOpen = YES;
     
     [self.window makeFirstResponder:nil];
@@ -426,12 +426,14 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSInteger *)numberOfNonHammerSites {
     
-    return [NVDataSource sharedDataSource].apps.count;
+    NSLog(@"panelController hammerApps count: %ld", self.dataSource.hammerApps.count);
+    return self.dataSource.apps.count - self.dataSource.hammerApps.count;
 }
 
 - (BOOL)hasHammerSites {
     
-    return (int)[NVDataSource sharedDataSource].numberOfHammerSites > 0;
+//    NSLog(@"%i", self.dataSource.numberOfHammerSites);
+    return (int)self.dataSource.numberOfHammerSites > 0;
 }
 
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
@@ -493,7 +495,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
-    } else if ([[[NVDataSource sharedDataSource] apps] count] == 0) {
+    } else if ([[self.dataSource apps] count] == 0) {
         
         self.appListTableView.hidden = YES;
         self.noAppsView.hidden = NO;
@@ -532,7 +534,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     [self.appListTableView setHidden:YES];
     
-    if ([[[NVDataSource sharedDataSource] apps] count] > 0) {
+    if ([[self.dataSource apps] count] > 0) {
         
     } else {
         [self.noAppsView setHidden:NO];
@@ -554,12 +556,17 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
 
-    NSInteger sites = [[[NVDataSource sharedDataSource] apps] count];
-    if ([self hammerGroupHeaderRowNumber] < sites) {
+    NSInteger sites = self.dataSource.apps.count + self.dataSource.hammerApps.count;
+//    sites += self.dataSource.hammerApps.count;
+    
+    NSLog(@"dataSource.apps: %ld. dataSource.hammerApps: %ld", self.dataSource.apps.count, self.dataSource.hammerApps.count);
+    
+    if (self.dataSource.hammerApps.count > 0) {
         
         sites += 1;
     }
     
+    NSLog(@"numberOfRowsInTableView: %ld", sites);
     return sites;
 }
 
@@ -608,11 +615,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     if (row < hammerGroupHeaderRowNumber) {
         
-        app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row];
-        
+        app = [self.dataSource.apps objectAtIndex:row];
+        NSLog(@"Finding site %ld in self.dataSource.apps A (length %ld): found %@", row, self.dataSource.apps.count, app.name);
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
-        app = [[[NVDataSource sharedDataSource] apps] objectAtIndex:row - 1];
+        row = row - self.dataSource.apps.count - 1;
+        app = [self.dataSource.hammerApps objectAtIndex:row];
+        NSLog(@"Finding site %ld in self.dataSource.hammerApps B (length %ld): found %@", row, self.dataSource.hammerApps.count, app.name);
     } else if (row == hammerGroupHeaderRowNumber){
         
         return [[NVGroupHeaderTableCellView alloc] init];
@@ -673,7 +682,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSInteger)hammerGroupHeaderRowNumber {
     
-    int number = (int)[NVDataSource sharedDataSource].apps.count - (int)[NVDataSource sharedDataSource].numberOfHammerSites;
+    int number = (int)[NVDataSource sharedDataSource].apps.count; //- (int)[NVDataSource sharedDataSource].hammerApps.count + 1;
 
     if ((int)[NVDataSource sharedDataSource].numberOfHammerSites == 0) {
         
@@ -847,7 +856,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1) {
         
-        NVDataSource *dataSource = [NVDataSource sharedDataSource];
         NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
         
         if (app.isARackApp) {
@@ -985,26 +993,41 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     }
 }
 
-- (NVApp *)appForSelectedRow:(NSInteger)selectedRow {
+- (NVApp *)appForSelectedRow:(NSInteger)row {
     
-    NSInteger realRowIndex = selectedRow;
-
-    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
-    if (selectedRow > hammerGroupHeaderRowNumber) {
-
-        realRowIndex -= 1;
-    } else if(selectedRow == hammerGroupHeaderRowNumber) {
-        
-        return nil;
-    }
+//    NSInteger realRowIndex = selectedRow;
+//    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app;
-    if (realRowIndex < dataSource.apps.count) {
-        app = [dataSource.apps objectAtIndex:realRowIndex];
+    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    if (row < hammerGroupHeaderRowNumber) {
+        
+        app = [self.dataSource.apps objectAtIndex:row];
+//        NSLog(@"Finding site %ld in self.dataSource.apps A (length %ld): found %@", row, self.dataSource.apps.count, app.name);
+    } else if (row > hammerGroupHeaderRowNumber && row > 0){
+        
+        row = row - self.dataSource.apps.count - 1;
+        app = [self.dataSource.hammerApps objectAtIndex:row];
+//        NSLog(@"Finding site %ld in self.dataSource.hammerApps B (length %ld): found %@", row, self.dataSource.hammerApps.count, app.name);
     } else {
         return nil;
     }
+//    
+//    if (selectedRow > hammerGroupHeaderRowNumber) {
+//
+//        realRowIndex -= 1;
+//    } else if(selectedRow == hammerGroupHeaderRowNumber) {
+//        
+//        return nil;
+//    }
+//    
+//    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+//    NVApp *app;
+//    if (realRowIndex < dataSource.apps.count) {
+//        app = [dataSource.apps objectAtIndex:realRowIndex];
+//    } else {
+//        return nil;
+//    }
     return app;
 }
 
@@ -1182,7 +1205,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
+    
+    NSLog(@"clicked %ld", self.appListTableView.selectedRow);
+    NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
     
     [dataSource removeApp:app];
     
@@ -1271,7 +1296,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)didClickOpenInTerminal:(id)sender {
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     NSTask *task = [[NSTask alloc] init];
@@ -1282,7 +1306,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)didClickOpenInFinder:(id)sender {
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.url];
@@ -1290,7 +1313,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)didClickOpenWithBrowser:(id)sender {
     
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.browserURL];

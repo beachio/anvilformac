@@ -11,7 +11,8 @@
 
 @interface NVDataSource : NSObject
 
-@property (strong, readonly, nonatomic) NSArray *apps;
+@property (strong, readonly, nonatomic) NSMutableArray *apps;
+@property (strong, readonly, nonatomic) NSMutableArray *hammerApps;
 
 - (void)readInSavedAppDataFromDisk;
 + (NVDataSource *)sharedDataSource;
