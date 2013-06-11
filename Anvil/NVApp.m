@@ -22,7 +22,7 @@ static NSString *const kAppleTouchIconFileName = @"apple-touch-icon.png";
 static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-precomposed.png";
 
 - (id)initWithURL:(NSURL *)url {
-       
+    
     self = [super  init];
     
     if(self) {

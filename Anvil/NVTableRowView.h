@@ -11,6 +11,7 @@
 @interface NVTableRowView : NSTableRowView
 
 @property BOOL hideTopBorder;
+@property BOOL darkTopBorder;
 @property BOOL hideBottomBorder;
 
 @end

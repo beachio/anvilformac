@@ -16,6 +16,11 @@
     
     // Initialization code here.
     self.backgroundStyle = NSBackgroundStyleLowered;
+    
+    if (self.isHammer) {
+        
+        [self.localLabel setText:@".dev.hammer"];
+    }
         
     self.deleteButton.stringValue = @"";
     self.restartButton.stringValue = @"";
@@ -34,7 +39,7 @@
     [self.deleteButton setHidden:YES];
         
     [self.siteLabel setWidth];
-    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
+    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width -5,
                                        self.siteLabel.frame.origin.y,
                                        self.siteLabel.frame.size.width,
                                        self.siteLabel.frame.size.height);
@@ -43,6 +48,14 @@
     [self.siteLabel setEditable:YES];
   
     [self setupReallyDeleteButton];
+}
+
+- (void)setIsHammer:(BOOL)isHammer {
+    
+    _isHammer = isHammer;
+    if (isHammer) {
+        [self.localLabel setText:@".hammer.dev"];
+    }
 }
 
 - (void)setupReallyDeleteButton {
@@ -59,7 +72,6 @@
     [self.reallyDeleteButton setAlternateTitle:@"Delete"];
     
     self.reallyDeleteButton.textOffset = 1.0;
-    
 }
 
 - (IBAction)didClickDeleteButton:(id)sender {
@@ -95,7 +107,7 @@
     [self hideReallyDeleteButton];
     
     [self.siteLabel setWidth];
-    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 2,
+    self.localLabel.frame = CGRectMake(self.siteLabel.frame.origin.x + self.siteLabel.frame.size.width - 5,
                                        self.siteLabel.frame.origin.y,
                                        self.siteLabel.frame.size.width,
                                        self.siteLabel.frame.size.height);
@@ -106,19 +118,23 @@
     CGRect dirtyRect = self.frame;
     
     NSRect deleteButtonFrame = self.deleteButton.frame;
-    self.deleteButton.frame = CGRectMake(dirtyRect.size.width - 5 - deleteButtonFrame.size.width,
+    
+    int spaceBetweenDeleteButtonAndRight = 12;
+    int spaceBetweenButtons = 5;
+    
+    self.deleteButton.frame = CGRectMake(dirtyRect.size.width - spaceBetweenDeleteButtonAndRight - deleteButtonFrame.size.width,
                                          deleteButtonFrame.origin.y,
                                          deleteButtonFrame.size.width,
                                          deleteButtonFrame.size.height);
     
     NSRect restartButtonFrame = self.restartButton.frame;
-    self.restartButton.frame = CGRectMake(self.deleteButton.frame.origin.x - 5 - restartButtonFrame.size.width,
+    self.restartButton.frame = CGRectMake(self.deleteButton.frame.origin.x - spaceBetweenButtons - restartButtonFrame.size.width,
                                           restartButtonFrame.origin.y,
                                           restartButtonFrame.size.width,
                                           restartButtonFrame.size.height);
     
     NSRect reallyDeleteButtonFrame = self.reallyDeleteButton.frame;
-    self.reallyDeleteButton.frame = CGRectMake(dirtyRect.size.width - 5 - reallyDeleteButtonFrame.size.width,
+    self.reallyDeleteButton.frame = CGRectMake(dirtyRect.size.width - spaceBetweenDeleteButtonAndRight - reallyDeleteButtonFrame.size.width,
                                          reallyDeleteButtonFrame.origin.y,
                                          reallyDeleteButtonFrame.size.width,
                                          reallyDeleteButtonFrame.size.height);

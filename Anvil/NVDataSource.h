@@ -16,7 +16,6 @@
 
 - (void)readInSavedAppDataFromDisk;
 + (NVDataSource *)sharedDataSource;
-//- (NVApp *)addAppWithURL:(NSURL *)url andName:(NSString *)name;
 - (NVApp *)addAppWithURL:(NSURL *)url;
 - (void)removeApp:(NVApp *)appToRemove;
 - (NVApp *)findAppWithURL:(NSURL *)url;

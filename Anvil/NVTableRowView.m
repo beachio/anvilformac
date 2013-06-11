@@ -115,7 +115,12 @@
         NSRect topDrawingRect = [self frame];
         topDrawingRect.origin.y = 0;
         topDrawingRect.size.height = 1;
-        [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
+        
+        if (self.darkTopBorder) {
+        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
+        } else {
+            [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
+        }
         NSRectFill (topDrawingRect);
     }
     

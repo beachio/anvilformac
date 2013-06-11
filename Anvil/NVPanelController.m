@@ -144,6 +144,19 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.powCheckerTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(switchSwitchViewToPowStatus) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
+        
+        // Draw it off-screen sure
+        [self.window setFrameOrigin:NSMakePoint(10000, 10000)];
+        [self.window makeKeyAndOrderFront:nil];
+        [self.window resignKeyWindow];
+        
+        // Give the NSScrollView a backing layer and set its corner radius.
+        [self.appListTableScrollView setWantsLayer:YES];
+        [self.appListTableScrollView.layer setCornerRadius:10.0f];
+        
+        // Give the NSScrollView's internal clip view a backing layer and set its corner radius.
+        [self.appListTableScrollView.contentView setWantsLayer:YES];
+        [self.appListTableScrollView.contentView.layer setCornerRadius:10.0f];
     }
 }
 
@@ -362,11 +375,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self.appListTableView reloadData];
     [self checkWhetherPowIsRunning];
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
+    
     self.panelIsOpen = YES;
     
     [self.window makeFirstResponder:nil];
     [self.window becomeMainWindow];
     [self.window makeKeyAndOrderFront:nil];
+    
     [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
     [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
 }
@@ -426,13 +441,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NSInteger *)numberOfNonHammerSites {
     
-    NSLog(@"panelController hammerApps count: %ld", self.dataSource.hammerApps.count);
     return self.dataSource.apps.count - self.dataSource.hammerApps.count;
 }
 
 - (BOOL)hasHammerSites {
     
-//    NSLog(@"%i", self.dataSource.numberOfHammerSites);
     return (int)self.dataSource.numberOfHammerSites > 0;
 }
 
@@ -455,7 +468,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         // THE MAGIC NUMBER
         // TODO: Make this cleverer about the actual difference in heights.
-        panelHeight -= 11;
+        panelHeight += 2;
+    } else {
+        
+        panelHeight += 11;
     }
 
     // Set our maximum height
@@ -557,16 +573,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
 
     NSInteger sites = self.dataSource.apps.count + self.dataSource.hammerApps.count;
-//    sites += self.dataSource.hammerApps.count;
-    
-    NSLog(@"dataSource.apps: %ld. dataSource.hammerApps: %ld", self.dataSource.apps.count, self.dataSource.hammerApps.count);
-    
+
     if (self.dataSource.hammerApps.count > 0) {
         
         sites += 1;
     }
     
-    NSLog(@"numberOfRowsInTableView: %ld", sites);
     return sites;
 }
 
@@ -611,24 +623,29 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
     NVApp *app;
+    NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
     
     NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     if (row < hammerGroupHeaderRowNumber) {
         
         app = [self.dataSource.apps objectAtIndex:row];
-        NSLog(@"Finding site %ld in self.dataSource.apps A (length %ld): found %@", row, self.dataSource.apps.count, app.name);
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
+        cellView.isHammer = YES;
         row = row - self.dataSource.apps.count - 1;
         app = [self.dataSource.hammerApps objectAtIndex:row];
-        NSLog(@"Finding site %ld in self.dataSource.hammerApps B (length %ld): found %@", row, self.dataSource.hammerApps.count, app.name);
     } else if (row == hammerGroupHeaderRowNumber){
         
         return [[NVGroupHeaderTableCellView alloc] init];
     }
     
-    NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
-    [cellView.siteLabel setText:app.name];
+    if (cellView.isHammer) {
+        
+        [cellView.siteLabel setText:[app.name stringByReplacingOccurrencesOfString:@".hammer" withString:@""]];
+    } else {
+        
+        [cellView.siteLabel setText:app.name];
+    }
     [cellView.siteLabel setTextColor:[NSColor colorWithDeviceRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [cellView.siteLabel setEnabled:NO];
     [cellView.siteLabel sizeToFit];
@@ -638,7 +655,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [cellView hideControls];
     [cellView.siteLabel setWidth];
     
-    [cellView resizeSubviewsWithOldSize:cellView.frame.size];
+//    [cellView resizeSubviewsWithOldSize:cellView.frame.size];
     
     cellView.showRestartButton = [app isARackApp];
     
@@ -667,13 +684,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger groupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     if (row == (groupHeaderRowNumber + 1)) {
         
-        return 31;
+        return 33;
     } else if (row == groupHeaderRowNumber - 1) {
         
-        return 31;
+        return 33;
     } else if (row == groupHeaderRowNumber) {
         
-        return 26;
+        return 23;
     } else {
         
         return 33;
@@ -711,8 +728,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         rowView.identifier = kAppListTableRowIdentifier;
     }
     
-    rowView.hideTopBorder    = (row == (groupHeaderRowNumber + 1));
-    rowView.hideBottomBorder = (row == (groupHeaderRowNumber - 1));
+    rowView.darkTopBorder = (row == (groupHeaderRowNumber + 1));
+//    rowView.hideTopBorder    = (row == (groupHeaderRowNumber + 1));
+//    rowView.hideBottomBorder = (row == (groupHeaderRowNumber - 1));
 
     return rowView;
 }
@@ -1003,12 +1021,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     if (row < hammerGroupHeaderRowNumber) {
         
         app = [self.dataSource.apps objectAtIndex:row];
-//        NSLog(@"Finding site %ld in self.dataSource.apps A (length %ld): found %@", row, self.dataSource.apps.count, app.name);
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
         row = row - self.dataSource.apps.count - 1;
         app = [self.dataSource.hammerApps objectAtIndex:row];
-//        NSLog(@"Finding site %ld in self.dataSource.hammerApps B (length %ld): found %@", row, self.dataSource.hammerApps.count, app.name);
     } else {
         return nil;
     }
@@ -1130,8 +1146,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)taskCompleted:(NSNotification *)notification {
 
-    NSLog(@"Task complete!");
-    
     int exitCode = [[notification object] terminationStatus];
     
     if (exitCode != 0)
@@ -1206,7 +1220,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger clickedRow = self.appListTableView.selectedRow;
     NVDataSource *dataSource = [NVDataSource sharedDataSource];
     
-    NSLog(@"clicked %ld", self.appListTableView.selectedRow);
     NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
     
     [dataSource removeApp:app];
@@ -1219,7 +1232,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 }
 
 - (IBAction)didClickRestartButton:(id)sender {
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
+
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [app restart];
