@@ -41,8 +41,8 @@
 }
 
 - (void)awakeFromNib {
-    self.titlebarPointImageView.backgroundImage = [NSImage imageNamed:@"TitlebarPoint"];
     
+    self.titlebarPointImageView.backgroundImage = [NSImage imageNamed:@"TitlebarPoint"];
 }
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldSize {

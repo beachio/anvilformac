@@ -9,6 +9,14 @@
 #import "NVTableCellView.h"
 #import "BFImage.h"
 #import "NSButton+NSButton_Extensions.h"
+#import "NSImage+Additions.h"
+
+@interface NVTableCellView ()
+
+@property BOOL mouseIsDown;
+@property BOOL isHovered;
+
+@end
 
 @implementation NVTableCellView
 

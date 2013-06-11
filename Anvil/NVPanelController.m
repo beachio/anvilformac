@@ -152,11 +152,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         // Give the NSScrollView a backing layer and set its corner radius.
         [self.appListTableScrollView setWantsLayer:YES];
-        [self.appListTableScrollView.layer setCornerRadius:10.0f];
+        [self.appListTableScrollView.layer setCornerRadius:4.0f];
         
         // Give the NSScrollView's internal clip view a backing layer and set its corner radius.
         [self.appListTableScrollView.contentView setWantsLayer:YES];
-        [self.appListTableScrollView.contentView.layer setCornerRadius:10.0f];
+        [self.appListTableScrollView.contentView.layer setCornerRadius:4.0f];
     }
 }
 

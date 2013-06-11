@@ -7,6 +7,7 @@
 //
 
 #import "NVTableRowView.h"
+#import "NSImage+Additions.h"
 
 @interface NVTableRowView ()
 
@@ -41,12 +42,14 @@
     
     self.highlighted = YES;
     self.needsDisplay = YES;
+    self.mouseIsDown = NO;
 }
 
 - (void)unhighlight {
 
     self.highlighted = NO;
     self.needsDisplay = YES;
+    self.mouseIsDown = NO;
 }
 
 - (void)setBackgroundColor:(NSColor *)backgroundColor {
