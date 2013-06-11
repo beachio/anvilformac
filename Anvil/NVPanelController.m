@@ -751,17 +751,48 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 #pragma mark - Mouse moving in the table view
 // Mouse movements are handled here for selecting rows
 
+- (void)highlightRow:(NSInteger)row {
+    
+    if (!self.isEditing) {
+        
+        for (int i = 0; i<self.appListTableView.numberOfRows; i++) {
+            
+            NVTableCellView *cellView = [self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO];
+            
+            if ([cellView isKindOfClass:[NVTableCellView class]]) {
+                
+                if (i == row) {
+                    
+                    if (!cellView.isHovered) {
+                        [cellView setIsHovered:YES];
+                        [cellView setNeedsDisplay:YES];
+                    }
+                } else {
+                    
+                    if (cellView.isHovered) {
+                        [cellView setIsHovered:NO];
+                        [cellView setNeedsDisplay:YES];
+                    }
+                }
+            }
+            
+        }
+        
+        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    }
+
+}
+
 - (void)mouseMoved:(NSEvent *)theEvent {
     
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
-    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
-    
-        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-    }
-    
+    [self highlightRow:row];
     self.appListTableView.needsDisplay = YES;
+    
+    self.appListTableView.menu = nil;
+    self.appListTableView.menu = [self menuForTableView];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
@@ -770,14 +801,40 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     if (trackingAreaName == kPanelTrackingAreaIdentifier) {
 
-        [self.appListTableView deselectRow:self.selectedRow];
+//        [self.appListTableView deselectRow:self.selectedRow];
         NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:-1];
         [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
         self.selectedRow = -1;
         [self clearRows];
         self.appListTableView.needsDisplay = YES;
     }
+    
+    [self highlightRow:-1];
 }
+
+- (void)mouseEntered:(NSEvent *)theEvent {
+    
+    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+    NSInteger row = [self.appListTableView rowAtPoint:point];
+    
+    [self highlightRow:row];
+}
+
+//- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
+//    
+////    NSEvent *theEvent = [NSApp currentEvent];
+////    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+////    NSInteger row = [self.appListTableView rowAtPoint:point];
+//    
+//    NSInteger row = [self.appListTableView clickedRow];
+//    
+//    NSLog(@"A");
+//    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
+//        
+//        NSLog(@"A");
+//        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+//    }
+//}
 
 #pragma mark - Renaming
 
@@ -817,7 +874,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)beginEditingRowAtIndex:(NSNumber *)indexNumber {
     
-    NSInteger index = [indexNumber integerValue];
+    NSInteger index = [self.appListTableView clickedRow];
     
     if (index > -1 && index < self.appListTableView.numberOfRows) {
         

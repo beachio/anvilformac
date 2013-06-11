@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet NVStyledButton *deleteButton;
 @property (weak, nonatomic) IBOutlet NVStyledButton *reallyDeleteButton;
 @property BOOL isHammer;
+@property BOOL darkBottomBorder;
+@property BOOL isHovered;
 
 @property (atomic) BOOL showRestartButton;
 

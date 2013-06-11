@@ -57,76 +57,93 @@
     return;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
-    
-    self.clickEvent = theEvent;
-    self.mouseIsDown = YES;
-    self.needsDisplay = YES;
-    [super mouseDown:theEvent];
-    self.mouseIsDown = NO;
-}
+//- (void)mouseDown:(NSEvent *)theEvent {
+//    
+//    self.clickEvent = theEvent;
+//    self.mouseIsDown = YES;
+//    self.needsDisplay = YES;
+//    [super mouseDown:theEvent];
+//    self.mouseIsDown = NO;
+//}
+//
+//- (void)mouseUp:(NSEvent *)theEvent {
+//
+//    self.mouseIsDown = NO;
+//    self.needsDisplay = YES;
+//    
+//    if (theEvent == self.clickEvent) {
+//        
+//        [super mouseUp:theEvent];
+//    }
+//}
 
-- (void)mouseUp:(NSEvent *)theEvent {
-
-    self.mouseIsDown = NO;
-    self.needsDisplay = YES;
-    
-    if (theEvent == self.clickEvent) {
-        
-        [super mouseUp:theEvent];
-    }
-}
-
-- (void)setSelected:(BOOL)selected {
-    
-    [super setSelected:selected];
-    self.needsDisplay = YES;
-}
-
-- (void)drawRect:(NSRect)dirtyRect {
-    
-    self.backgroundColor = nil;
-    [super drawRect:dirtyRect];
-    
-    if (self.selected) {
-        
-        [[NSColor colorWithDeviceRed:253.0/255.0 green:253.0/255.0 blue:253.0/255.0 alpha:1.0] set];
-        NSRectFill(self.bounds);
-    }
-    
-    // Top and bottom borders for rows
-    NSTableView *tableView = (NSTableView*)[self superview]; // The table view the row is part of
-    
-    if (![[self superview] isKindOfClass: [NSTableView class]]) {
-        return;
-    }
-    
-    NSInteger ownRowNumber = [tableView rowForView:self];
-    NSInteger numberOfRows = [tableView numberOfRows];
-    
-    if (ownRowNumber < numberOfRows-1 && !self.hideBottomBorder) {
-        
-        NSRect bottomDrawingRect = [self frame];
-        bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
-        bottomDrawingRect.size.height = 1.0;
-        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
-        NSRectFill(bottomDrawingRect);
-    }
-    
-    if (ownRowNumber > 0 && !self.hideTopBorder) {
-        
-        NSRect topDrawingRect = [self frame];
-        topDrawingRect.origin.y = 0;
-        topDrawingRect.size.height = 1;
-        
-        if (self.darkTopBorder) {
-        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
-        } else {
-            [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
-        }
-        NSRectFill (topDrawingRect);
-    }
-    
-}
+//- (void)setSelected:(BOOL)selected {
+//    
+//    [super setSelected:selected];
+//    self.needsDisplay = YES;
+//}
+//
+//- (void)drawRect:(NSRect)dirtyRect {
+////    
+////    self.backgroundColor = nil;
+//    [super drawRect:dirtyRect];
+////
+//    if (self.selected) {
+//        
+//        [[NSColor colorWithDeviceRed:253.0/255.0 green:253.0/255.0 blue:253.0/255.0 alpha:1.0] set];
+//        NSRectFill(self.bounds);
+//    }
+////
+////    // Top and bottom borders for rows
+//    NSTableView *tableView = (NSTableView*)[self superview]; // The table view the row is part of
+////
+//    if (![[self superview] isKindOfClass: [NSTableView class]]) {
+//        return;
+//    }
+////
+////    if (self.mouseIsDown) {
+////        
+//////            [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
+//////        [[NSImage imageNamed:@"RowBackgroundPushed.png"] drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
+////        [[NSColor colorWithDeviceRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0] set];
+////        NSRectFill(self.bounds);
+////        
+////        NSShadow *topShadow = [[NSShadow alloc] init];
+////        [topShadow ]
+////        return;
+////    }
+//    
+////    NSInteger ownRowNumber = [tableView rowForView:self];
+////    NSInteger numberOfRows = [tableView numberOfRows];
+////    
+////    if (ownRowNumber < numberOfRows-1 && !self.hideBottomBorder) {
+////        
+////        NSRect bottomDrawingRect = [self frame];
+////        bottomDrawingRect.origin.y = bottomDrawingRect.size.height - 1.0;
+////        bottomDrawingRect.size.height = 1.0;
+////        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
+////        NSRectFill(bottomDrawingRect);
+////    }
+////    
+////    if (ownRowNumber > 0 && !self.hideTopBorder && !self.isSelected) {
+////        
+////        NSRect topDrawingRect = [self frame];
+////        topDrawingRect.origin.y = 0;
+////        topDrawingRect.size.height = 1;
+////        
+////        if (self.darkTopBorder) {
+////        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
+////        } else {
+////            [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
+////        }
+////        NSRectFill (topDrawingRect);
+////    }
+////        if (self.darkTopBorder) {
+////        [[NSColor colorWithDeviceRed:219.0/255.0 green:219.0/255.0 blue:219.0/255.0 alpha:0.5] set];
+////        } else {
+////            [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
+////        }
+//
+//}
 
 @end
