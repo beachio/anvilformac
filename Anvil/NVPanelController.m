@@ -473,7 +473,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         // THE MAGIC NUMBER
         // TODO: Make this cleverer about the actual difference in heights.
-        panelHeight += 5;
+        panelHeight += 2;
     } else {
         
         panelHeight += 11;
