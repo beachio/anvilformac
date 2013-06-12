@@ -108,8 +108,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.installPowButton.isBold = NO;
         self.installPowButton.textSize = 12.0;
         
-        self.noSitesAddASiteButton.image = [NSImage imageNamed:@"BlueButtonAdd"];
-        self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"BlueButtonAddPushed"];
+        self.noSitesAddASiteButton.image = [NSImage imageNamed:@"ButtonAdd"];
+        self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"ButtonAddPushed"];
         [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
         self.noSitesAddASiteButton.textSize = 12.0;
         self.noSitesAddASiteButton.isBold = NO;
@@ -500,6 +500,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     if (![self isPowInstalled]) {
         
         self.appListTableView.hidden = YES;
+        self.appListTableScrollView.hidden = YES;
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = NO;
         
@@ -514,13 +515,21 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     } else if ([[self.dataSource apps] count] == 0) {
         
         self.appListTableView.hidden = YES;
+        self.appListTableScrollView.hidden = YES;
         self.noAppsView.hidden = NO;
         self.welcomeView.hidden = YES;
+//        
+//        panelRect.origin.y -= self.noAppsView.frame.size.height;
+//        panelRect.size.height += self.noAppsView.frame.size.height;
         
-        panelRect.origin.y -= self.noAppsView.frame.size.height;
-        panelRect.size.height += self.noAppsView.frame.size.height;
+        panelHeight = self.noAppsView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
+        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
+        panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
+
+        
     } else {
         self.appListTableView.hidden = NO;
+        self.appListTableScrollView.hidden = NO;
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = YES;
     }
@@ -1119,9 +1128,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     [task setLaunchPath:@"/bin/sh"];
     
-    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
-    NSString *command = [NSString stringWithFormat:
-                   @"tell application \"Terminal\" to do script \"/bin/sh \\\"%@\\\"; exit\"", installPowPath];
+//    NSString *installPowPath = [[NSBundle mainBundle] pathForResource:@"InstallPow" ofType:@"sh"];
+//    NSString *command = [NSString stringWithFormat:
+//                   @"tell application \"Terminal\" to do script \"/bin/sh \\\"%@\\\"; exit\"", installPowPath];
+    
+    NSString *command = @"curl get.pow.cx | sh";
+    command = [NSString stringWithFormat:@"tell application \"Terminal\" to do script \"%@\"", command];
     
     NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     

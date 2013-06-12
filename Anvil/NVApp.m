@@ -146,6 +146,20 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
 - (void)createSymlink {
     
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *powPath = [@"~/.pow" stringByResolvingSymlinksInPath];
+    
+    if (![fileManager fileExistsAtPath:powPath]) {
+        
+        NSLog(@" NO POW DIRECTORY");
+        NSString *destinationPath = [@"~/Library/Application Support/Pow/Hosts" stringByResolvingSymlinksInPath];
+        
+        NSLog(@"New pow path symlink to: %@", destinationPath);
+        [fileManager createSymbolicLinkAtPath:powPath withDestinationPath:destinationPath error:nil];
+        return;
+    }
+    
     if ([self isARackApp]) {
         
         [[NSFileManager defaultManager] createSymbolicLinkAtURL:[self symlinkURL] withDestinationURL:self.url error:nil];

@@ -54,7 +54,7 @@
     if ([self state]) {
         image = [self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
     } else {
-        if (self.hovered) {
+        if (self.hovered && self.hoverImage) {
             image = [self.hoverImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
         } else {
             image = [self.image stretchableImageWithEdgeInsets:self.insetsOrDefaults];

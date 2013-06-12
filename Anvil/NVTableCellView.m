@@ -32,6 +32,8 @@
     self.deleteButton.stringValue = @"";
     self.restartButton.stringValue = @"";
     
+    
+    
     self.restartButton.image = [NSImage imageNamed:@"Restart"];
     self.deleteButton.image = [NSImage imageNamed:@"Delete"];
     self.deleteButton.hoverImage = [NSImage imageNamed:@"DeleteHover"];
