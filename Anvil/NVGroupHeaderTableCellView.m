@@ -17,10 +17,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
-        // Initialization code here.
         
-        NVLabel *label = [[NVLabel alloc] initWithFrame:NSMakeRect(6, 5, 120, 16)];
+        NVLabel *label = [[NVLabel alloc] initWithFrame:NSMakeRect(9, 6, 120, 16)];
         [label setText:@"HAMMER SITES"];
         label.font = [NSFont fontWithName:@"Helvetica Neue" size:10];
         [label setTextColor:[NSColor colorWithDeviceRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0]];

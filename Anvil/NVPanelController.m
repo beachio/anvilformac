@@ -18,7 +18,7 @@
 #define POPUP_HEIGHT 122
 #define PANEL_WIDTH 256
 
-#define WINDOW_VERTICAL_OFFSET 4
+#define WINDOW_VERTICAL_OFFSET 7
 
 #define MENU_ANIMATION_DURATION .1
 
@@ -73,6 +73,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.switchView.delegate = self;
         
+        [self.switchLabel setAlphaValue:0.9999999];
+        [self.headerView makeTransparent];
         self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
         self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
         
@@ -81,12 +83,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.appListTableView.menu = [self menuForTableView];
         self.appListTableView.action = @selector(appListTableViewClicked:);
         self.appListTableView.backgroundColor = [NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1];
-        
         self.appListTableView.delegate = self;
         
         self.appListTableScrollView.wantsLayer = YES;
         self.appListTableScrollView.layer.opaque = NO;
-        self.appListTableScrollView.layer.cornerRadius = 0;
+//        self.appListTableScrollView.layer.cornerRadius = 0;
         self.appListTableScrollView.backgroundColor = [NSColor clearColor];
         [self.appListTableView setIntercellSpacing:NSMakeSize(0, 0)];
         
@@ -151,6 +152,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [self.window resignKeyWindow];
         
         // Give the NSScrollView a backing layer and set its corner radius.
+        
+//        [self.backgroundView setWantsLayer:YES];
+//        [self.backgroundView.layer setCornerRadius:4.0f];
+        
         [self.appListTableScrollView setWantsLayer:YES];
         [self.appListTableScrollView.layer setCornerRadius:4.0f];
         
@@ -358,7 +363,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     // TODO: Make this clip with rounded corners
     NSInteger appListHeight = panel.frame.size.height - HEADER_HEIGHT - 5;
-    self.appListTableScrollView.frame = NSMakeRect(0, 0, PANEL_WIDTH + 1, appListHeight);
+    self.appListTableScrollView.frame = NSMakeRect(0, 0, PANEL_WIDTH, appListHeight);
 }
 
 #pragma mark - Keyboard
@@ -468,7 +473,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         // THE MAGIC NUMBER
         // TODO: Make this cleverer about the actual difference in heights.
-        panelHeight += 2;
+        panelHeight += 5;
     } else {
         
         panelHeight += 11;
@@ -480,8 +485,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         panelHeight = maxHeight;
     }
-    
-    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2) - 2;
+
+    panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
     
     // Better make sure the panel's inside the window.
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
@@ -635,14 +640,15 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NVTableCellView *cellView = (NVTableCellView *)[tableView makeViewWithIdentifier:kAppListTableCellIdentifier owner:self];
     
     NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
+    
     if (row < hammerGroupHeaderRowNumber) {
         
         app = [self.dataSource.apps objectAtIndex:row];
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
         cellView.isHammer = YES;
-        row = row - self.dataSource.apps.count - 1;
-        app = [self.dataSource.hammerApps objectAtIndex:row];
+        long hammerGroupRow = row - self.dataSource.apps.count - 1;
+        app = [self.dataSource.hammerApps objectAtIndex:hammerGroupRow];
     } else if (row == hammerGroupHeaderRowNumber){
         
         return [[NVGroupHeaderTableCellView alloc] init];
@@ -655,6 +661,19 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         [cellView.siteLabel setText:app.name];
     }
+    
+    cellView.darkTopBorder = (row == (hammerGroupHeaderRowNumber+1));
+    
+    cellView.hideBottomBorder = NO;
+    cellView.hideTopBorder = NO;
+    if (row == self.dataSource.apps.count + self.dataSource.hammerApps.count) {
+        
+        cellView.hideBottomBorder = YES;
+    } else if(row == 0) {
+        
+        cellView.hideTopBorder = YES;
+    }
+    
     [cellView.siteLabel setTextColor:[NSColor colorWithDeviceRed:68.0/255.0 green:68.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [cellView.siteLabel setEnabled:NO];
     [cellView.siteLabel sizeToFit];
@@ -699,7 +718,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         return 33;
     } else if (row == groupHeaderRowNumber) {
         
-        return 23;
+        return 24;
     } else {
         
         return 33;
@@ -814,8 +833,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:-1];
         [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
         self.selectedRow = -1;
-        [self clearRows];
+//        [self clearRows];
         self.appListTableView.needsDisplay = YES;
+        
+        for (int i = 0; i < self.appListTableView.numberOfRows; i++) {
+            
+            [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+        }
     }
     
     [self highlightRow:-1];
@@ -826,7 +850,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
     
-    [self highlightRow:row];
+    if (row >= 0) {
+        [self highlightRow:row];
+        [[self.appListTableView viewAtColumn:0 row:row makeIfNecessary:NO] showControls];
+    }
 }
 
 //- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
@@ -1302,13 +1329,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (IBAction)didClickRestartButton:(id)sender {
 
-    NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
     
     [app restart];
     
     NVTableCellView *cellView = [self.appListTableView viewAtColumn:0 row:self.appListTableView.selectedRow makeIfNecessary:NO];
-    NVSpinnerButton *restartButton = cellView.restartButton;
-    [restartButton showSpinnerFor:0.4];
+    [cellView spinRestartButton];
 }
 
 - (IBAction)didClickInstallPowButton:(id)sender {

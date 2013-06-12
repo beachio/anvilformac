@@ -14,6 +14,8 @@
 		4F2CCA10176384060010AB4B /* NVGroupHeaderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CCA0F176384060010AB4B /* NVGroupHeaderTableCellView.m */; };
 		4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F361365160C9816008584A0 /* NVPopupButtonCell.m */; };
 		4F6DBFDB160626FB00D2F214 /* NVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6DBFDA160626FA00D2F214 /* NVLabel.m */; };
+		4F723F9B1768D547004C5990 /* Footer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F723F991768D547004C5990 /* Footer.png */; };
+		4F723F9C1768D547004C5990 /* Footer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F723F9A1768D547004C5990 /* Footer@2x.png */; };
 		4F78B8941608AD17006B0500 /* NVStyledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8931608AD17006B0500 /* NVStyledView.m */; };
 		4F78B8CE1608ADCD006B0500 /* NSBezierPath+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8CD1608ADCD006B0500 /* NSBezierPath+Additions.m */; };
 		4F78B8DC1608ADE4006B0500 /* NSError+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8D11608ADE4006B0500 /* NSError+HTTP.m */; };
@@ -131,6 +133,8 @@
 		4F361365160C9816008584A0 /* NVPopupButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPopupButtonCell.m; sourceTree = "<group>"; };
 		4F6DBFD9160626FA00D2F214 /* NVLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVLabel.h; sourceTree = "<group>"; };
 		4F6DBFDA160626FA00D2F214 /* NVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLabel.m; sourceTree = "<group>"; };
+		4F723F991768D547004C5990 /* Footer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Footer.png; sourceTree = "<group>"; };
+		4F723F9A1768D547004C5990 /* Footer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Footer@2x.png"; sourceTree = "<group>"; };
 		4F78B8921608AD17006B0500 /* NVStyledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStyledView.h; sourceTree = "<group>"; };
 		4F78B8931608AD17006B0500 /* NVStyledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStyledView.m; sourceTree = "<group>"; };
 		4F78B8CC1608ADCD006B0500 /* NSBezierPath+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+Additions.h"; sourceTree = "<group>"; };
@@ -330,6 +334,8 @@
 		4FA5A0691763633D00196CDF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4F723F991768D547004C5990 /* Footer.png */,
+				4F723F9A1768D547004C5990 /* Footer@2x.png */,
 				4FA7B8601767706F009B0BBF /* RowBackgroundPushed.png */,
 				4FA7B8611767706F009B0BBF /* RowBackgroundPushed@2x.png */,
 				4FA5A06A1763633D00196CDF /* AddButton.png */,
@@ -767,8 +773,10 @@
 				4FA5A0BA1763633D00196CDF /* Restart.png in Resources */,
 				4FA5A0BB1763633D00196CDF /* Restart@2x.png in Resources */,
 				4FA5A0BC1763633D00196CDF /* RestartHover.png in Resources */,
+				4F723F9C1768D547004C5990 /* Footer@2x.png in Resources */,
 				4FA5A0BD1763633D00196CDF /* RestartHover@2x.png in Resources */,
 				4FA5A0BE1763633D00196CDF /* RestartPushed.png in Resources */,
+				4F723F9B1768D547004C5990 /* Footer.png in Resources */,
 				4FA5A0BF1763633D00196CDF /* RestartPushed@2x.png in Resources */,
 				4FA5A0C01763633D00196CDF /* SettingsButton.png in Resources */,
 				4FA5A0C11763633D00196CDF /* SettingsButton@2x.png in Resources */,

@@ -47,15 +47,21 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         // TODO: Add , @"Build" to this array when Hammer is available.
         NSArray *folderTypesArray = [[NSArray alloc] initWithObjects:@"Public", @"Build", nil];
         
-        for (NSString *folderName in folderTypesArray) {
+        expandedURL = [[NSURL fileURLWithPath:[expandedURL.path stringByExpandingTildeInPath]] URLByResolvingSymlinksInPath];
+        self.url = [expandedURL URLByResolvingSymlinksInPath];
+        
+        if (![self isARackApp]) {
             
-            // Check whether this app has a public URL symlink inside it.
-            NSString *publicURLPath = [stringWithSymlinks  stringByAppendingPathComponent:folderName];
-            NSURL *publicURL = [[NSURL URLWithString:publicURLPath] URLByResolvingSymlinksInPath];
-            BOOL publicURLExists = [[NSFileManager defaultManager] fileExistsAtPath:publicURL.path];
-            if (publicURLExists && ![[publicURL.path stringByDeletingLastPathComponent] isEqualTo:expandedURL.path]) {
+            for (NSString *folderName in folderTypesArray) {
                 
-                expandedURL = publicURL;
+                // Check whether this app has a public URL symlink inside it.
+                NSString *publicURLPath = [stringWithSymlinks  stringByAppendingPathComponent:folderName];
+                NSURL *publicURL = [[NSURL URLWithString:publicURLPath] URLByResolvingSymlinksInPath];
+                BOOL publicURLExists = [[NSFileManager defaultManager] fileExistsAtPath:publicURL.path];
+                if (publicURLExists && ![[publicURL.path stringByDeletingLastPathComponent] isEqualTo:expandedURL.path]) {
+                    
+                    expandedURL = publicURL;
+                }
             }
         }
 

@@ -75,9 +75,9 @@ static NSString *const kAppsKey = @"apps";
 // The wrapper function for the whole shebang.
 - (void)readInSavedAppDataFromDisk {
     
-    [self clearOldHammerSymlinks];
+//    [self clearOldHammerSymlinks];
     [self importFromPowdirectory];
-    [self importNewHammerSites];
+//    [self importNewHammerSites];
 }
 
 // Step 1

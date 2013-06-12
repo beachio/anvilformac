@@ -247,4 +247,9 @@
 	[self invalidateRasterization];
 }
 
+- (void)makeTransparent {
+    
+    [self.layer setOpaque:NO];
+}
+
 @end

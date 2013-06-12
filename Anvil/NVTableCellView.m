@@ -33,7 +33,6 @@
     self.restartButton.stringValue = @"";
     
     
-    
     self.restartButton.image = [NSImage imageNamed:@"Restart"];
     self.deleteButton.image = [NSImage imageNamed:@"Delete"];
     self.deleteButton.hoverImage = [NSImage imageNamed:@"DeleteHover"];
@@ -52,6 +51,10 @@
                                        self.siteLabel.frame.origin.y,
                                        self.siteLabel.frame.size.width,
                                        self.siteLabel.frame.size.height);
+    
+    [self.restartButton setWantsLayer:YES];
+    [self.deleteButton setWantsLayer:YES];
+    [self.deleteButton setTransparent:NO];
     
     [self.siteLabel setEditable:YES];
   
@@ -155,7 +158,7 @@
     
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.1];
-    if (self.showRestartButton && ![self.restartButton isSpinning]) {
+    if (self.showRestartButton) { // && ![self.restartButton isSpinning]) {
         [[self.restartButton animator] setHidden:NO];
     }
     [[self.deleteButton animator] setHidden:NO];
@@ -232,9 +235,24 @@
             // White background.
             [[NSColor whiteColor] set];
             NSRectFill(self.bounds);
+            
+            if (self.darkTopBorder) {
+                [[NSColor colorWithDeviceRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0] set];
+                if (!self.hideTopBorder) {
+                    NSRectFill(topLineRectangle);
+                }
+            }
         } else {
-            [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
-            NSRectFill(topLineRectangle);
+            
+            if (self.darkTopBorder) {
+                [[NSColor colorWithDeviceRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0] set];
+            } else {
+                [[NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.4] set];
+            }
+            
+            if (!self.hideTopBorder) {
+                NSRectFill(topLineRectangle);
+            }
         }
 
         if (self.mouseIsDown) {
@@ -243,9 +261,25 @@
             [[NSColor colorWithDeviceRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0] set];
         }
         
-        NSRectFill (bottomLineRectangle);
+        if (!self.hideBottomBorder) {
+            NSRectFill (bottomLineRectangle);
+        }
     }
 
+}
+
+- (void)spinRestartButton {
+    
+    [self.restartButton showSpinnerFor:0.4];
+    [self performSelector:@selector(hideControlsIfNotHovered:) withObject:nil afterDelay:0.4];
+}
+
+- (void)hideControlsIfNotHovered:(id)sender {
+    
+    if (!self.isHovered) {
+        
+        [self hideControls];
+    }
 }
 
 @end

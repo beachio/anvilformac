@@ -25,4 +25,9 @@
     [self setRowHeight:32.0];
 }
 
+- (BOOL)isOpaque {
+    
+    return NO;
+}
+
 @end

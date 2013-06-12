@@ -48,5 +48,6 @@
 // If shouldRasterize == YES, then you need to invalidate the rasterization whenever the view needs to be re-cached. Changing the view attributes (gradient, backgroundColor, etc.) _won't_ call this automatically. Changes to the frame size _will_ automatically call this.
 - (void)invalidateRasterization;
 - (void)renderStyle;
+- (void)makeTransparent;
 
 @end
