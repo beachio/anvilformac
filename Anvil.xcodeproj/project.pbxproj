@@ -105,6 +105,7 @@
 		4FBFA3B915C7F49200BA8209 /* NVDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA3B815C7F49200BA8209 /* NVDataSource.m */; };
 		4FCEDE9516159EA600122B18 /* CustomLoadingSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */; };
 		4FCEDE991615B7F700122B18 /* NVSpinnerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */; };
+		4FD8D2FB176A72EF00D33EE8 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8D2FA176A72EF00D33EE8 /* LaunchAtLoginController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -257,6 +258,8 @@
 		4FCEDE9416159EA600122B18 /* CustomLoadingSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLoadingSpinner.m; sourceTree = "<group>"; };
 		4FCEDE971615B7F700122B18 /* NVSpinnerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVSpinnerButton.h; sourceTree = "<group>"; };
 		4FCEDE981615B7F700122B18 /* NVSpinnerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVSpinnerButton.m; sourceTree = "<group>"; };
+		4FD8D2F9176A72EF00D33EE8 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		4FD8D2FA176A72EF00D33EE8 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +287,8 @@
 		4F38B81C16CC47700004C0F5 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4FD8D2F9176A72EF00D33EE8 /* LaunchAtLoginController.h */,
+				4FD8D2FA176A72EF00D33EE8 /* LaunchAtLoginController.m */,
 				4FA5A0CE17636A3D00196CDF /* NSButton+Extras */,
 			);
 			name = Libraries;
@@ -807,6 +812,7 @@
 				4FBFA36715C6F85800BA8209 /* main.m in Sources */,
 				4FBFA36E15C6F85800BA8209 /* NVAppDelegate.m in Sources */,
 				4FBFA38015C6F8D500BA8209 /* NVMenubarController.m in Sources */,
+				4FD8D2FB176A72EF00D33EE8 /* LaunchAtLoginController.m in Sources */,
 				4FBFA38315C6F94900BA8209 /* NVPanelController.m in Sources */,
 				4FBFA38A15C6F9F400BA8209 /* NVStatusItemView.m in Sources */,
 				4FBFA38D15C6FA7E00BA8209 /* NVBackgroundView.m in Sources */,

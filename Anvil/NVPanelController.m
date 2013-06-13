@@ -7,6 +7,7 @@
 #import "NVAppDelegate.h"
 #import "NVGroupHeaderTableRowView.h"
 #import "NVGroupHeaderTableCellView.h"
+#import "LaunchAtLoginController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <Sparkle/Sparkle.h>
 
@@ -172,12 +173,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         return;
     }
     
-    if (self.trackingArea) {
-        
-        [self.appListTableView removeTrackingArea:self.trackingArea];
-        self.trackingArea = nil;
-    }
-    
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingInVisibleRect | NSTrackingActiveAlways);
     self.trackingArea = [ [NSTrackingArea alloc] initWithRect:self.backgroundView.frame
                                                       options:opts
@@ -219,10 +214,18 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 - (NSMenu *)buildSettingsMenu {
     
     NSMenu *settingsMenu = [[NSMenu alloc] initWithTitle:@"Settings"];
+    [settingsMenu setShowsStateColumn:YES];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""]]; // First one gets eaten by the dropdown button. It's weird.
     
     // TODO: about window
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"About Anvil" action:@selector(didClickShowAbout:) keyEquivalent:@""]];
+    
+    NSMenuItem *launchOnLoginItem = [[NSMenuItem alloc] initWithTitle:@"Launch on Login" action:@selector(toggleOpenAtLaunch:) keyEquivalent:@""];
+    
+    if ([self isSetToLaunchOnLogin]) {
+        [launchOnLoginItem setState:NSOnState];
+    }
+    [settingsMenu addItem:launchOnLoginItem];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(didClickSupportMenuItem:) keyEquivalent:@""]];
     [settingsMenu addItem:[NSMenuItem separatorItem]];
@@ -231,6 +234,22 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
     
     return settingsMenu;
+}
+
+#pragma mark - Setting / getting launch options
+
+ - (BOOL)isSetToLaunchOnLogin {
+     
+     LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+     BOOL launch = [launchController launchAtLogin];
+     return launch;
+ }
+     
+- (void)toggleOpenAtLaunch:(id)sender {
+    
+    LaunchAtLoginController *launchController = [[LaunchAtLoginController alloc] init];
+    [launchController setLaunchAtLogin:![self isSetToLaunchOnLogin]];
+    self.settingsButton.menu = [self buildSettingsMenu];
 }
 
 #pragma mark - SwitchView and Pow
@@ -376,6 +395,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 #pragma mark - Public methods
 
 - (void)openPanel {
+    
+    
+    if (!self.trackingArea) {
+        
+        [self createTrackingArea];
+    }
     
     [self.appListTableView reloadData];
     [self checkWhetherPowIsRunning];
@@ -551,16 +576,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     } else {
         [self.window setFrame:panelRect display:YES];
     }
-    
-    // Fuck you, Cocoa. Why doesn't createTrackingArea work here? Why?
-    // Is this some kind of race condition? Are you making me do this just to mess with me?
-    // I'll never know. I leave you with a haiku.
-    // Do not touch this bit -
-    // It has caused me much despair!
-    // This should do the trick.
-    [self createTrackingArea];
-    [self performSelector:@selector(createTrackingArea) withObject:NULL afterDelay:0.3];
-    [self performSelector:@selector(createTrackingArea) withObject:NULL afterDelay:1.0];
 }
 
 #pragma mark - Alternate panels
