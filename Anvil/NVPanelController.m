@@ -468,16 +468,35 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSRect statusRect = [self statusRect];
     
     NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
+    [self.appListTableView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
+    [self.appListTableView sizeToFit];
+
     
-    if ([self hasHammerSites]) {
-        
-        // THE MAGIC NUMBER
-        // TODO: Make this cleverer about the actual difference in heights.
-        panelHeight += 4;
-    } else {
-        
-        panelHeight += 11;
+    
+    
+    CGFloat height = 0;
+    for (int i = 0; i < self.appListTableView.numberOfRows; i++) {
+
+        height += [self tableView:self.appListTableView heightOfRow:i]; //[[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] frame].size.height;
     }
+    
+//    if ([self hasHammerSites]) {
+//        
+//        height += 11;
+//    }
+//
+//    
+//    panelHeight = height;
+//    
+//    if ([self hasHammerSites]) {
+//        
+//        // THE MAGIC NUMBER
+//        // TODO: Make this cleverer about the actual difference in heights.
+//        panelHeight += 4;
+//    } else {
+//        
+//        panelHeight += 11;
+//    }
 
     // Set our maximum height
     NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
