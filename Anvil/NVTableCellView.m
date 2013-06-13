@@ -169,11 +169,18 @@
     [NSAnimationContext endGrouping];
 }
 
+- (void)hideControlsImmediately {
+    
+    [self.reallyDeleteButton setHidden:YES];
+    [self.restartButton setHidden:YES];
+    [self.deleteButton setHidden:YES];
+}
+
 - (void)hideControls {
     
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.05];
-    [[self.reallyDeleteButton animator] setHidden:YES];
+    [self.reallyDeleteButton setHidden:YES];
     [[self.restartButton animator] setHidden:YES];
     [[self.deleteButton animator] setHidden:YES];
     [NSAnimationContext endGrouping];

@@ -30,6 +30,7 @@
 @property (atomic) BOOL showRestartButton;
 
 - (void)showControls;
+- (void)hideControlsImmediately;
 - (void)hideControls;
 - (void)showReallyDeleteButton;
 - (void)hideReallyDeleteButton;

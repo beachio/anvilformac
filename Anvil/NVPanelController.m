@@ -654,13 +654,14 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         app = [self.dataSource.apps objectAtIndex:row];
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
-        cellView.isHammer = YES;
         long hammerGroupRow = row - self.dataSource.apps.count - 1;
         app = [self.dataSource.hammerApps objectAtIndex:hammerGroupRow];
     } else if (row == hammerGroupHeaderRowNumber){
         
         return [[NVGroupHeaderTableCellView alloc] init];
     }
+    
+    cellView.isHammer = (row > hammerGroupHeaderRowNumber && row > 0);
     
     if (cellView.isHammer) {
         
@@ -688,7 +689,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cellView.siteLabel.delegate = self;
     [cellView.siteLabel setWidth];
     
-    [cellView hideControls];
+    [cellView hideControlsImmediately];
     [cellView.siteLabel setWidth];
     
 //    [cellView resizeSubviewsWithOldSize:cellView.frame.size];
