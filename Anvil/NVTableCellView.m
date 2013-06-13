@@ -158,6 +158,7 @@
     
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:0.1];
+    [self.reallyDeleteButton setHidden:YES];
     if (self.showRestartButton) { // && ![self.restartButton isSpinning]) {
         [[self.restartButton animator] setHidden:NO];
     }
@@ -193,6 +194,7 @@
     [self setNeedsDisplay:YES];
     [super mouseDown:theEvent];
     self.mouseIsDown = NO;
+    self.isHovered = NO;
 }
 
 - (void)mouseUp:(NSEvent *)theEvent {

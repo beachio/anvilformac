@@ -6,13 +6,15 @@
 //  Copyright (c) 2012 Riot. All rights reserved.
 //
 
+// This dataSource tracks normal "apps" and hammer "apps.
+// It uses two separate arrays: apps and hammerApps.
+
 #import "NVDataSource.h"
 
 @interface NVDataSource ()
 
 @property (strong, readwrite, nonatomic) NSMutableArray *apps;
 @property (strong, readwrite, nonatomic) NSMutableArray *hammerApps;
-@property NSInteger _numberOfHammerSites;
 @property (strong, nonatomic) NSFileManager *fileManager;
 
 @end
@@ -75,9 +77,9 @@ static NSString *const kAppsKey = @"apps";
 // The wrapper function for the whole shebang.
 - (void)readInSavedAppDataFromDisk {
     
-//    [self clearOldHammerSymlinks];
+    [self clearOldHammerSymlinks];
     [self importFromPowdirectory];
-//    [self importNewHammerSites];
+    [self importNewHammerSites];
 }
 
 // Step 1
@@ -189,7 +191,7 @@ static NSString *const kAppsKey = @"apps";
         }
         
         if (!found) {
-            
+                        
             // Create a new Hammer site!
             NVApp *newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
             
@@ -263,8 +265,27 @@ static NSString *const kAppsKey = @"apps";
 - (NVApp *)addAppWithURL:(NSURL *)url {
     
     NVApp *newApp = [[NVApp alloc] init];
-    newApp.name = [url lastPathComponent];
-    newApp.url = url;
+    
+    if ([[url lastPathComponent] isEqualToString:@"Build"]) {
+        
+        NSString *hammerProjectName = [[url.path stringByDeletingLastPathComponent] lastPathComponent];
+        newApp.name = hammerProjectName;
+    } else {
+        
+        NSURL *buildFolderURL = [url URLByAppendingPathComponent:@"Build"];
+        
+        BOOL isDirectory;
+        if ([self.fileManager fileExistsAtPath:buildFolderURL.path isDirectory:&isDirectory] && isDirectory) {
+            
+            newApp.url = buildFolderURL;
+        } else {
+            
+            newApp.url = url;
+        }
+        newApp.name = [url lastPathComponent];
+    }
+    
+
     [newApp createSymlink];
     
     [[self mutableArrayValueForKey:kAppsKey] addObject:newApp];
@@ -330,35 +351,4 @@ static NSString *const kAppsKey = @"apps";
     return self.hammerApps.count;
 }
 
-
 @end
-
-
-
-
-
-//- (void)deleteOldSymlinks {
-
-//    NSMutableArray *hammerAppsArray = [[NSMutableArray alloc] init];
-//    NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];
-//    NSError *error = nil;
-//    NSArray *dirContents = [self.fileManager contentsOfDirectoryAtPath:path error:&error];
-//
-//    for (NSString* symlinkName in dirContents) {
-//
-//        if ([symlinkName isNotEqualTo:@".DS_Store"]) {
-//
-//            NSString *encodedName = [[NSString stringWithFormat:@"~/.pow/%@", symlinkName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//            NSURL *url = [NSURL URLWithString:encodedName];
-//            NVApp *thisApp = [self appByName:symlinkName];
-//
-//            if (!thisApp) {
-//
-//                NSLog(@"Couldn't find %@ - Deleting site at %@", symlinkName, url.path);
-//                [self.fileManager removeItemAtURL:url error:nil];
-//            }
-//
-//        }
-//    }
-
-//}

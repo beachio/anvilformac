@@ -49,7 +49,7 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect
-{
+{    
     NSImage *image = nil;
     if ([self state]) {
         image = [self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];

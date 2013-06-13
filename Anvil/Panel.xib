@@ -227,7 +227,7 @@
                             <button id="549" userLabel="Install Pow Button" customClass="NVStyledButton">
                                 <rect key="frame" x="73" y="19" width="110" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="bevel" title="Install Pow" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="550">
+                                <buttonCell key="cell" type="bevel" title="Install Pow" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="550">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -254,7 +254,7 @@
                             <button id="562" customClass="NVStyledButton">
                                 <rect key="frame" x="78" y="39" width="100" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="bevel" title="     Add a site" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="563">
+                                <buttonCell key="cell" type="bevel" title="     Add a site" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="563">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -365,7 +365,6 @@
         <class className="NVTableCellView" superclassName="NSTableCellView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NVTableCellView.h"/>
             <relationships>
-                <relationship kind="action" name="didClickDeleteButton:"/>
                 <relationship kind="outlet" name="deleteButton" candidateClass="NVStyledButton"/>
                 <relationship kind="outlet" name="faviconImageView" candidateClass="NVLayeredImageView"/>
                 <relationship kind="outlet" name="localLabel" candidateClass="NVLabel"/>

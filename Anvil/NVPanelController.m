@@ -473,7 +473,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         // THE MAGIC NUMBER
         // TODO: Make this cleverer about the actual difference in heights.
-        panelHeight += 2;
+        panelHeight += 4;
     } else {
         
         panelHeight += 11;
@@ -618,9 +618,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         if (view && i == self.appListTableView.selectedRow && i < [self hammerGroupHeaderRowNumber]) {
             
-            [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setBackgroundColor:[NSColor whiteColor]];
-            [[self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO] showControls];
-            [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setNeedsDisplay:YES];
+            NVTableRowView *rowView = [self.appListTableView rowViewAtRow:i makeIfNecessary:NO];
+            NVTableCellView *cellView = [self.appListTableView viewAtColumn:0 row:i makeIfNecessary:NO];
+            
+            [rowView setBackgroundColor:[NSColor whiteColor]];
+            [cellView showControls];
+            [rowView setNeedsDisplay:YES];
         } else {
             
             [[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] setBackgroundColor:[NSColor clearColor]];
@@ -815,7 +818,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
-    
+        
     [self highlightRow:row];
     self.appListTableView.needsDisplay = YES;
     
@@ -855,22 +858,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [[self.appListTableView viewAtColumn:0 row:row makeIfNecessary:NO] showControls];
     }
 }
-
-//- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)tableColumn {
-//    
-////    NSEvent *theEvent = [NSApp currentEvent];
-////    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
-////    NSInteger row = [self.appListTableView rowAtPoint:point];
-//    
-//    NSInteger row = [self.appListTableView clickedRow];
-//    
-//    NSLog(@"A");
-//    if (!self.isEditing && row != [self.appListTableView selectedRow]) {
-//        
-//        NSLog(@"A");
-//        [self.appListTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
-//    }
-//}
 
 #pragma mark - Renaming
 
@@ -1183,7 +1170,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [task setLaunchPath:@"/bin/sh"];
     
     NSString *command = [NSString stringWithFormat:
-                         @"tell application \"Terminal\" to do script \"curl get.pow.cx/uninstall.sh | sh\""];
+                         @"tell application \"Terminal\" to do script \"sudo curl get.pow.cx/uninstall.sh | sh\""];
     
     NSAppleScript *as = [[NSAppleScript alloc] initWithSource: command];
     
@@ -1297,14 +1284,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
     }];
 }
-
-//- (IBAction)didClickRestart:(id)sender {
-//    
-//    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-//    NVApp *app = [dataSource.apps objectAtIndex:self.appListTableView.clickedRow];
-//    
-//    [app restart];
-//}
 
 - (IBAction)didClickReallyDeleteButton:(id)sender {
     
