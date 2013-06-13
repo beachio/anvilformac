@@ -49,12 +49,13 @@
     NSRect footerRect = NSMakeRect(0, 0, dirtyRect.size.width, 34);
     [self.backgroundImage drawInRect:footerRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
     
-    NSRect contentRect = dirtyRect;
+    NSRect contentRect = [self bounds];
     contentRect.origin.y = footerRect.size.height;
     contentRect.size.height -= footerRect.size.height;
     contentRect.size.height -= ARROW_HEIGHT;
     contentRect.size.height -= 10;
     [[NSColor colorWithDeviceRed:244.0/255.0 green:244.0/255.0 blue:244.0/255.0 alpha:1.0] set];
+    
     NSRectFill(contentRect);
 }
 

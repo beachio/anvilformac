@@ -454,6 +454,31 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     return (int)self.dataSource.numberOfHammerSites > 0;
 }
 
+- (CGFloat)tableHeight {
+    
+    CGFloat height = 0;
+    for (int i = 0; i < self.appListTableView.numberOfRows; i++) {
+        
+        height += [self tableView:self.appListTableView heightOfRow:i]; //[[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] frame].size.height;
+    }
+    
+    height += ARROW_HEIGHT + HEADER_HEIGHT;
+    height -= 2; // borders?
+    return height;
+}
+
+- (CGFloat)desiredWindowHeight {
+    
+    CGFloat height = [self tableHeight];
+    // Set our maximum height
+    NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
+    if (height > maxHeight) {
+        
+        height = maxHeight;
+    }
+    return height;
+}
+
 - (void)updatePanelHeightAndAnimate:(BOOL)shouldAnimate {
     
     if (!self.hasActivePanel) {
@@ -466,51 +491,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSWindow *panel = [self window];
     NSRect panelRect = panel.frame;
     NSRect statusRect = [self statusRect];
-    
-    NSInteger panelHeight = (self.appListTableView.rowHeight + self.appListTableView.intercellSpacing.height) * [self.appListTableView numberOfRows] + ARROW_HEIGHT + HEADER_HEIGHT;
-    [self.appListTableView setColumnAutoresizingStyle:NSTableViewUniformColumnAutoresizingStyle];
-    [self.appListTableView sizeToFit];
 
+    NSInteger panelHeight = [self desiredWindowHeight];
     
     
-    
-    CGFloat height = 0;
-    for (int i = 0; i < self.appListTableView.numberOfRows; i++) {
-
-        height += [self tableView:self.appListTableView heightOfRow:i]; //[[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] frame].size.height;
-    }
-    
-    height += ARROW_HEIGHT + HEADER_HEIGHT;
-    height -= 2;
-    panelHeight = height;
-    
-//    if ([self hasHammerSites]) {
-//        
-//        height += 11;
-//    }
-//
-//    
-//    panelHeight = height;
-//    
-//    if ([self hasHammerSites]) {
-//        
-//        // THE MAGIC NUMBER
-//        // TODO: Make this cleverer about the actual difference in heights.
-//        panelHeight += 4;
-//    } else {
-//        
-//        panelHeight += 11;
-//    }
-
-    // Set our maximum height
-    NSInteger maxHeight = round([[NSScreen mainScreen] frame].size.height / 2);
-    if (panelHeight > maxHeight) {
-        
-        panelHeight = maxHeight;
-    }
-
+    // Make sure it's horizontally centred
     panelRect.origin.x = roundf(NSMidX(statusRect) - NSWidth(panelRect) / 2);
-    
     // Better make sure the panel's inside the window.
     NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     if (NSMaxX(panelRect) > (NSMaxX(screenRect) - ARROW_HEIGHT))
@@ -533,28 +519,22 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.welcomeView.hidden = NO;
         
         // In this case, appListTableView can actually be tall without being visible!
-        // 24 is the menubar height. 6 is the arrow height. HEADER_HEIGHT is the header height.
-        // TODO: Clean up these numbers.
 
         panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
         NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
-    } else if ([[self.dataSource apps] count] == 0) {
+    } else if ([[self.dataSource apps] count] == 0 && [[self.dataSource hammerApps] count] == 0) {
         
         self.appListTableView.hidden = YES;
         self.appListTableScrollView.hidden = YES;
         self.noAppsView.hidden = NO;
         self.welcomeView.hidden = YES;
-//        
-//        panelRect.origin.y -= self.noAppsView.frame.size.height;
-//        panelRect.size.height += self.noAppsView.frame.size.height;
         
         panelHeight = self.noAppsView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
         NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
 
-        
     } else {
         self.appListTableView.hidden = NO;
         self.appListTableScrollView.hidden = NO;
@@ -562,9 +542,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.welcomeView.hidden = YES;
     }
     
-    [panel setAlphaValue:1];
+    if (panel.alphaValue < 1) {
+        panel.alphaValue = 1;
+    }
     
-    NSLog(@"Setting panel height to %f", panelRect.size.height);
     if (shouldAnimate) {
         [[[self window] animator] setFrame:panelRect display:YES];
     } else {

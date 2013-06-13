@@ -162,7 +162,10 @@
     if (self.showRestartButton) { // && ![self.restartButton isSpinning]) {
         [[self.restartButton animator] setHidden:NO];
     }
-    [[self.deleteButton animator] setHidden:NO];
+    
+    if (!self.isHammer) {
+        [[self.deleteButton animator] setHidden:NO];
+    }
     [NSAnimationContext endGrouping];
 }
 

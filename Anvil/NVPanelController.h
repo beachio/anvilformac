@@ -6,6 +6,7 @@
 #import "NVSwitchView.h"
 #import "NVStyledButton.h"
 #import "CustomLoadingSpinner.h"
+#import "NVSiteTableView.h"
 
 @class NVPanelController;
 
@@ -29,7 +30,7 @@
     __unsafe_unretained NSTextField *_textField;
 }
 
-@property (weak, nonatomic) IBOutlet NSTableView *appListTableView;
+@property (weak, nonatomic) IBOutlet NVSiteTableView *appListTableView;
 @property (nonatomic, unsafe_unretained) IBOutlet NVBackgroundView *backgroundView;
 @property (nonatomic, unsafe_unretained) IBOutlet NSSearchField *searchField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextField *textField;

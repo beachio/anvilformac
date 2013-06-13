@@ -3,6 +3,7 @@
 
 #define ARROW_WIDTH 12
 #define ARROW_HEIGHT 8
+#define HEADER_HEIGHT 34
 
 @interface NVBackgroundView : NVStyledView
 {
