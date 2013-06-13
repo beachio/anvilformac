@@ -675,7 +675,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     cellView.hideBottomBorder = NO;
     cellView.hideTopBorder = NO;
-    if (row == self.dataSource.apps.count + self.dataSource.hammerApps.count) {
+    
+    if (row == self.dataSource.apps.count + self.dataSource.hammerApps.count || row == hammerGroupHeaderRowNumber-1) {
         
         cellView.hideBottomBorder = YES;
     } else if(row == 0) {
@@ -688,11 +689,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [cellView.siteLabel sizeToFit];
     cellView.siteLabel.delegate = self;
     [cellView.siteLabel setWidth];
-    
     [cellView hideControlsImmediately];
     [cellView.siteLabel setWidth];
-    
-//    [cellView resizeSubviewsWithOldSize:cellView.frame.size];
     
     cellView.showRestartButton = [app isARackApp];
     
@@ -704,7 +702,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                                                             withSize:NSMakeSize(16, 16)];
     } else {
         
-//        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
         cellView.faviconImageView.foregroundImage = nil;
     }
 
@@ -822,16 +819,17 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)mouseMoved:(NSEvent *)theEvent {
     
-//    NSLog(@"Mouse moved");
-    
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
-        
-    [self highlightRow:row];
-    self.appListTableView.needsDisplay = YES;
     
-    self.appListTableView.menu = nil;
-    self.appListTableView.menu = [self menuForTableView];
+    if (row > -1 && row < self.appListTableView.numberOfRows) {
+        
+        [self highlightRow:row];
+        self.appListTableView.needsDisplay = YES;
+        
+        self.appListTableView.menu = nil;
+        self.appListTableView.menu = [self menuForTableView];
+    }
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
@@ -1012,9 +1010,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)didClickCopyXipIo:(id)sender {
     
-    NSInteger clickedRow = self.appListTableView.selectedRow;
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
     
     NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, [self ipAddress]];
     
@@ -1023,20 +1019,20 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [pboard setString:xipString forType:NSStringPboardType];
     
     self.hasActivePanel = NO;
+    [self clearRows];
 }
 
 - (void)didClickOpenInXipIo:(id)sender {
     
-    NSInteger clickedRow = self.appListTableView.selectedRow;
-    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-    NVApp *app = [dataSource.apps objectAtIndex:clickedRow];
+    NVApp *app = [self appForSelectedRow:self.appListTableView.selectedRow];
 
     NSString *xipString = [NSString stringWithFormat:@"http://%@.%@.xip.io/", app.name, [self ipAddress]];
 
     NSURL *ipURL = [[NSURL alloc] initWithString:xipString];
     [[NSWorkspace sharedWorkspace] openURL:ipURL];
 
-    self.hasActivePanel = NO;    
+    self.hasActivePanel = NO;
+    [self clearRows];
 }
 
 - (NSString *)ipAddress {
@@ -1100,9 +1096,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (NVApp *)appForSelectedRow:(NSInteger)row {
     
-//    NSInteger realRowIndex = selectedRow;
-//    NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
-    
     NVApp *app;
     NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     if (row < hammerGroupHeaderRowNumber) {
@@ -1115,22 +1108,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     } else {
         return nil;
     }
-//    
-//    if (selectedRow > hammerGroupHeaderRowNumber) {
-//
-//        realRowIndex -= 1;
-//    } else if(selectedRow == hammerGroupHeaderRowNumber) {
-//        
-//        return nil;
-//    }
-//    
-//    NVDataSource *dataSource = [NVDataSource sharedDataSource];
-//    NVApp *app;
-//    if (realRowIndex < dataSource.apps.count) {
-//        app = [dataSource.apps objectAtIndex:realRowIndex];
-//    } else {
-//        return nil;
-//    }
+
     return app;
 }
 
@@ -1396,6 +1374,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [task setLaunchPath:@"/usr/bin/open"];
     [task setArguments:[NSArray arrayWithObjects:@"-a", @"Terminal", app.url.path, nil]];
     [task launch];
+    
+    [self clearRows];
 }
 
 - (void)didClickOpenInFinder:(id)sender {
@@ -1403,6 +1383,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.url];
+    [self clearRows];
 }
 
 - (void)didClickOpenWithBrowser:(id)sender {
@@ -1410,6 +1391,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NVApp *app = [self appForSelectedRow:self.appListTableView.clickedRow];
     
     [[NSWorkspace sharedWorkspace] openURL:app.browserURL];
+    [self clearRows];
 }
 
 #pragma mark - Deallocation
