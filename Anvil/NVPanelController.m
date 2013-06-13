@@ -480,6 +480,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         height += [self tableView:self.appListTableView heightOfRow:i]; //[[self.appListTableView rowViewAtRow:i makeIfNecessary:NO] frame].size.height;
     }
     
+    height += ARROW_HEIGHT + HEADER_HEIGHT;
+    height -= 2;
+    panelHeight = height;
+    
 //    if ([self hasHammerSites]) {
 //        
 //        height += 11;
@@ -560,6 +564,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     [panel setAlphaValue:1];
     
+    NSLog(@"Setting panel height to %f", panelRect.size.height);
     if (shouldAnimate) {
         [[[self window] animator] setFrame:panelRect display:YES];
     } else {
