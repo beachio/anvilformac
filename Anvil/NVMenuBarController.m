@@ -23,8 +23,6 @@
         statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
         statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
         statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconAlt"];
-        statusItemView.action = @selector(togglePanel:);
-        statusItemView.rightClickAction = @selector(menuItemRightClicked:);
         statusItemView.delegate = self;
     }
     return self;
@@ -43,6 +41,16 @@
 }
 
 #pragma mark - Icon
+
+- (void)statusItemView:(NVStatusItemView *)statusItem wasRightClicked:(id)sender {
+    
+    [self.delegate performSelector:@selector(menuItemRightClicked:) withObject:self];
+}
+
+- (void)statusItemView:(NVStatusItemView *)statusItem wasClicked:(id)sender {
+    
+    [self.delegate performSelector:@selector(togglePanel:) withObject:self];
+}
 
 - (BOOL)hasActiveIcon {
     

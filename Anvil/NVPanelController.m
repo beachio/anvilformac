@@ -816,6 +816,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)mouseMoved:(NSEvent *)theEvent {
     
+//    NSLog(@"Mouse moved");
+    
     NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
     NSInteger row = [self.appListTableView rowAtPoint:point];
         
@@ -832,11 +834,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     if (trackingAreaName == kPanelTrackingAreaIdentifier) {
 
-//        [self.appListTableView deselectRow:self.selectedRow];
         NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:-1];
         [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
         self.selectedRow = -1;
-//        [self clearRows];
+        [self clearRows];
         self.appListTableView.needsDisplay = YES;
         
         for (int i = 0; i < self.appListTableView.numberOfRows; i++) {

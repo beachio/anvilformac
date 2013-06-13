@@ -25,6 +25,8 @@
 
 @protocol NVStatusItemViewDelegate <NSObject>
 @optional
+- (void)statusItemView:(NVStatusItemView *)statusItem wasClicked:(id)sender;
+- (void)statusItemView:(NVStatusItemView *)statusItem wasRightClicked:(id)sender;
 - (void)statusItemView:(NVStatusItemView *)statusItem didReceiveDropURL:(NSURL *)dropURL;
 - (BOOL)statusItemView:(NVStatusItemView *)statusItem canReceiveDropURL:(NSURL *)dropURL;
 - (void)addAppWithURL:(NSURL *)url;

@@ -113,12 +113,14 @@
 
 - (void)mouseDown:(NSEvent *)theEvent {
     
-    [NSApp sendAction:self.action to:self.target from:self];
+//    [NSApp sendAction:self.action to:self.target from:self];
+    [self.delegate statusItemView:self wasClicked:self];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
     
-    [NSApp sendAction:self.rightClickAction to:self.target from:self];
+//    [NSApp sendAction:self.rightClickAction to:self.target from:self];
+    [self.delegate statusItemView:self wasRightClicked:self];
 }
 
 - (BOOL)needsDisplay {
