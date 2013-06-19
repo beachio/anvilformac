@@ -714,6 +714,11 @@
 				CLASSPREFIX = NV;
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = Riot;
+				TargetAttributes = {
+					4FBFA35515C6F85800BA8209 = {
+						DevelopmentTeam = RVSYWD2P7Y;
+					};
+				};
 			};
 			buildConfigurationList = 4FBFA35015C6F85800BA8209 /* Build configuration list for PBXProject "Anvil" */;
 			compatibilityVersion = "Xcode 3.2";
