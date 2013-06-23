@@ -67,7 +67,11 @@
     
     _isHammer = isHammer;
     if (isHammer) {
+        
         [self.localLabel setText:@".hammer.dev"];
+    } else {
+        
+        [self.localLabel setText:@".dev"];
     }
 }
 

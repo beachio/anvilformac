@@ -18,12 +18,23 @@
 
 @implementation NVStyledButton
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.hovered = NO;
+    }
+    return self;
+}
+
 - (void)awakeFromNib
 {
     self.hovered = NO;
     self.textSize = 11.0;
     self.insets = BFEdgeInsetsMake(1.0, 5.0, 1.0, 5.0);
     self.isBold = YES;
+    self.hovered = NO;
     int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
     NSTrackingArea *trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
                                                                  options:opts
@@ -49,12 +60,13 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect
-{    
+{
     NSImage *image = nil;
     if ([self state]) {
         image = [self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
     } else {
         if (self.hovered && self.hoverImage) {
+
             image = [self.hoverImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
         } else {
             image = [self.image stretchableImageWithEdgeInsets:self.insetsOrDefaults];

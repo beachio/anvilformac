@@ -117,6 +117,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.noSitesAddASiteButton.isBold = NO;
         
         CGRect frame = self.welcomeView.frame;
+        self.welcomeView.backgroundColor = [NSColor colorWithDeviceRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
         [self.welcomeView setFrame:CGRectMake(frame.origin.x,
                                               self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
                                               frame.size.width,
@@ -546,7 +547,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         // In this case, appListTableView can actually be tall without being visible!
 
         panelHeight = self.welcomeView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
-        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
+        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
         
     } else if ([[self.dataSource apps] count] == 0 && [[self.dataSource hammerApps] count] == 0) {
@@ -557,7 +558,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.welcomeView.hidden = YES;
         
         panelHeight = self.noAppsView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
-        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight - WINDOW_VERTICAL_OFFSET;
+        NSInteger panelY = bottomOfMenubarViewOffset - panelHeight;
         panelRect = CGRectMake(panelRect.origin.x, panelY, PANEL_WIDTH, panelHeight);
 
     } else {
@@ -1115,11 +1116,15 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSInteger hammerGroupHeaderRowNumber = [self hammerGroupHeaderRowNumber];
     if (row < hammerGroupHeaderRowNumber) {
         
-        app = [self.dataSource.apps objectAtIndex:row];
+        if (row < self.dataSource.apps.count) {
+            app = [self.dataSource.apps objectAtIndex:row];
+        }
     } else if (row > hammerGroupHeaderRowNumber && row > 0){
         
         row = row - self.dataSource.apps.count - 1;
-        app = [self.dataSource.hammerApps objectAtIndex:row];
+        if (row < self.dataSource.hammerApps.count) {
+            app = [self.dataSource.hammerApps objectAtIndex:row];
+        }
     } else {
         return nil;
     }
