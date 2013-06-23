@@ -112,7 +112,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.noSitesAddASiteButton.image = [NSImage imageNamed:@"ButtonAdd"];
         self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"ButtonAddPushed"];
-        [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:25.0];
+        [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:30.0];
         self.noSitesAddASiteButton.textSize = 12.0;
         self.noSitesAddASiteButton.isBold = NO;
         
@@ -144,6 +144,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [self.appListTableView reloadData];
         [self switchSwitchViewToPowStatus];
         self.awake = YES;
+        
+        self.appListTableView.clickDelegate = self;
         
         self.powCheckerTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(switchSwitchViewToPowStatus) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
@@ -692,10 +694,13 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cellView.hideBottomBorder = NO;
     cellView.hideTopBorder = NO;
     
-    if (row == self.dataSource.apps.count + self.dataSource.hammerApps.count || row == hammerGroupHeaderRowNumber-1) {
-        
+    if ((self.dataSource.hammerApps.count > 0 && row == self.dataSource.apps.count+self.dataSource.hammerApps.count) ||
+        (self.dataSource.hammerApps.count == 0 && row == self.dataSource.apps.count-1))
+    {
         cellView.hideBottomBorder = YES;
-    } else if(row == 0) {
+    }
+        
+    if(row == 0) {
         
         cellView.hideTopBorder = YES;
     }
@@ -966,12 +971,26 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 #pragma mark - Menus
 
+- (void)tableView:(NSTableView *)tableView wasRightClickedAndNeedsAMenu:(NSEvent *)theEvent {
+    
+    NSPoint point = [self.appListTableView convertPoint:[theEvent locationInWindow] fromView:self.backgroundView];
+    NSInteger row = [self.appListTableView rowAtPoint:point];
+    NSIndexSet *rowToSelect = [NSIndexSet indexSetWithIndex:row];
+    [tableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+    [self.appListTableView selectRowIndexes:rowToSelect byExtendingSelection:NO];
+    tableView.menu = [self menuForTableView];
+
+    [self highlightRow:row];
+}
+
 - (NSMenu *)menuForTableView {
     
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Site Menu"];
     
-    NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:self.appListTableView.clickedRow];
-    [self.appListTableView selectRowIndexes:thisIndexSet byExtendingSelection:NO];
+    if (self.appListTableView.selectedRow == [self hammerGroupHeaderRowNumber]) {
+        
+        return nil;
+    }
     
     if (self.appListTableView.selectedRow < self.appListTableView.numberOfRows && self.appListTableView.selectedRow > -1) {
         

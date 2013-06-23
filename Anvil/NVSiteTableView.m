@@ -18,7 +18,6 @@
 
 @implementation NVSiteTableView
 
-
 - (void)awakeFromNib {
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
@@ -28,6 +27,16 @@
 - (BOOL)isOpaque {
     
     return NO;
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent {
+    
+    if (self.clickDelegate && [self.clickDelegate respondsToSelector:@selector(tableView:wasRightClickedAndNeedsAMenu:)]) {
+        
+        [self.clickDelegate tableView:self wasRightClickedAndNeedsAMenu:theEvent];
+    }
+    
+    [super rightMouseDown:theEvent];
 }
 
 @end
