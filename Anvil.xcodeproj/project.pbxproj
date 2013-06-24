@@ -13,6 +13,7 @@
 		4F107C681610CF0E00624611 /* InstallPow.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4F107C671610CF0E00624611 /* InstallPow.sh */; };
 		4F2CCA10176384060010AB4B /* NVGroupHeaderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CCA0F176384060010AB4B /* NVGroupHeaderTableCellView.m */; };
 		4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F361365160C9816008584A0 /* NVPopupButtonCell.m */; };
+		4F4AFFED1778AACF0081BBD3 /* Anvil.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */; };
 		4F6DBFDB160626FB00D2F214 /* NVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6DBFDA160626FA00D2F214 /* NVLabel.m */; };
 		4F723F9B1768D547004C5990 /* Footer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F723F991768D547004C5990 /* Footer.png */; };
 		4F723F9C1768D547004C5990 /* Footer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F723F9A1768D547004C5990 /* Footer@2x.png */; };
@@ -86,7 +87,6 @@
 		4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
 		4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
 		4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4FBABB09161344D600D4174B /* dsa_pub.pem */; };
-		4FBE23721619EC7100CB6793 /* Anvil.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 4FBE23711619EC7100CB6793 /* Anvil.iconset */; };
 		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
 		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
 		4FBFA36715C6F85800BA8209 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBFA36615C6F85800BA8209 /* main.m */; };
@@ -132,6 +132,7 @@
 		4F2CCA0F176384060010AB4B /* NVGroupHeaderTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVGroupHeaderTableCellView.m; sourceTree = "<group>"; };
 		4F361364160C9816008584A0 /* NVPopupButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPopupButtonCell.h; sourceTree = "<group>"; };
 		4F361365160C9816008584A0 /* NVPopupButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPopupButtonCell.m; sourceTree = "<group>"; };
+		4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Anvil.icns; sourceTree = "<group>"; };
 		4F6DBFD9160626FA00D2F214 /* NVLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVLabel.h; sourceTree = "<group>"; };
 		4F6DBFDA160626FA00D2F214 /* NVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLabel.m; sourceTree = "<group>"; };
 		4F723F991768D547004C5990 /* Footer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Footer.png; sourceTree = "<group>"; };
@@ -220,7 +221,6 @@
 		4FB9E814160610A1005B50A4 /* NVTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableCellView.m; sourceTree = "<group>"; };
 		4FBABB041613442200D4174B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FBABB09161344D600D4174B /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		4FBE23711619EC7100CB6793 /* Anvil.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = Anvil.iconset; sourceTree = SOURCE_ROOT; };
 		4FBFA35615C6F85800BA8209 /* Anvil.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anvil.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBFA35A15C6F85800BA8209 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4FBFA35D15C6F85800BA8209 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -455,7 +455,6 @@
 			isa = PBXGroup;
 			children = (
 				4FA5A0691763633D00196CDF /* images */,
-				4FBE23711619EC7100CB6793 /* Anvil.iconset */,
 				4F0B716016234A82007246F9 /* 404 */,
 				4FBABB09161344D600D4174B /* dsa_pub.pem */,
 			);
@@ -465,6 +464,7 @@
 		4FBFA34B15C6F85800BA8209 = {
 			isa = PBXGroup;
 			children = (
+				4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */,
 				4FAB52721611D78400BD03F8 /* QuartzCore.framework */,
 				4FBFA36015C6F85800BA8209 /* Anvil */,
 				4FBFA35915C6F85800BA8209 /* Frameworks */,
@@ -748,7 +748,6 @@
 				4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */,
 				4F107C681610CF0E00624611 /* InstallPow.sh in Resources */,
 				4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */,
-				4FBE23721619EC7100CB6793 /* Anvil.iconset in Resources */,
 				4F0B716216234A82007246F9 /* index.html in Resources */,
 				4FA5A09C1763633D00196CDF /* AddButton.png in Resources */,
 				4FA5A09D1763633D00196CDF /* AddButton@2x.png in Resources */,
@@ -762,6 +761,7 @@
 				4FA5A0A51763633D00196CDF /* ButtonAdd@2x.png in Resources */,
 				4FA5A0A61763633D00196CDF /* ButtonAddPushed.png in Resources */,
 				4FA5A0A71763633D00196CDF /* ButtonAddPushed@2x.png in Resources */,
+				4F4AFFED1778AACF0081BBD3 /* Anvil.icns in Resources */,
 				4FA5A0A81763633D00196CDF /* Delete.png in Resources */,
 				4FA5A0A91763633D00196CDF /* Delete@2x.png in Resources */,
 				4FA5A0AA1763633D00196CDF /* DeleteButton.png in Resources */,
