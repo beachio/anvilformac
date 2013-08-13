@@ -151,6 +151,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
         
         // Draw it off-screen sure
+        [self.window setAlphaValue:0.0];
         [self.window setFrameOrigin:NSMakePoint(10000, 10000)];
         [self.window makeKeyAndOrderFront:nil];
         [self.window resignKeyWindow];

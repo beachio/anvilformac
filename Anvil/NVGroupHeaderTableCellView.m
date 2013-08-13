@@ -46,7 +46,12 @@
     
     [super drawRect:dirtyRect];
     NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader.png"];
-    [titleBarImage drawInRect:self.bounds withLeftCapWidth:1.0 topCapHeight:1.0];
+    
+    // This needs to fill the box somehow cleverer than this.. Redcolor fills the row completely.
+    CGRect rect = self.bounds;
+    // HAHA MADNESS
+    rect.size.width += 1;
+    [titleBarImage drawInRect:rect withLeftCapWidth:1.0 topCapHeight:1.0];
 }
 
 @end

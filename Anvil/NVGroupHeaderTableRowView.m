@@ -22,43 +22,17 @@
     return self;
 }
 
-- (void)awakeFromNib {
-
-}
-
 - (BOOL)isOpaque {
     
     return NO;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
+- (void)drawRect:(NSRect)dirtyRect {
     
     // This is the top line on the group bar.
-    [[NSColor colorWithDeviceRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0] set];
-    NSRectFill(dirtyRect);  
-//    [super drawRect:dirtyRect];
-    
-//    // TODO: Check retina
-//    NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader"];
-//    
-//    NSRect adjustedDirtyRect = dirtyRect;
-//    adjustedDirtyRect.origin.y = -10;
-//    [titleBarImage drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
-//
-//    [[NSColor darkGrayColor] set];
-//    NSRectFill(dirtyRect);
-//
-//    NSImage *titleBarImage = [[NSImage imageNamed:@"HammerHeader.png"] image];
-//    
-//    [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
-//    [titleBarImage drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0];
-////    [titleBarImage drawInRect:[self bounds] fromRect:NSZeroRect operation:NSCompositeDestinationOver fraction:1.0 respectFlipped:YES hints:nil];
-//    [[NSColor whiteColor] set];
-//    NSRectFill(dirtyRect);
-////    NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader.png"];
-//    [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
-
+    // This is how we get the border above the Hammer sites bar!
+    [[NSColor colorWithDeviceRed:225.0/255.0 green:225.0/255.0 blue:225.0/255.0 alpha:1.0] set];
+    NSRectFill(dirtyRect);
 }
 
 @end
