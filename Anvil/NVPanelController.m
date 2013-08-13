@@ -690,8 +690,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     }
     
     cellView.darkTopBorder = (row == (hammerGroupHeaderRowNumber+1));
-    
-    cellView.hideBottomBorder = NO;
+    cellView.hideBottomBorder = (row == (hammerGroupHeaderRowNumber-1));
     cellView.hideTopBorder = NO;
     
     if ((self.dataSource.hammerApps.count > 0 && row == self.dataSource.apps.count+self.dataSource.hammerApps.count) ||
@@ -783,7 +782,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         rowView.identifier = kAppListTableRowIdentifier;
     }
     
-    rowView.darkTopBorder = (row == (groupHeaderRowNumber + 1));
+//    rowView.darkTopBorder = (row == (groupHeaderRowNumber + 1));
 //    rowView.hideTopBorder    = (row == (groupHeaderRowNumber + 1));
 //    rowView.hideBottomBorder = (row == (groupHeaderRowNumber - 1));
 

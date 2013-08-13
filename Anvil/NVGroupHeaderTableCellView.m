@@ -44,8 +44,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     
+    [super drawRect:dirtyRect];
     NSImage *titleBarImage = [NSImage imageNamed:@"HammerHeader.png"];
-    [titleBarImage drawInRect:dirtyRect withLeftCapWidth:1.0 topCapHeight:1.0];
+    [titleBarImage drawInRect:self.bounds withLeftCapWidth:1.0 topCapHeight:1.0];
 }
 
 @end

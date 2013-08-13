@@ -34,8 +34,9 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     
+    // This is the top line on the group bar.
     [[NSColor colorWithDeviceRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0] set];
-    NSRectFill(dirtyRect);
+    NSRectFill(dirtyRect);  
 //    [super drawRect:dirtyRect];
     
 //    // TODO: Check retina

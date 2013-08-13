@@ -25,6 +25,8 @@
     return [[[NVDataSource sharedDataSource] apps] objectAtIndex:rowIndex];
 }
 
+// This is not actually used yet.
+// TODO: Move the panelcontroller table logic into here.
 - (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
     
     return [[NSTableRowView alloc] init];

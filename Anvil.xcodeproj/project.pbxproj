@@ -942,6 +942,7 @@
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -960,6 +961,7 @@
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
