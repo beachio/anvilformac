@@ -695,8 +695,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cellView.hideTopBorder = NO;
     
     if ((self.dataSource.hammerApps.count > 0 && row == self.dataSource.apps.count+self.dataSource.hammerApps.count) ||
-        (self.dataSource.hammerApps.count == 0 && row == self.dataSource.apps.count-1))
-    {
+        (self.dataSource.hammerApps.count == 0 && row == self.dataSource.apps.count-1)) {
         cellView.hideBottomBorder = YES;
     }
         
@@ -725,6 +724,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         cellView.faviconImageView.foregroundImage = nil;
     }
+    
+    cellView.faviconImageView.needsDisplay = YES;
 
     return cellView;
 }

@@ -109,9 +109,8 @@ static NSString *const kAppsKey = @"apps";
                 
                 // /Users/elliott/sites/project
                 NSString *hammerProjectDirectory = [[[hammerSiteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                NSString *name = [[hammerSiteDictionary valueForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-                
-                found = [hammerProjectDirectory isEqualTo:escapedSymlinkUrlPath] && [name isEqualToString:[escapedSymlinkUrlPath lastPathComponent]];
+//                NSString *name = [[hammerSiteDictionary valueForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+                found = [hammerProjectDirectory isEqualTo:escapedSymlinkUrlPath]; //&& [name isEqualToString:[escapedSymlinkUrlPath lastPathComponent]];
             }
             
             if (!found) {
@@ -182,15 +181,15 @@ static NSString *const kAppsKey = @"apps";
         
         BOOL found = false;
         NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
-        NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingPathComponent:@"Build"];
+//        NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingPathComponent:@"Build"];
         
         for (NVApp *app in self.hammerApps) {
             
             if (found) continue;
             if (
                 [[app.url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] isEqualTo:localFileURL]
-                &&
-                [app.name isEqualToString:name]
+//                &&
+//                [app.name isEqualToString:name]
             ) {
                 
                 found = true;
