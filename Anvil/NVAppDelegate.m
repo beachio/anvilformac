@@ -31,6 +31,8 @@ void *kContextActivePanel = &kContextActivePanel;
     
     // This fixes the final switch view bug.
     [self.menubarController.statusItemView setNeedsDisplay:YES];
+    
+    // TODO: Investigate whether this is where we should open the panel, when the application's launched while it's already running?
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -50,6 +52,8 @@ void *kContextActivePanel = &kContextActivePanel;
     [self panelController];
     NSTimer *mainLoopTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(readSites) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:mainLoopTimer forMode:NSEventTrackingRunLoopMode];
+    
+    // Todo: open window (unless the computer's just started up)
 }
 
 - (void)readSites {
@@ -73,6 +77,7 @@ void *kContextActivePanel = &kContextActivePanel;
 }  
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    
     // Explicitly remove the icon from the menu bar
     self.menubarController = nil;
     return NSTerminateNow;

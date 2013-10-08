@@ -151,10 +151,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
         
         // Draw it off-screen sure
-        [self.window setAlphaValue:0.0];
-        [self.window setFrameOrigin:NSMakePoint(10000, 10000)];
-        [self.window makeKeyAndOrderFront:nil];
-        [self.window resignKeyWindow];
+        // [self.window setFrameOrigin:NSMakePoint(10000, 10000)];
+        // [self.window makeKeyAndOrderFront:nil];
+        // [self.window resignKeyWindow];
         
         // Give the NSScrollView a backing layer and set its corner radius.
         
@@ -400,7 +399,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)openPanel {
     
-    
     if (!self.trackingArea) {
         
         [self createTrackingArea];
@@ -411,7 +409,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
     
     self.panelIsOpen = YES;
-    
+
     [self.window makeFirstResponder:nil];
     [self.window becomeMainWindow];
     [self.window makeKeyAndOrderFront:nil];
@@ -695,8 +693,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cellView.hideTopBorder = NO;
     
     if ((self.dataSource.hammerApps.count > 0 && row == self.dataSource.apps.count+self.dataSource.hammerApps.count) ||
-        (self.dataSource.hammerApps.count == 0 && row == self.dataSource.apps.count-1))
-    {
+        (self.dataSource.hammerApps.count == 0 && row == self.dataSource.apps.count-1)) {
         cellView.hideBottomBorder = YES;
     }
         
@@ -725,6 +722,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         cellView.faviconImageView.foregroundImage = nil;
     }
+    
+    cellView.faviconImageView.needsDisplay = YES;
 
     return cellView;
 }

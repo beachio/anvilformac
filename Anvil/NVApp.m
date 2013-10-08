@@ -67,24 +67,17 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
 
         self.url = expandedURL;
     }
+    
+    [self performSelectorInBackground:@selector(fetchFaviconURL:) withObject:nil];
     return self;
 }
 
 #pragma mark - URLs
 
-- (NSURL *)faviconURL {
+- (void)fetchFaviconURL:(id)sender {
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    // If we've cached this already, use the cache.
-    if (self._faviconURL && [fileManager fileExistsAtPath:self._faviconURL.path]) {
-        
-        return self._faviconURL;
-    } else if(self.hasNoFavicon) {
-        
-        return nil;
-    }
-
+    
     NSURL *faviconURL = nil; //[self.url URLByAppendingPathComponent:@"public/favicon.ico"];
     NSArray *enumeratorKeys = [NSArray arrayWithObject:NSURLIsDirectoryKey];
     NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:self.url includingPropertiesForKeys:enumeratorKeys options:0 errorHandler:NULL];
@@ -108,11 +101,28 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
     if( [fileManager fileExistsAtPath:faviconURL.path] && [attrs fileSize] > 0){
         
         self._faviconURL = faviconURL;
-        return faviconURL;
     } else {
         
         self.hasNoFavicon = YES;
         self._faviconURL = nil;
+    }
+
+}
+
+- (NSURL *)faviconURL {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // If we've cached this already, use the cache.
+    if (self._faviconURL && [fileManager fileExistsAtPath:self._faviconURL.path]) {
+        
+        return self._faviconURL;
+    } else if(self.hasNoFavicon) {
+        
+        return nil;
+    } else {
+        
+        [self performSelectorInBackground:@selector(fetchFaviconURL:) withObject:nil];
         return nil;
     }
 }
