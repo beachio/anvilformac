@@ -165,7 +165,7 @@ static NSString *const kAppsKey = @"apps";
             }
         }
     }
-    
+
     self.hammerApps = hammerAppsArray;
     self.apps = appsArray;
 }
@@ -176,28 +176,67 @@ static NSString *const kAppsKey = @"apps";
 - (void)importNewHammerSites {
     
     NSMutableArray *appsToAdd = [[NSMutableArray alloc] init];
+    NSMutableArray *appsToRemove = [[NSMutableArray alloc] init];
+    NSMutableArray *urlsAdded = [[NSMutableArray alloc] init];
+
+    for (NVApp *app in self.hammerApps) {
+
+        BOOL found = NO;
+        int i = 0;
+        for (NSDictionary *siteDictionary in [self hammerSitesDictionary]) {
+            BOOL found = false;
+            NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
+            NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingFormat:@".hammer"];
+            if (found) continue;
+            if (
+                [[app.url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] isEqualTo:localFileURL]) {
+                found = true;
+                if (![app.name isEqualToString:name]) {
+                    [app destroySymlink];
+                    app.name = name;
+                    [app createSymlink];
+                    [self.hammerApps replaceObjectAtIndex:i withObject:app];
+                }
+                found = true;
+            }
+            i++;
+        };
+
+        if (!found) {
+
+            if ([urlsAdded indexOfObject:app.name] == -1) {
+                [appsToRemove addObject:app];
+            }
+        }
+    };
     
     for (NSDictionary *siteDictionary in [self hammerSitesDictionary]) {
         
         BOOL found = false;
         NSString *localFileURL = [[siteDictionary valueForKey:@"rootDirectoryURL"] stringByAppendingPathComponent:@"Build"];
-//        NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingPathComponent:@"Build"];
-        
+        NSString *name = [[siteDictionary valueForKey:@"name"] stringByAppendingFormat:@".hammer"];
+
+        int i = 0;
         for (NVApp *app in self.hammerApps) {
             
             if (found) continue;
-            if (
-                [[app.url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] isEqualTo:localFileURL]
-//                &&
-//                [app.name isEqualToString:name]
-            ) {
-                
+
+            if ([[app.url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] isEqualTo:localFileURL]) {
+                // Matches URL! Let's check whether it's been renamed.
                 found = true;
+                if (![app.name isEqualToString:name]) {
+                    // It's been renamed.
+                    [app destroySymlink];
+                    app.name = name;
+                    [app createSymlink];
+                    [self.hammerApps replaceObjectAtIndex:i withObject:app];
+                }
             }
+            i++;
         }
         
         if (!found) {
-                        
+
             // Create a new Hammer site!
             NVApp *newApp = [[NVApp alloc] initWithURL:[NSURL URLWithString:localFileURL]];
             
@@ -206,11 +245,17 @@ static NSString *const kAppsKey = @"apps";
             newApp.name = [[name stringByReplacingOccurrencesOfString:@" " withString:@"-"] lowercaseString];;
             [newApp createSymlink];
             [appsToAdd addObject:newApp];
+            [urlsAdded addObject:newApp.name];
         }
+    }
+
+
+
+    for (NVApp *app in appsToRemove) {
+        [self removeApp:app];
     }
     
     for (NVApp *app in appsToAdd) {
-        
         [self.hammerApps addObject:app];
     }
 }

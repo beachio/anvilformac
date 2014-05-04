@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet NVSpinnerButton *restartButton;
 @property (weak, nonatomic) IBOutlet NVStyledButton *deleteButton;
 @property (weak, nonatomic) IBOutlet NVStyledButton *reallyDeleteButton;
-@property BOOL isHammer;
+@property (nonatomic) BOOL isHammer;
 @property BOOL darkTopBorder;
 @property BOOL isHovered;
 

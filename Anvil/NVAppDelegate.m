@@ -50,7 +50,7 @@ void *kContextActivePanel = &kContextActivePanel;
     
     // Initialize it
     [self panelController];
-    NSTimer *mainLoopTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(readSites) userInfo:nil repeats:YES];
+    NSTimer *mainLoopTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(readSites) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:mainLoopTimer forMode:NSEventTrackingRunLoopMode];
     
     // Todo: open window (unless the computer's just started up)

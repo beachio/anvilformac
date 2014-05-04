@@ -20,7 +20,7 @@
 @implementation NVTableCellView
 
 - (void)awakeFromNib {
-    
+
     // Initialization code here.
     self.backgroundStyle = NSBackgroundStyleLowered;
     
@@ -57,16 +57,13 @@
     [self.deleteButton setTransparent:NO];
     
     [self.siteLabel setEditable:YES];
-  
-//    [self addTrackingRect:[self bounds] owner:self userData:nil assumeInside:YES];
-    
     [self setupReallyDeleteButton];
 }
 
 - (void)setIsHammer:(BOOL)isHammer {
     
     _isHammer = isHammer;
-    if (isHammer) {
+    if (self.isHammer) {
         
         [self.localLabel setText:@".hammer.dev"];
     } else {

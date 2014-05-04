@@ -12,6 +12,6 @@
 
 @property (nonatomic, assign) NSInteger arrowX;
 @property (nonatomic, assign) IBOutlet NVStyledView *titlebarPointImageView;
-@property (strong, atomic) BFImage *backgroundImage;
+@property (nonatomic, strong) BFImage *backgroundImage;
 
 @end

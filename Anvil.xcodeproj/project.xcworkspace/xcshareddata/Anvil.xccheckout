@@ -2,37 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>2713ECD8-C939-42BD-82A8-37EEFED95222</string>
+	<string>CD39611F-11E3-4424-BF5F-D2126334C7B4</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Anvil</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>88FFEF15-6903-4995-A3EE-780A2212410B</key>
-		<string>ssh://github.com/RiotHQ/anvilformac.git</string>
+		<key>70BA2789-C9AA-496D-B9B0-3EEBF1DE499C</key>
+		<string>ssh://github.com/riothq/anvilformac.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Anvil.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>88FFEF15-6903-4995-A3EE-780A2212410B</key>
+		<key>70BA2789-C9AA-496D-B9B0-3EEBF1DE499C</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/RiotHQ/anvilformac.git</string>
+	<string>ssh://github.com/riothq/anvilformac.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>88FFEF15-6903-4995-A3EE-780A2212410B</string>
+	<string>70BA2789-C9AA-496D-B9B0-3EEBF1DE499C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>88FFEF15-6903-4995-A3EE-780A2212410B</string>
+			<string>70BA2789-C9AA-496D-B9B0-3EEBF1DE499C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Anvil</string>
+			<string>anvilformac</string>
 		</dict>
 	</array>
 </dict>
