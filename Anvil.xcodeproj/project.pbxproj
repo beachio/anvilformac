@@ -11,6 +11,7 @@
 		4F0B716216234A82007246F9 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4F0B716116234A82007246F9 /* index.html */; };
 		4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DA4B81609CED500D21ABE /* BFImage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4F107C681610CF0E00624611 /* InstallPow.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4F107C671610CF0E00624611 /* InstallPow.sh */; };
+		4F1247F11916D98400F1C105 /* CDEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1247F01916D98400F1C105 /* CDEvents.framework */; };
 		4F2CCA10176384060010AB4B /* NVGroupHeaderTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CCA0F176384060010AB4B /* NVGroupHeaderTableCellView.m */; };
 		4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F361365160C9816008584A0 /* NVPopupButtonCell.m */; };
 		4F4AFFED1778AACF0081BBD3 /* Anvil.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */; };
@@ -85,7 +86,7 @@
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
 		4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
-		4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
+		4FBABB081613443A00D4174B /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4FBABB041613442200D4174B /* Sparkle.framework */; };
 		4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4FBABB09161344D600D4174B /* dsa_pub.pem */; };
 		4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBFA35A15C6F85800BA8209 /* Cocoa.framework */; };
 		4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBFA36315C6F85800BA8209 /* InfoPlist.strings */; };
@@ -109,14 +110,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4FBABB071613443100D4174B /* CopyFiles */ = {
+		4FBABB071613443100D4174B /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4FBABB081613443A00D4174B /* Sparkle.framework in CopyFiles */,
+				4FBABB081613443A00D4174B /* Sparkle.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -128,6 +130,7 @@
 		4F0DA4B81609CED500D21ABE /* BFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFImage.m; sourceTree = "<group>"; };
 		4F0DA4B91609CED500D21ABE /* BFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFImage.h; sourceTree = "<group>"; };
 		4F107C671610CF0E00624611 /* InstallPow.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = InstallPow.sh; sourceTree = "<group>"; };
+		4F1247F01916D98400F1C105 /* CDEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CDEvents.framework; sourceTree = "<group>"; };
 		4F2CCA0E176384060010AB4B /* NVGroupHeaderTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVGroupHeaderTableCellView.h; sourceTree = "<group>"; };
 		4F2CCA0F176384060010AB4B /* NVGroupHeaderTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVGroupHeaderTableCellView.m; sourceTree = "<group>"; };
 		4F361364160C9816008584A0 /* NVPopupButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVPopupButtonCell.h; sourceTree = "<group>"; };
@@ -269,6 +272,7 @@
 			files = (
 				4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */,
 				4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */,
+				4F1247F11916D98400F1C105 /* CDEvents.framework in Frameworks */,
 				4FBABB051613442200D4174B /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +487,7 @@
 		4FBFA35915C6F85800BA8209 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F1247F01916D98400F1C105 /* CDEvents.framework */,
 				4FBABB041613442200D4174B /* Sparkle.framework */,
 				4FBFA35A15C6F85800BA8209 /* Cocoa.framework */,
 				4FBFA35C15C6F85800BA8209 /* Other Frameworks */,
@@ -694,7 +699,7 @@
 				4FBFA35215C6F85800BA8209 /* Sources */,
 				4FBFA35315C6F85800BA8209 /* Frameworks */,
 				4FBFA35415C6F85800BA8209 /* Resources */,
-				4FBABB071613443100D4174B /* CopyFiles */,
+				4FBABB071613443100D4174B /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -934,7 +939,8 @@
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
@@ -953,7 +959,8 @@
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";

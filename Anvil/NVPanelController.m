@@ -149,7 +149,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.powCheckerTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(switchSwitchViewToPowStatus) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:self.powCheckerTimer forMode:NSRunLoopCommonModes];
-        
+
         // Draw it off-screen sure
         // [self.window setFrameOrigin:NSMakePoint(10000, 10000)];
         // [self.window makeKeyAndOrderFront:nil];

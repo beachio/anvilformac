@@ -10,9 +10,12 @@
 // It uses two separate arrays: apps and hammerApps.
 
 #import "NVDataSource.h"
+#import <CDEvents/CDEvents.h>
 
 @interface NVDataSource ()
 
+@property (strong, atomic) CDEvents *powEvents;
+@property (strong, atomic) CDEvents *hammerEvents;
 @property (strong, readwrite, nonatomic) NSMutableArray *apps;
 @property (strong, readwrite, nonatomic) NSMutableArray *hammerApps;
 @property (strong, nonatomic) NSFileManager *fileManager;
@@ -40,6 +43,8 @@ static NSString *const kAppsKey = @"apps";
         if (!self.fileManager)  self.fileManager =  [NSFileManager defaultManager];
         if (!self.apps)         self.apps =         [[NSMutableArray alloc] init];
         if (!self.hammerApps)   self.hammerApps =   [[NSMutableArray alloc] init];
+
+        [self startWatching];
     }
     
     return self;
@@ -179,7 +184,7 @@ static NSString *const kAppsKey = @"apps";
     NSMutableArray *appsToRemove = [[NSMutableArray alloc] init];
     NSMutableArray *urlsAdded = [[NSMutableArray alloc] init];
 
-    for (NVApp *app in self.hammerApps) {
+    for (NVApp *app in [self.hammerApps copy]) {
 
         BOOL found = NO;
         int i = 0;
@@ -400,6 +405,41 @@ static NSString *const kAppsKey = @"apps";
 - (NSInteger *)numberOfHammerSites {
     
     return self.hammerApps.count;
+}
+
+#pragma mark - FSEvents
+
+- (void)startWatching {
+
+    NSString *hammerPath = [[@"~/Library/Containers/com.riot.hammer/Data/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *hammerURL = [NSURL URLWithString:hammerPath];
+    NSArray *hammerURLs = [[NSMutableArray alloc] initWithObjects:hammerURL, nil];
+    CDEvents *hammerEvents = [[CDEvents alloc] initWithURLs:hammerURLs block:^(CDEvents *watcher, CDEvent *event) {
+
+        [self clearOldHammerSymlinks];
+        [self importNewHammerSites];
+    } onRunLoop:[NSRunLoop mainRunLoop]
+                                 sinceEventIdentifier:kFSEventStreamEventIdSinceNow
+                                 notificationLantency:0.5
+                              ignoreEventsFromSubDirs:NO
+                                          excludeURLs:@[]
+                                  streamCreationFlags:kCDEventsDefaultEventStreamFlags|kFSEventStreamCreateFlagFileEvents];
+    self.hammerEvents = hammerEvents;
+
+    NSString *powPath = [@"~/.pow/" stringByExpandingTildeInPath];
+    NSURL *powURL = [NSURL URLWithString:powPath];
+    NSArray *urls = [[NSMutableArray alloc] initWithObjects:powURL, nil];
+    CDEvents *powEvents = [[CDEvents alloc] initWithURLs:urls block:^(CDEvents *watcher, CDEvent *event) {
+
+        [self importFromPowdirectory];
+    } onRunLoop:[NSRunLoop mainRunLoop]
+        sinceEventIdentifier:kFSEventStreamEventIdSinceNow
+        notificationLantency:0.5
+        ignoreEventsFromSubDirs:NO
+        excludeURLs:@[]
+        streamCreationFlags:kCDEventsDefaultEventStreamFlags|kFSEventStreamCreateFlagFileEvents];
+
+    self.powEvents = powEvents;
 }
 
 @end
