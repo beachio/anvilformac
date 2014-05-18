@@ -200,7 +200,12 @@ static NSString *const kAppsKey = @"apps";
                     [app destroySymlink];
                     app.name = name;
                     [app createSymlink];
-                    [self.hammerApps replaceObjectAtIndex:i withObject:app];
+
+                    if (i < [self.hammerApps count]) {
+                        [self.hammerApps replaceObjectAtIndex:i withObject:app];
+                    } else {
+                        [self.hammerApps addObject:app];
+                    }
                 }
                 found = true;
             }
@@ -358,11 +363,43 @@ static NSString *const kAppsKey = @"apps";
 
 #pragma mark - Fetching sites from Hammer
 
-- (NSDictionary *)hammerSitesDictionary {
+- (NSDictionary *)hammerTrialSitesDictionary {
+
+    NSString *hammerPath = [@"~/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath];
+
+    NSURL *hammerPathURL = [NSURL fileURLWithPath:hammerPath];
+
+    NSData *plistData = [NSData dataWithContentsOfURL:hammerPathURL];
+
+    if (plistData == nil) {
+        return [[NSDictionary alloc] init];
+    }
+
+    NSError *plistReadError = nil;
+    NSDictionary *appsPlistDictionary = [NSPropertyListSerialization propertyListWithData:plistData options:0 format:NULL error:&plistReadError];
+    if (appsPlistDictionary == nil && plistReadError != nil) {
+
+        NSLog(@"[%@ %@], Loading Apps.plist encountered error: %@", [self class], NSStringFromSelector(_cmd), plistReadError);
+    }
+
+    NSDictionary *appsDictionary = [appsPlistDictionary valueForKey:@"apps"];
+    return appsDictionary;
+}
+
+- (NSArray *)hammerSitesDictionary {
+
+    NSArray *hammerSites = (NSArray *)[self hammerFullSitesDictionary];
+    NSArray *hammerTrialSites = (NSArray *)[self hammerTrialSitesDictionary];
+    NSArray *allSites = [hammerSites arrayByAddingObjectsFromArray:hammerTrialSites];
+
+    return allSites;
+}
+
+- (NSDictionary *)hammerFullSitesDictionary {
     
     NSString *hammerPath = [@"~/Library/Containers/com.riot.hammer/Data/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath];
-    
     NSURL *hammerPathURL = [NSURL fileURLWithPath:hammerPath];
+    
     NSData *plistData = [NSData dataWithContentsOfURL:hammerPathURL];
     
     if (plistData == nil) {
@@ -375,6 +412,8 @@ static NSString *const kAppsKey = @"apps";
         
         NSLog(@"[%@ %@], Loading Apps.plist encountered error: %@", [self class], NSStringFromSelector(_cmd), plistReadError);
     }
+
+    [appsPlistDictionary valueForKey:@"apps"];
     
     
     //    NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];
@@ -412,8 +451,12 @@ static NSString *const kAppsKey = @"apps";
 - (void)startWatching {
 
     NSString *hammerPath = [[@"~/Library/Containers/com.riot.hammer/Data/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *hammerTrialPath = [[@"~/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     NSURL *hammerURL = [NSURL URLWithString:hammerPath];
-    NSArray *hammerURLs = [[NSMutableArray alloc] initWithObjects:hammerURL, nil];
+    NSURL *hammerTrialURL = [NSURL URLWithString:hammerTrialPath];
+    NSArray *hammerURLs = [[NSMutableArray alloc] initWithObjects:hammerURL, hammerTrialURL, nil];
+
     CDEvents *hammerEvents = [[CDEvents alloc] initWithURLs:hammerURLs block:^(CDEvents *watcher, CDEvent *event) {
 
         [self clearOldHammerSymlinks];
