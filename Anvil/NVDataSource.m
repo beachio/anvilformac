@@ -390,7 +390,14 @@ static NSString *const kAppsKey = @"apps";
 
     NSArray *hammerSites = (NSArray *)[self hammerFullSitesDictionary];
     NSArray *hammerTrialSites = (NSArray *)[self hammerTrialSitesDictionary];
-    NSArray *allSites = [hammerSites arrayByAddingObjectsFromArray:hammerTrialSites];
+    
+    NSArray *allSites;
+    if (hammerTrialSites.count > 0) {
+        allSites = [hammerSites arrayByAddingObjectsFromArray:hammerTrialSites];
+    } else {
+        allSites = hammerSites;
+    }
+    
 
     return allSites;
 }

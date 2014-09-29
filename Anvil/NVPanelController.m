@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Sparkle/Sparkle.h>
 
+
 #define SEARCH_INSET 15
 
 #define OPEN_DURATION .15
@@ -720,6 +721,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                                                             withSize:NSMakeSize(16, 16)];
     } else {
         
+        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIcon"];
         cellView.faviconImageView.foregroundImage = nil;
     }
     
