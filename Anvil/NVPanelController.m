@@ -721,7 +721,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                                                             withSize:NSMakeSize(16, 16)];
     } else {
         
-        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIcon"];
+        cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIconDefault"];
+//        cellView.faviconImageView.foregroundImage = [NSImage imageNamed:@"SiteIconDefault"];
         cellView.faviconImageView.foregroundImage = nil;
     }
     

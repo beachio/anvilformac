@@ -85,6 +85,10 @@
 		4FA7B8631767706F009B0BBF /* RowBackgroundPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA7B8611767706F009B0BBF /* RowBackgroundPushed@2x.png */; };
 		4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB52721611D78400BD03F8 /* QuartzCore.framework */; };
 		4FB35C471740113600107F30 /* NVGroupHeaderTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB35C461740113600107F30 /* NVGroupHeaderTableRowView.m */; };
+		4FB88F3C19D9001300D390CE /* SiteIconDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB88F3819D9001300D390CE /* SiteIconDefault.png */; };
+		4FB88F3D19D9001300D390CE /* SiteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB88F3919D9001300D390CE /* SiteIcon.png */; };
+		4FB88F3E19D9001300D390CE /* SiteIconDefault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB88F3A19D9001300D390CE /* SiteIconDefault@2x.png */; };
+		4FB88F3F19D9001300D390CE /* SiteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB88F3B19D9001300D390CE /* SiteIcon@2x.png */; };
 		4FB9E80D1605FEBE005B50A4 /* NVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E80C1605FEBE005B50A4 /* NVApp.m */; };
 		4FB9E81216061096005B50A4 /* NVTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E81116061096005B50A4 /* NVTableRowView.m */; };
 		4FB9E815160610A1005B50A4 /* NVTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB9E814160610A1005B50A4 /* NVTableCellView.m */; };
@@ -219,6 +223,10 @@
 		4FAB52721611D78400BD03F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4FB35C451740113600107F30 /* NVGroupHeaderTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVGroupHeaderTableRowView.h; sourceTree = "<group>"; };
 		4FB35C461740113600107F30 /* NVGroupHeaderTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVGroupHeaderTableRowView.m; sourceTree = "<group>"; };
+		4FB88F3819D9001300D390CE /* SiteIconDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SiteIconDefault.png; sourceTree = "<group>"; };
+		4FB88F3919D9001300D390CE /* SiteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SiteIcon.png; sourceTree = "<group>"; };
+		4FB88F3A19D9001300D390CE /* SiteIconDefault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SiteIconDefault@2x.png"; sourceTree = "<group>"; };
+		4FB88F3B19D9001300D390CE /* SiteIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SiteIcon@2x.png"; sourceTree = "<group>"; };
 		4FB9E80B1605FEBE005B50A4 /* NVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVApp.h; sourceTree = "<group>"; };
 		4FB9E80C1605FEBE005B50A4 /* NVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVApp.m; sourceTree = "<group>"; };
 		4FB9E81016061096005B50A4 /* NVTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableRowView.h; sourceTree = "<group>"; };
@@ -345,6 +353,10 @@
 		4FA5A0691763633D00196CDF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4FB88F3819D9001300D390CE /* SiteIconDefault.png */,
+				4FB88F3919D9001300D390CE /* SiteIcon.png */,
+				4FB88F3A19D9001300D390CE /* SiteIconDefault@2x.png */,
+				4FB88F3B19D9001300D390CE /* SiteIcon@2x.png */,
 				4F723F991768D547004C5990 /* Footer.png */,
 				4F723F9A1768D547004C5990 /* Footer@2x.png */,
 				4FA7B8601767706F009B0BBF /* RowBackgroundPushed.png */,
@@ -765,6 +777,7 @@
 				4FA5A0A21763633D00196CDF /* BlueButtonPushed.png in Resources */,
 				4FA5A0A31763633D00196CDF /* BlueButtonPushed@2x.png in Resources */,
 				4FA5A0A41763633D00196CDF /* ButtonAdd.png in Resources */,
+				4FB88F3E19D9001300D390CE /* SiteIconDefault@2x.png in Resources */,
 				4FA5A0A51763633D00196CDF /* ButtonAdd@2x.png in Resources */,
 				4FA5A0A61763633D00196CDF /* ButtonAddPushed.png in Resources */,
 				4FA5A0A71763633D00196CDF /* ButtonAddPushed@2x.png in Resources */,
@@ -778,6 +791,7 @@
 				4FA5A0AE1763633D00196CDF /* DeleteHover.png in Resources */,
 				4FA5A0AF1763633D00196CDF /* DeleteHover@2x.png in Resources */,
 				4FA5A0B01763633D00196CDF /* DeletePushed.png in Resources */,
+				4FB88F3D19D9001300D390CE /* SiteIcon.png in Resources */,
 				4FA5A0B11763633D00196CDF /* DeletePushed@2x.png in Resources */,
 				4FA5A0B21763633D00196CDF /* HammerHeader.png in Resources */,
 				4FA5A0B31763633D00196CDF /* HammerHeader@2x.png in Resources */,
@@ -789,11 +803,13 @@
 				4FA5A0B91763633D00196CDF /* MenubarIconGlow@2x.png in Resources */,
 				4FA5A0BA1763633D00196CDF /* Restart.png in Resources */,
 				4FA5A0BB1763633D00196CDF /* Restart@2x.png in Resources */,
+				4FB88F3C19D9001300D390CE /* SiteIconDefault.png in Resources */,
 				4FA5A0BC1763633D00196CDF /* RestartHover.png in Resources */,
 				4F723F9C1768D547004C5990 /* Footer@2x.png in Resources */,
 				4FA5A0BD1763633D00196CDF /* RestartHover@2x.png in Resources */,
 				4FA5A0BE1763633D00196CDF /* RestartPushed.png in Resources */,
 				4F723F9B1768D547004C5990 /* Footer.png in Resources */,
+				4FB88F3F19D9001300D390CE /* SiteIcon@2x.png in Resources */,
 				4FA5A0BF1763633D00196CDF /* RestartPushed@2x.png in Resources */,
 				4FA5A0C01763633D00196CDF /* SettingsButton.png in Resources */,
 				4FA5A0C11763633D00196CDF /* SettingsButton@2x.png in Resources */,
