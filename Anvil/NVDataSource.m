@@ -363,7 +363,7 @@ static NSString *const kAppsKey = @"apps";
 
 #pragma mark - Fetching sites from Hammer
 
-- (NSDictionary *)hammerTrialSitesDictionary {
+- (NSArray *)hammerTrialSitesDictionary {
 
     NSString *hammerPath = [@"~/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath];
 
@@ -372,7 +372,7 @@ static NSString *const kAppsKey = @"apps";
     NSData *plistData = [NSData dataWithContentsOfURL:hammerPathURL];
 
     if (plistData == nil) {
-        return [[NSDictionary alloc] init];
+        return [[NSArray alloc] init];
     }
 
     NSError *plistReadError = nil;
@@ -382,14 +382,14 @@ static NSString *const kAppsKey = @"apps";
         NSLog(@"[%@ %@], Loading Apps.plist encountered error: %@", [self class], NSStringFromSelector(_cmd), plistReadError);
     }
 
-    NSDictionary *appsDictionary = [appsPlistDictionary valueForKey:@"apps"];
+    NSArray *appsDictionary = (NSArray *)[appsPlistDictionary valueForKey:@"apps"];
     return appsDictionary;
 }
 
 - (NSArray *)hammerSitesDictionary {
 
-    NSArray *hammerSites = (NSArray *)[self hammerFullSitesDictionary];
-    NSArray *hammerTrialSites = (NSArray *)[self hammerTrialSitesDictionary];
+    NSArray *hammerSites = [self hammerFullSitesDictionary];
+    NSArray *hammerTrialSites = [self hammerTrialSitesDictionary];
     
     NSArray *allSites;
     if (hammerTrialSites.count > 0) {
@@ -397,12 +397,11 @@ static NSString *const kAppsKey = @"apps";
     } else {
         allSites = hammerSites;
     }
-    
 
     return allSites;
 }
 
-- (NSDictionary *)hammerFullSitesDictionary {
+- (NSArray *)hammerFullSitesDictionary {
     
     NSString *hammerPath = [@"~/Library/Containers/com.riot.hammer/Data/Library/Application Support/Riot/Hammer/AppData/Apps.plist" stringByExpandingTildeInPath];
     NSURL *hammerPathURL = [NSURL fileURLWithPath:hammerPath];
@@ -410,7 +409,7 @@ static NSString *const kAppsKey = @"apps";
     NSData *plistData = [NSData dataWithContentsOfURL:hammerPathURL];
     
     if (plistData == nil) {
-        return [[NSDictionary alloc] init];
+        return [[NSArray alloc] init];
     }
     
     NSError *plistReadError = nil;
@@ -420,7 +419,7 @@ static NSString *const kAppsKey = @"apps";
         NSLog(@"[%@ %@], Loading Apps.plist encountered error: %@", [self class], NSStringFromSelector(_cmd), plistReadError);
     }
 
-    [appsPlistDictionary valueForKey:@"apps"];
+//    [appsPlistDictionary valueForKey:@"apps"];
     
     
     //    NSString *path = [@"~/.pow/" stringByExpandingTildeInPath];
@@ -443,7 +442,7 @@ static NSString *const kAppsKey = @"apps";
     //        //        }
     //    }
     
-    NSDictionary *appsDictionary = [appsPlistDictionary valueForKey:@"apps"];
+    NSArray *appsDictionary = (NSArray *)[appsPlistDictionary valueForKey:@"apps"];
     
     return appsDictionary;
 }

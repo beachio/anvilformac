@@ -33,7 +33,7 @@
         
         NSSize imageSize = self.foregroundImageSize;
         CGFloat originX = ceilf((rect.size.width - imageSize.width) / 2.0);
-        CGFloat originY = ceilf((rect.size.height - imageSize.height) / 2.0);
+        CGFloat originY = ceilf((rect.size.height - imageSize.height) / 2.0) - 0.5;
         
         NSRect imageRect = NSIntegralRect(NSMakeRect(originX, originY, imageSize.width, imageSize.height));
         [self.foregroundImage drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
