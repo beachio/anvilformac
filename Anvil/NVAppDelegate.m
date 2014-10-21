@@ -1,4 +1,5 @@
 #import "NVAppDelegate.h"
+#import <Sparkle/Sparkle.h>
 
 @interface NVAppDelegate () <NSMenuDelegate>
 
@@ -54,6 +55,8 @@ void *kContextActivePanel = &kContextActivePanel;
 //    [[NSRunLoop currentRunLoop] addTimer:mainLoopTimer forMode:NSEventTrackingRunLoopMode];
 
     // Todo: open window (unless the computer's just started up)
+    SUUpdater *updater = [[SUUpdater alloc] init];
+    [updater checkForUpdatesInBackground];
 }
 
 - (void)readSites {
