@@ -23,6 +23,7 @@
         statusItemView = [[NVStatusItemView alloc] initWithStatusItem:statusItem];
         statusItemView.image = [NSImage imageNamed:@"MenubarIcon"];
         statusItemView.alternateImage = [NSImage imageNamed:@"MenubarIconAlt"];
+        statusItemView.darkImage = [NSImage imageNamed:@"MenubarIconAlt"];
         statusItemView.delegate = self;
     }
     return self;

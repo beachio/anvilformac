@@ -39,6 +39,20 @@
     return self;
 }
 
+- (BOOL)darkMode {
+    NSString * value = (__bridge NSString *)(CFPreferencesCopyValue((CFStringRef)@"AppleInterfaceStyle", kCFPreferencesAnyApplication, kCFPreferencesCurrentUser, kCFPreferencesCurrentHost));
+    
+    
+    NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+
+    if ([osxMode isEqualToString:@"Dark"]) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
 -(NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender{
     
     return NSDragOperationCopy;
@@ -100,7 +114,11 @@
     if (self.showHighlightIcon) {
         icon = self.alternateImage;
     } else {
-        icon = self.image;
+        if ([self darkMode]) {
+            icon = self.darkImage;
+        } else {
+            icon = self.image;
+        }
     }
     
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];

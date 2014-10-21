@@ -13,6 +13,7 @@
 @property (strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, strong) NSImage *image;
 @property (nonatomic, strong) NSImage *alternateImage;
+@property (nonatomic, strong) NSImage *darkImage;
 @property (nonatomic, setter = setHighlighted:) BOOL isHighlighted;
 @property (nonatomic, readonly) NSRect globalRect;
 @property (nonatomic) SEL action;

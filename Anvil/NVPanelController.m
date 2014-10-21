@@ -132,6 +132,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.isPowRunning = YES;
         [self performSelectorInBackground:@selector(checkWhetherPowIsRunning) withObject:nil];
+        
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(drawRect:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
+
     }
     
     return self;
