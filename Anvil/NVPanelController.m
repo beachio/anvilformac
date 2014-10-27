@@ -43,6 +43,7 @@
 @property (strong, nonatomic) NVDataSource *dataSource;
 
 @property (strong, nonatomic) NSFileHandle *taskOutput;
+@property (strong, nonatomic) NSMutableData *taskOutputData;
 
 @end
 
@@ -63,6 +64,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     if (self != nil) {
         
         self.dataSource = [NVDataSource sharedDataSource];
+        self.taskOutputData = [NSMutableData alloc];
         
         self.isEditing = NO;
         
@@ -130,8 +132,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                              frame.size.width,
                                              frame.size.height)];
         
-        self.isPowRunning = YES;
-        [self performSelectorInBackground:@selector(checkWhetherPowIsRunning) withObject:nil];
+        [self checkWhetherPowIsRunning];
         
         [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(drawRect:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
 
@@ -265,12 +266,12 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     if (self.hasActivePanel) {
         self.selectedRow = -1;
-//        BOOL status = [self checkWhetherPowIsRunning];
-//        self.isPowRunning = status;
-
         [self.switchView switchToWithoutCallbacks:self.isPowRunning withAnimation:YES];
         self.switchLabel.text = self.isPowRunning ? @"ON" : @"OFF";
+    } else {
+        [self.switchView switchToWithoutCallbacks:self.isPowRunning withAnimation:NO];
     }
+    [self.switchView setNeedsDisplay:YES];
 }
 
 - (BOOL)switchView:(NVSwitchView *)switchView shouldSwitchTo:(BOOL)state {
@@ -303,7 +304,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self.window becomeMainWindow];
 
     [self checkWhetherPowIsRunning];
-    
     [self performSelector:@selector(checkWhetherPowIsRunning) withObject:nil afterDelay:1.0];
     [self performSelector:@selector(checkWhetherPowIsRunning) withObject:nil afterDelay:2.0];
 
@@ -408,6 +408,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [self createTrackingArea];
     }
     
+//    NSLog(@"Open. Switch to %@", self.isPowRunning ? @"yes" : @"no");
+    [self.switchView switchToWithoutCallbacks:self.isPowRunning withAnimation:NO];
+    self.switchLabel.text = self.isPowRunning ? @"ON" : @"OFF";
     [self.appListTableView reloadData];
     [self checkWhetherPowIsRunning];
     [self updatePanelHeightAndAnimate:self.panelIsOpen];
@@ -418,8 +421,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [self.window becomeMainWindow];
     [self.window makeKeyAndOrderFront:nil];
     
-    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
-    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
+//    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:0.5];
+//    [self performSelector:@selector(switchSwitchViewToPowStatus) withObject:nil afterDelay:1.0];
 }
 
 - (void)closePanel {
@@ -1225,51 +1228,41 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/curl"];
-    [task setArguments:[NSArray arrayWithObjects:@"-I", @"--silent", @"--connect-timeout", @"5", @"-H", @"host:pow", @"localhost:20559/status.json", nil]];
+    [task setArguments:@[@"127.0.0.1:20559"]];
+//    [task setArguments:[NSArray arrayWithObjects:@"-I", @"--connect-timeout", @"5", @"-H", @"host:pow", @"localhost:20559/status.json", nil]];
     
-    NSPipe *outputPipe = [NSPipe pipe];
+//    NSLog(@"-");
     [task setStandardInput:[NSPipe pipe]];
     [task setStandardError:[NSPipe pipe]];
-    [task setStandardOutput:outputPipe];
+
+    task.standardOutput = [NSPipe pipe];
+    [[task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
+        NSData *data = [file availableData]; // this will read to EOF, so call only once
+        
+        // if you're collecting the whole output of a task, you may store it on a property
+        [self.taskOutputData appendData:data];
+        
+        self.isPowRunning = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] length] > 0;
+//            NSLog(@"Task output - %@", (self.isPowRunning ? @"yes" : @"no"));
+        [self switchSwitchViewToPowStatus];
+    }];
+    
+    [task setTerminationHandler:^(NSTask *task) {
+        
+        BOOL running = [[[NSString alloc] initWithData:self.taskOutputData encoding:NSUTF8StringEncoding] length] > 0;
+        self.isPowRunning = running;
+        self.taskOutputData = [[NSMutableData alloc] init];
+    }];
+    
+//    NSLog(@"Launching task...");
     [task launch];
-//    [task waitUntilExit];
-    
-    self.taskOutput = [outputPipe fileHandleForReading];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskDataAvailable:) name:NSFileHandleReadCompletionNotification object:self.taskOutput];
-    [self.taskOutput readInBackgroundAndNotify];
     
     return NO;
 }
 
-- (void)taskDataAvailable:(NSNotification *)notification {
-    
-    NSData *incomingData = [[notification userInfo] objectForKey:NSFileHandleNotificationDataItem];
-    if (incomingData && [incomingData length])
-    {
-        self.isPowRunning = YES;
-    } else {
-        self.isPowRunning = NO;
-    }
-    
-    [self switchSwitchViewToPowStatus];
-}
-
-- (void)taskCompleted:(NSNotification *)notification {
-
-    int exitCode = [[notification object] terminationStatus];
-    
-    if (exitCode != 0)
-        NSLog(@"Error: Task exited with code %d", exitCode);
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    // Do whatever else you need to do when the task finished
-    
-//    BOOL powIsRunning = [responseCode rangeOfString:@"200"].location != NSNotFound;
-//    self.isPowRunning = powIsRunning;
-//    [self switchSwitchViewToPowStatus];
-//    
-//    return powIsRunning;
-
+- (void)setIsPowRunning:(BOOL)isPowRunning {
+    _isPowRunning = isPowRunning;
+//    NSLog(@"Pow running: %@", isPowRunning ? @"yes" : @"no");
 }
 
 #pragma mark - Clicking and actions

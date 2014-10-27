@@ -79,6 +79,8 @@
 
 - (void)switchToWithoutCallbacks:(BOOL)position withAnimation:(BOOL)useAnimation {
     
+//    NSLog(@"Switch to %@ %@ animation", position ? @"on" : @"off", useAnimation ? @"with" : @"without");
+    
     self.on = position;
     
     NSRect firstViewFrame = self.switcherView.frame;
@@ -113,9 +115,13 @@
     
     if (useAnimation) {
         
-        NSViewAnimation *theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObjects:newAnimations, nil]];
-        [theAnim setDuration:0.1];
-        [theAnim startAnimation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // do work here
+            NSViewAnimation *theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObjects:newAnimations, nil]];
+            [theAnim setDuration:0.1];
+            [theAnim startAnimation];
+        });
+        
     } else {
         
         self.switcherView.frame = lastViewFrame;
