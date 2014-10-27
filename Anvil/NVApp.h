@@ -13,6 +13,7 @@
 @property (copy, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSURL *sourceURL;
+@property (strong, atomic) NSImage *faviconImage;
 
 - (id)initWithURL:(NSURL *)url;
 - (NSURL *)faviconURL;

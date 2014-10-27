@@ -66,6 +66,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
         }
 
         self.url = expandedURL;
+        self.faviconImage = [[NSImage alloc] initWithContentsOfURL:self.faviconURL];
     }
     
     [self performSelectorInBackground:@selector(fetchFaviconURL:) withObject:nil];
@@ -101,6 +102,7 @@ static NSString *const kPrecomposedAppleTouchIconFileName = @"apple-touch-icon-p
     if( [fileManager fileExistsAtPath:faviconURL.path] && [attrs fileSize] > 0){
         
         self._faviconURL = faviconURL;
+        self.faviconImage = [[NSImage alloc] initWithContentsOfURL:self.faviconURL];
     } else {
         
         self.hasNoFavicon = YES;

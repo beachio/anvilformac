@@ -13,6 +13,7 @@
 @property (atomic) double textSize;
 @property (atomic) double textOffset;
 @property (atomic) BOOL isBold;
+@property (nonatomic, retain) NSImage *image;
 @property (nonatomic, retain) NSImage *hoverImage;
 
 - (void)setInsetsWithTop:(CGFloat)top right:(CGFloat)right bottom:(CGFloat)bottom left:(CGFloat)left;

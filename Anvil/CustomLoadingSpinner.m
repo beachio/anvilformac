@@ -122,7 +122,6 @@
 	double value = fmod(([self doubleValue] + (5.0/60.0)), 1.0);
 
 	[self setDoubleValue:value];
-
     [self setNeedsDisplay:YES];
 }
 

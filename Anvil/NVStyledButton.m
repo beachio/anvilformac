@@ -14,6 +14,8 @@
 @interface NVStyledButton ()
 @property (atomic) BFEdgeInsets insets;
 @property BOOL hovered;
+@property (strong, nonatomic) NSImage *cachedHoverImage;
+@property (strong, nonatomic) NSImage *cachedImage;
 @end
 
 @implementation NVStyledButton
@@ -27,6 +29,9 @@
     }
     return self;
 }
+
+@synthesize image = _image;
+@synthesize alternateImage = _alternateImage;
 
 - (void)awakeFromNib
 {
@@ -59,21 +64,35 @@
     return myInsets;
 }
 
+- (void)setHoverImage:(NSImage *)hoverImage {
+    
+    _hoverImage = [hoverImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+}
+
+- (void)setImage:(NSImage *)image {
+ 
+    _image = [image stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+}
+
+- (void)setAlternateImage:(NSImage *)alternateImage {
+    _alternateImage = [alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSImage *image = nil;
     if ([self state]) {
-        image = [self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+        image = self.alternateImage; //[self.alternateImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
     } else {
         if (self.hovered && self.hoverImage) {
-
-            image = [self.hoverImage stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+            image = self.hoverImage;
         } else {
-            image = [self.image stretchableImageWithEdgeInsets:self.insetsOrDefaults];
+            image = self.image;
         }
     }
+
+    // TODO: setFlipped is deprecated
     [image setFlipped:YES];
-    
     [image drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES hints:nil];
     
     NSDictionary *att = nil;

@@ -133,9 +133,6 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
                                              frame.size.height)];
         
         [self checkWhetherPowIsRunning];
-        
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(drawRect:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
-
     }
     
     return self;
@@ -614,7 +611,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
-
+    
     NSInteger sites = self.dataSource.apps.count + self.dataSource.hammerApps.count;
 
     if (self.dataSource.hammerApps.count > 0) {
@@ -722,8 +719,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     if (app.faviconURL) {
     
         cellView.faviconImageView.backgroundImage = [NSImage imageNamed:@"SiteIcon"];
-        NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
-        cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:faviconImage
+//        NSImage *faviconImage = [[NSImage alloc] initWithContentsOfURL:app.faviconURL];
+        
+        cellView.faviconImageView.foregroundImage = [self imageRepresentationOfImage:app.faviconImage
                                                                             withSize:NSMakeSize(32, 32)];
     } else {
         

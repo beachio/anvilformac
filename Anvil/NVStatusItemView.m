@@ -123,7 +123,7 @@
     
     [icon drawAtPoint:iconPoint fromRect:dirtyRect operation:NSCompositeSourceOver fraction:1.0];
     
-    [self setNeedsDisplay:YES];
+//    [self setNeedsDisplay:YES];
 }
 
 #pragma mark -
@@ -139,11 +139,6 @@
     
 //    [NSApp sendAction:self.rightClickAction to:self.target from:self];
     [self.delegate statusItemView:self wasRightClicked:self];
-}
-
-- (BOOL)needsDisplay {
-    
-    return YES;
 }
 
 #pragma mark -

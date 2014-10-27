@@ -74,18 +74,20 @@
 
 - (void)setupReallyDeleteButton {
     
-    NSImage *reallyDeleteButtonImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButton"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
-    NSImage *reallyDeleteButtonAlternateImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButtonPushed"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
-    
-    [self.reallyDeleteButton.cell setImageScaling:NSImageScaleAxesIndependently];
-    
-    self.reallyDeleteButton.image = reallyDeleteButtonImage;
-    self.reallyDeleteButton.alternateImage = reallyDeleteButtonAlternateImage;
+    if (!self.reallyDeleteButton.image) {
+        NSImage *reallyDeleteButtonImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButton"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
+        NSImage *reallyDeleteButtonAlternateImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButtonPushed"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
+        
+        [self.reallyDeleteButton.cell setImageScaling:NSImageScaleAxesIndependently];
+        
+        self.reallyDeleteButton.image = reallyDeleteButtonImage;
+        self.reallyDeleteButton.alternateImage = reallyDeleteButtonAlternateImage;
 
-    [self.reallyDeleteButton setTitle:@"Delete"];
-    [self.reallyDeleteButton setAlternateTitle:@"Delete"];
-    
-    self.reallyDeleteButton.textOffset = 1.0;
+        [self.reallyDeleteButton setTitle:@"Delete"];
+        [self.reallyDeleteButton setAlternateTitle:@"Delete"];
+        
+        self.reallyDeleteButton.textOffset = 1.0;
+    }
 }
 
 - (IBAction)didClickDeleteButton:(id)sender {
