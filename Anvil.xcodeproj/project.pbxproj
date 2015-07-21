@@ -7,6 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C9292281B5EF29300CF3890 /* SwitchFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292261B5EF29300CF3890 /* SwitchFlat.png */; };
+		0C9292291B5EF29300CF3890 /* SwitchFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292271B5EF29300CF3890 /* SwitchFlat@2x.png */; };
+		0C92922E1B5EF2FF00CF3890 /* SwitchActiveFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92922A1B5EF2FF00CF3890 /* SwitchActiveFlat.png */; };
+		0C92922F1B5EF2FF00CF3890 /* SwitchActiveFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92922B1B5EF2FF00CF3890 /* SwitchActiveFlat@2x.png */; };
+		0C9292301B5EF2FF00CF3890 /* SwitchInactiveFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92922C1B5EF2FF00CF3890 /* SwitchInactiveFlat.png */; };
+		0C9292311B5EF2FF00CF3890 /* SwitchInactiveFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92922D1B5EF2FF00CF3890 /* SwitchInactiveFlat@2x.png */; };
+		0C9292341B5EF4D400CF3890 /* HammerHeaderFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292321B5EF4D400CF3890 /* HammerHeaderFlat.png */; };
+		0C9292351B5EF4D400CF3890 /* HammerHeaderFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292331B5EF4D400CF3890 /* HammerHeaderFlat@2x.png */; };
+		0C92924A1B5EFD9A00CF3890 /* RestartHoverFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292441B5EFD9A00CF3890 /* RestartHoverFlat.png */; };
+		0C92924B1B5EFD9A00CF3890 /* RestartHoverFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292451B5EFD9A00CF3890 /* RestartHoverFlat@2x.png */; };
+		0C92924C1B5EFD9A00CF3890 /* RestartPushedFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292461B5EFD9A00CF3890 /* RestartPushedFlat.png */; };
+		0C92924D1B5EFD9A00CF3890 /* RestartPushedFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292471B5EFD9A00CF3890 /* RestartPushedFlat@2x.png */; };
+		0C9292541B5EFFB600CF3890 /* deleteFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92924E1B5EFFB600CF3890 /* deleteFlat.png */; };
+		0C9292551B5EFFB600CF3890 /* deleteFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92924F1B5EFFB600CF3890 /* deleteFlat@2x.png */; };
+		0C9292581B5EFFB600CF3890 /* deleteFlatPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292521B5EFFB600CF3890 /* deleteFlatPushed.png */; };
+		0C9292591B5EFFB600CF3890 /* deleteFlatPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292531B5EFFB600CF3890 /* deleteFlatPushed@2x.png */; };
+		0C92925E1B5F04A900CF3890 /* deleteFlatHover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92925A1B5F04A900CF3890 /* deleteFlatHover.png */; };
+		0C92925F1B5F04A900CF3890 /* deleteFlatHover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92925B1B5F04A900CF3890 /* deleteFlatHover@2x.png */; };
+		0C9292601B5F04A900CF3890 /* RestartFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92925C1B5F04A900CF3890 /* RestartFlat.png */; };
+		0C9292611B5F04A900CF3890 /* RestartFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92925D1B5F04A900CF3890 /* RestartFlat@2x.png */; };
+		0C9292661B5F055100CF3890 /* SettingsButtonFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292621B5F055100CF3890 /* SettingsButtonFlat.png */; };
+		0C9292671B5F055100CF3890 /* SettingsButtonFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292631B5F055100CF3890 /* SettingsButtonFlat@2x.png */; };
+		0C9292681B5F055100CF3890 /* SettingsButtonPushedFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292641B5F055100CF3890 /* SettingsButtonPushedFlat.png */; };
+		0C9292691B5F055100CF3890 /* SettingsButtonPushedFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292651B5F055100CF3890 /* SettingsButtonPushedFlat@2x.png */; };
+		0C92926E1B5F07A600CF3890 /* settingsButtonFlatLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92926A1B5F07A600CF3890 /* settingsButtonFlatLarge.png */; };
+		0C92926F1B5F07A600CF3890 /* settingsButtonFlatLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92926B1B5F07A600CF3890 /* settingsButtonFlatLarge@2x.png */; };
+		0C9292701B5F07A600CF3890 /* settingsButtonFlatLargePushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92926C1B5F07A600CF3890 /* settingsButtonFlatLargePushed.png */; };
+		0C9292711B5F07A600CF3890 /* settingsButtonFlatLargePushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92926D1B5F07A600CF3890 /* settingsButtonFlatLargePushed@2x.png */; };
+		0C92927E1B5F0A9100CF3890 /* addButtonFlatLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92927A1B5F0A9100CF3890 /* addButtonFlatLarge.png */; };
+		0C92927F1B5F0A9100CF3890 /* addButtonFlatLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92927B1B5F0A9100CF3890 /* addButtonFlatLarge@2x.png */; };
+		0C9292801B5F0A9100CF3890 /* addButtonFlatLargePushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92927C1B5F0A9100CF3890 /* addButtonFlatLargePushed.png */; };
+		0C9292811B5F0A9100CF3890 /* addButtonFlatLargePushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C92927D1B5F0A9100CF3890 /* addButtonFlatLargePushed@2x.png */; };
 		4F08AF9D1614885600D446C2 /* NVStyledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F08AF9C1614885500D446C2 /* NVStyledButton.m */; };
 		4F0B716216234A82007246F9 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4F0B716116234A82007246F9 /* index.html */; };
 		4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DA4B81609CED500D21ABE /* BFImage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -70,12 +102,6 @@
 		4FA5A0C11763633D00196CDF /* SettingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A08F1763633D00196CDF /* SettingsButton@2x.png */; };
 		4FA5A0C21763633D00196CDF /* SettingsButtonPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0901763633D00196CDF /* SettingsButtonPushed.png */; };
 		4FA5A0C31763633D00196CDF /* SettingsButtonPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0911763633D00196CDF /* SettingsButtonPushed@2x.png */; };
-		4FA5A0C41763633D00196CDF /* Switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0921763633D00196CDF /* Switch.png */; };
-		4FA5A0C51763633D00196CDF /* Switch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0931763633D00196CDF /* Switch@2x.png */; };
-		4FA5A0C61763633D00196CDF /* SwitchActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0941763633D00196CDF /* SwitchActive.png */; };
-		4FA5A0C71763633D00196CDF /* SwitchActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0951763633D00196CDF /* SwitchActive@2x.png */; };
-		4FA5A0C81763633D00196CDF /* SwitchInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0961763633D00196CDF /* SwitchInactive.png */; };
-		4FA5A0C91763633D00196CDF /* SwitchInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0971763633D00196CDF /* SwitchInactive@2x.png */; };
 		4FA5A0CA1763633D00196CDF /* Titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0981763633D00196CDF /* Titlebar.png */; };
 		4FA5A0CB1763633D00196CDF /* Titlebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A0991763633D00196CDF /* Titlebar@2x.png */; };
 		4FA5A0CC1763633D00196CDF /* TitlebarPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FA5A09A1763633D00196CDF /* TitlebarPoint.png */; };
@@ -130,6 +156,38 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C9292261B5EF29300CF3890 /* SwitchFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchFlat.png; sourceTree = "<group>"; };
+		0C9292271B5EF29300CF3890 /* SwitchFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchFlat@2x.png"; sourceTree = "<group>"; };
+		0C92922A1B5EF2FF00CF3890 /* SwitchActiveFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchActiveFlat.png; sourceTree = "<group>"; };
+		0C92922B1B5EF2FF00CF3890 /* SwitchActiveFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchActiveFlat@2x.png"; sourceTree = "<group>"; };
+		0C92922C1B5EF2FF00CF3890 /* SwitchInactiveFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchInactiveFlat.png; sourceTree = "<group>"; };
+		0C92922D1B5EF2FF00CF3890 /* SwitchInactiveFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchInactiveFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292321B5EF4D400CF3890 /* HammerHeaderFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HammerHeaderFlat.png; sourceTree = "<group>"; };
+		0C9292331B5EF4D400CF3890 /* HammerHeaderFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HammerHeaderFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292441B5EFD9A00CF3890 /* RestartHoverFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RestartHoverFlat.png; sourceTree = "<group>"; };
+		0C9292451B5EFD9A00CF3890 /* RestartHoverFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RestartHoverFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292461B5EFD9A00CF3890 /* RestartPushedFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RestartPushedFlat.png; sourceTree = "<group>"; };
+		0C9292471B5EFD9A00CF3890 /* RestartPushedFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RestartPushedFlat@2x.png"; sourceTree = "<group>"; };
+		0C92924E1B5EFFB600CF3890 /* deleteFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteFlat.png; sourceTree = "<group>"; };
+		0C92924F1B5EFFB600CF3890 /* deleteFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292521B5EFFB600CF3890 /* deleteFlatPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteFlatPushed.png; sourceTree = "<group>"; };
+		0C9292531B5EFFB600CF3890 /* deleteFlatPushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteFlatPushed@2x.png"; sourceTree = "<group>"; };
+		0C92925A1B5F04A900CF3890 /* deleteFlatHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteFlatHover.png; sourceTree = "<group>"; };
+		0C92925B1B5F04A900CF3890 /* deleteFlatHover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteFlatHover@2x.png"; sourceTree = "<group>"; };
+		0C92925C1B5F04A900CF3890 /* RestartFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RestartFlat.png; sourceTree = "<group>"; };
+		0C92925D1B5F04A900CF3890 /* RestartFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RestartFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292621B5F055100CF3890 /* SettingsButtonFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButtonFlat.png; sourceTree = "<group>"; };
+		0C9292631B5F055100CF3890 /* SettingsButtonFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsButtonFlat@2x.png"; sourceTree = "<group>"; };
+		0C9292641B5F055100CF3890 /* SettingsButtonPushedFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButtonPushedFlat.png; sourceTree = "<group>"; };
+		0C9292651B5F055100CF3890 /* SettingsButtonPushedFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsButtonPushedFlat@2x.png"; sourceTree = "<group>"; };
+		0C92926A1B5F07A600CF3890 /* settingsButtonFlatLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsButtonFlatLarge.png; sourceTree = "<group>"; };
+		0C92926B1B5F07A600CF3890 /* settingsButtonFlatLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButtonFlatLarge@2x.png"; sourceTree = "<group>"; };
+		0C92926C1B5F07A600CF3890 /* settingsButtonFlatLargePushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsButtonFlatLargePushed.png; sourceTree = "<group>"; };
+		0C92926D1B5F07A600CF3890 /* settingsButtonFlatLargePushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButtonFlatLargePushed@2x.png"; sourceTree = "<group>"; };
+		0C92927A1B5F0A9100CF3890 /* addButtonFlatLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addButtonFlatLarge.png; sourceTree = "<group>"; };
+		0C92927B1B5F0A9100CF3890 /* addButtonFlatLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addButtonFlatLarge@2x.png"; sourceTree = "<group>"; };
+		0C92927C1B5F0A9100CF3890 /* addButtonFlatLargePushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addButtonFlatLargePushed.png; sourceTree = "<group>"; };
+		0C92927D1B5F0A9100CF3890 /* addButtonFlatLargePushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addButtonFlatLargePushed@2x.png"; sourceTree = "<group>"; };
 		4F08AF9B1614885500D446C2 /* NVStyledButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStyledButton.h; sourceTree = "<group>"; };
 		4F08AF9C1614885500D446C2 /* NVStyledButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStyledButton.m; sourceTree = "<group>"; };
 		4F0B716116234A82007246F9 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -206,12 +264,6 @@
 		4FA5A08F1763633D00196CDF /* SettingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsButton@2x.png"; sourceTree = "<group>"; };
 		4FA5A0901763633D00196CDF /* SettingsButtonPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsButtonPushed.png; sourceTree = "<group>"; };
 		4FA5A0911763633D00196CDF /* SettingsButtonPushed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsButtonPushed@2x.png"; sourceTree = "<group>"; };
-		4FA5A0921763633D00196CDF /* Switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Switch.png; sourceTree = "<group>"; };
-		4FA5A0931763633D00196CDF /* Switch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Switch@2x.png"; sourceTree = "<group>"; };
-		4FA5A0941763633D00196CDF /* SwitchActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchActive.png; sourceTree = "<group>"; };
-		4FA5A0951763633D00196CDF /* SwitchActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchActive@2x.png"; sourceTree = "<group>"; };
-		4FA5A0961763633D00196CDF /* SwitchInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwitchInactive.png; sourceTree = "<group>"; };
-		4FA5A0971763633D00196CDF /* SwitchInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwitchInactive@2x.png"; sourceTree = "<group>"; };
 		4FA5A0981763633D00196CDF /* Titlebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Titlebar.png; sourceTree = "<group>"; };
 		4FA5A0991763633D00196CDF /* Titlebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Titlebar@2x.png"; sourceTree = "<group>"; };
 		4FA5A09A1763633D00196CDF /* TitlebarPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitlebarPoint.png; sourceTree = "<group>"; };
@@ -361,6 +413,10 @@
 				4F723F9A1768D547004C5990 /* Footer@2x.png */,
 				4FA7B8601767706F009B0BBF /* RowBackgroundPushed.png */,
 				4FA7B8611767706F009B0BBF /* RowBackgroundPushed@2x.png */,
+				0C92927A1B5F0A9100CF3890 /* addButtonFlatLarge.png */,
+				0C92927B1B5F0A9100CF3890 /* addButtonFlatLarge@2x.png */,
+				0C92927C1B5F0A9100CF3890 /* addButtonFlatLargePushed.png */,
+				0C92927D1B5F0A9100CF3890 /* addButtonFlatLargePushed@2x.png */,
 				4FA5A06A1763633D00196CDF /* AddButton.png */,
 				4FA5A06B1763633D00196CDF /* AddButton@2x.png */,
 				4FA5A06C1763633D00196CDF /* AddButtonPushed.png */,
@@ -373,6 +429,12 @@
 				4FA5A0731763633D00196CDF /* ButtonAdd@2x.png */,
 				4FA5A0741763633D00196CDF /* ButtonAddPushed.png */,
 				4FA5A0751763633D00196CDF /* ButtonAddPushed@2x.png */,
+				0C92924E1B5EFFB600CF3890 /* deleteFlat.png */,
+				0C92924F1B5EFFB600CF3890 /* deleteFlat@2x.png */,
+				0C9292521B5EFFB600CF3890 /* deleteFlatPushed.png */,
+				0C9292531B5EFFB600CF3890 /* deleteFlatPushed@2x.png */,
+				0C92925A1B5F04A900CF3890 /* deleteFlatHover.png */,
+				0C92925B1B5F04A900CF3890 /* deleteFlatHover@2x.png */,
 				4FA5A0761763633D00196CDF /* Delete.png */,
 				4FA5A0771763633D00196CDF /* Delete@2x.png */,
 				4FA5A0781763633D00196CDF /* DeleteButton.png */,
@@ -385,28 +447,44 @@
 				4FA5A07F1763633D00196CDF /* DeletePushed@2x.png */,
 				4FA5A0801763633D00196CDF /* HammerHeader.png */,
 				4FA5A0811763633D00196CDF /* HammerHeader@2x.png */,
+				0C9292321B5EF4D400CF3890 /* HammerHeaderFlat.png */,
+				0C9292331B5EF4D400CF3890 /* HammerHeaderFlat@2x.png */,
 				4FA5A0821763633D00196CDF /* MenubarIcon.png */,
 				4FA5A0831763633D00196CDF /* MenubarIcon@2x.png */,
 				4FA5A0841763633D00196CDF /* MenubarIconAlt.png */,
 				4FA5A0851763633D00196CDF /* MenubarIconAlt@2x.png */,
 				4FA5A0861763633D00196CDF /* MenubarIconGlow.png */,
 				4FA5A0871763633D00196CDF /* MenubarIconGlow@2x.png */,
+				0C92925C1B5F04A900CF3890 /* RestartFlat.png */,
+				0C92925D1B5F04A900CF3890 /* RestartFlat@2x.png */,
+				0C9292441B5EFD9A00CF3890 /* RestartHoverFlat.png */,
+				0C9292451B5EFD9A00CF3890 /* RestartHoverFlat@2x.png */,
+				0C9292461B5EFD9A00CF3890 /* RestartPushedFlat.png */,
+				0C9292471B5EFD9A00CF3890 /* RestartPushedFlat@2x.png */,
 				4FA5A0881763633D00196CDF /* Restart.png */,
 				4FA5A0891763633D00196CDF /* Restart@2x.png */,
 				4FA5A08A1763633D00196CDF /* RestartHover.png */,
 				4FA5A08B1763633D00196CDF /* RestartHover@2x.png */,
 				4FA5A08C1763633D00196CDF /* RestartPushed.png */,
 				4FA5A08D1763633D00196CDF /* RestartPushed@2x.png */,
+				0C9292621B5F055100CF3890 /* SettingsButtonFlat.png */,
+				0C9292631B5F055100CF3890 /* SettingsButtonFlat@2x.png */,
+				0C9292641B5F055100CF3890 /* SettingsButtonPushedFlat.png */,
+				0C9292651B5F055100CF3890 /* SettingsButtonPushedFlat@2x.png */,
 				4FA5A08E1763633D00196CDF /* SettingsButton.png */,
 				4FA5A08F1763633D00196CDF /* SettingsButton@2x.png */,
 				4FA5A0901763633D00196CDF /* SettingsButtonPushed.png */,
 				4FA5A0911763633D00196CDF /* SettingsButtonPushed@2x.png */,
-				4FA5A0921763633D00196CDF /* Switch.png */,
-				4FA5A0931763633D00196CDF /* Switch@2x.png */,
-				4FA5A0941763633D00196CDF /* SwitchActive.png */,
-				4FA5A0951763633D00196CDF /* SwitchActive@2x.png */,
-				4FA5A0961763633D00196CDF /* SwitchInactive.png */,
-				4FA5A0971763633D00196CDF /* SwitchInactive@2x.png */,
+				0C92926A1B5F07A600CF3890 /* settingsButtonFlatLarge.png */,
+				0C92926B1B5F07A600CF3890 /* settingsButtonFlatLarge@2x.png */,
+				0C92926C1B5F07A600CF3890 /* settingsButtonFlatLargePushed.png */,
+				0C92926D1B5F07A600CF3890 /* settingsButtonFlatLargePushed@2x.png */,
+				0C9292261B5EF29300CF3890 /* SwitchFlat.png */,
+				0C9292271B5EF29300CF3890 /* SwitchFlat@2x.png */,
+				0C92922A1B5EF2FF00CF3890 /* SwitchActiveFlat.png */,
+				0C92922B1B5EF2FF00CF3890 /* SwitchActiveFlat@2x.png */,
+				0C92922C1B5EF2FF00CF3890 /* SwitchInactiveFlat.png */,
+				0C92922D1B5EF2FF00CF3890 /* SwitchInactiveFlat@2x.png */,
 				4FA5A0981763633D00196CDF /* Titlebar.png */,
 				4FA5A0991763633D00196CDF /* Titlebar@2x.png */,
 				4FA5A09A1763633D00196CDF /* TitlebarPoint.png */,
@@ -735,7 +813,7 @@
 				ORGANIZATIONNAME = Riot;
 				TargetAttributes = {
 					4FBFA35515C6F85800BA8209 = {
-						DevelopmentTeam = RVSYWD2P7Y;
+						DevelopmentTeam = 9HNHHQLWA5;
 					};
 				};
 			};
@@ -761,71 +839,97 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C9292811B5F0A9100CF3890 /* addButtonFlatLargePushed@2x.png in Resources */,
 				4FBFA36515C6F85800BA8209 /* InfoPlist.strings in Resources */,
 				4FBFA36B15C6F85800BA8209 /* Credits.rtf in Resources */,
+				0C9292661B5F055100CF3890 /* SettingsButtonFlat.png in Resources */,
+				0C9292351B5EF4D400CF3890 /* HammerHeaderFlat@2x.png in Resources */,
 				4FBFA37115C6F85800BA8209 /* MainMenu.xib in Resources */,
+				0C9292691B5F055100CF3890 /* SettingsButtonPushedFlat@2x.png in Resources */,
+				0C92924D1B5EFD9A00CF3890 /* RestartPushedFlat@2x.png in Resources */,
+				0C92924B1B5EFD9A00CF3890 /* RestartHoverFlat@2x.png in Resources */,
 				4FBFA39A15C7006A00BA8209 /* Panel.xib in Resources */,
 				4F107C681610CF0E00624611 /* InstallPow.sh in Resources */,
+				0C9292681B5F055100CF3890 /* SettingsButtonPushedFlat.png in Resources */,
+				0C9292601B5F04A900CF3890 /* RestartFlat.png in Resources */,
 				4FBABB0A161344D600D4174B /* dsa_pub.pem in Resources */,
+				0C92927F1B5F0A9100CF3890 /* addButtonFlatLarge@2x.png in Resources */,
 				4F0B716216234A82007246F9 /* index.html in Resources */,
 				4FA5A09C1763633D00196CDF /* AddButton.png in Resources */,
 				4FA5A09D1763633D00196CDF /* AddButton@2x.png in Resources */,
+				0C92922F1B5EF2FF00CF3890 /* SwitchActiveFlat@2x.png in Resources */,
 				4FA5A09E1763633D00196CDF /* AddButtonPushed.png in Resources */,
 				4FA5A09F1763633D00196CDF /* AddButtonPushed@2x.png in Resources */,
 				4FA5A0A01763633D00196CDF /* BlueButton.png in Resources */,
+				0C9292551B5EFFB600CF3890 /* deleteFlat@2x.png in Resources */,
+				0C9292341B5EF4D400CF3890 /* HammerHeaderFlat.png in Resources */,
 				4FA5A0A11763633D00196CDF /* BlueButton@2x.png in Resources */,
 				4FA5A0A21763633D00196CDF /* BlueButtonPushed.png in Resources */,
 				4FA5A0A31763633D00196CDF /* BlueButtonPushed@2x.png in Resources */,
 				4FA5A0A41763633D00196CDF /* ButtonAdd.png in Resources */,
+				0C9292541B5EFFB600CF3890 /* deleteFlat.png in Resources */,
 				4FB88F3E19D9001300D390CE /* SiteIconDefault@2x.png in Resources */,
 				4FA5A0A51763633D00196CDF /* ButtonAdd@2x.png in Resources */,
 				4FA5A0A61763633D00196CDF /* ButtonAddPushed.png in Resources */,
 				4FA5A0A71763633D00196CDF /* ButtonAddPushed@2x.png in Resources */,
+				0C92924C1B5EFD9A00CF3890 /* RestartPushedFlat.png in Resources */,
+				0C9292281B5EF29300CF3890 /* SwitchFlat.png in Resources */,
 				4F4AFFED1778AACF0081BBD3 /* Anvil.icns in Resources */,
 				4FA5A0A81763633D00196CDF /* Delete.png in Resources */,
 				4FA5A0A91763633D00196CDF /* Delete@2x.png in Resources */,
+				0C92926F1B5F07A600CF3890 /* settingsButtonFlatLarge@2x.png in Resources */,
 				4FA5A0AA1763633D00196CDF /* DeleteButton.png in Resources */,
 				4FA5A0AB1763633D00196CDF /* DeleteButton@2x.png in Resources */,
+				0C9292301B5EF2FF00CF3890 /* SwitchInactiveFlat.png in Resources */,
 				4FA5A0AC1763633D00196CDF /* DeleteButtonPushed.png in Resources */,
 				4FA5A0AD1763633D00196CDF /* DeleteButtonPushed@2x.png in Resources */,
 				4FA5A0AE1763633D00196CDF /* DeleteHover.png in Resources */,
 				4FA5A0AF1763633D00196CDF /* DeleteHover@2x.png in Resources */,
+				0C92926E1B5F07A600CF3890 /* settingsButtonFlatLarge.png in Resources */,
 				4FA5A0B01763633D00196CDF /* DeletePushed.png in Resources */,
+				0C9292671B5F055100CF3890 /* SettingsButtonFlat@2x.png in Resources */,
 				4FB88F3D19D9001300D390CE /* SiteIcon.png in Resources */,
 				4FA5A0B11763633D00196CDF /* DeletePushed@2x.png in Resources */,
 				4FA5A0B21763633D00196CDF /* HammerHeader.png in Resources */,
 				4FA5A0B31763633D00196CDF /* HammerHeader@2x.png in Resources */,
 				4FA5A0B41763633D00196CDF /* MenubarIcon.png in Resources */,
+				0C92922E1B5EF2FF00CF3890 /* SwitchActiveFlat.png in Resources */,
 				4FA5A0B51763633D00196CDF /* MenubarIcon@2x.png in Resources */,
 				4FA5A0B61763633D00196CDF /* MenubarIconAlt.png in Resources */,
 				4FA5A0B71763633D00196CDF /* MenubarIconAlt@2x.png in Resources */,
 				4FA5A0B81763633D00196CDF /* MenubarIconGlow.png in Resources */,
+				0C9292711B5F07A600CF3890 /* settingsButtonFlatLargePushed@2x.png in Resources */,
 				4FA5A0B91763633D00196CDF /* MenubarIconGlow@2x.png in Resources */,
 				4FA5A0BA1763633D00196CDF /* Restart.png in Resources */,
+				0C9292701B5F07A600CF3890 /* settingsButtonFlatLargePushed.png in Resources */,
 				4FA5A0BB1763633D00196CDF /* Restart@2x.png in Resources */,
 				4FB88F3C19D9001300D390CE /* SiteIconDefault.png in Resources */,
+				0C9292291B5EF29300CF3890 /* SwitchFlat@2x.png in Resources */,
 				4FA5A0BC1763633D00196CDF /* RestartHover.png in Resources */,
 				4F723F9C1768D547004C5990 /* Footer@2x.png in Resources */,
 				4FA5A0BD1763633D00196CDF /* RestartHover@2x.png in Resources */,
+				0C9292611B5F04A900CF3890 /* RestartFlat@2x.png in Resources */,
 				4FA5A0BE1763633D00196CDF /* RestartPushed.png in Resources */,
 				4F723F9B1768D547004C5990 /* Footer.png in Resources */,
+				0C9292581B5EFFB600CF3890 /* deleteFlatPushed.png in Resources */,
 				4FB88F3F19D9001300D390CE /* SiteIcon@2x.png in Resources */,
 				4FA5A0BF1763633D00196CDF /* RestartPushed@2x.png in Resources */,
 				4FA5A0C01763633D00196CDF /* SettingsButton.png in Resources */,
+				0C92925E1B5F04A900CF3890 /* deleteFlatHover.png in Resources */,
+				0C92924A1B5EFD9A00CF3890 /* RestartHoverFlat.png in Resources */,
 				4FA5A0C11763633D00196CDF /* SettingsButton@2x.png in Resources */,
 				4FA5A0C21763633D00196CDF /* SettingsButtonPushed.png in Resources */,
 				4FA5A0C31763633D00196CDF /* SettingsButtonPushed@2x.png in Resources */,
-				4FA5A0C41763633D00196CDF /* Switch.png in Resources */,
-				4FA5A0C51763633D00196CDF /* Switch@2x.png in Resources */,
-				4FA5A0C61763633D00196CDF /* SwitchActive.png in Resources */,
-				4FA5A0C71763633D00196CDF /* SwitchActive@2x.png in Resources */,
-				4FA5A0C81763633D00196CDF /* SwitchInactive.png in Resources */,
-				4FA5A0C91763633D00196CDF /* SwitchInactive@2x.png in Resources */,
+				0C9292801B5F0A9100CF3890 /* addButtonFlatLargePushed.png in Resources */,
+				0C9292591B5EFFB600CF3890 /* deleteFlatPushed@2x.png in Resources */,
 				4FA5A0CA1763633D00196CDF /* Titlebar.png in Resources */,
 				4FA5A0CB1763633D00196CDF /* Titlebar@2x.png in Resources */,
 				4FA5A0CC1763633D00196CDF /* TitlebarPoint.png in Resources */,
+				0C92925F1B5F04A900CF3890 /* deleteFlatHover@2x.png in Resources */,
 				4FA5A0CD1763633D00196CDF /* TitlebarPoint@2x.png in Resources */,
 				4FA7B8621767706F009B0BBF /* RowBackgroundPushed.png in Resources */,
+				0C92927E1B5F0A9100CF3890 /* addButtonFlatLarge.png in Resources */,
+				0C9292311B5EF2FF00CF3890 /* SwitchInactiveFlat@2x.png in Resources */,
 				4FA7B8631767706F009B0BBF /* RowBackgroundPushed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

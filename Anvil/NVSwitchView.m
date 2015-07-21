@@ -27,12 +27,12 @@
     
     if (retinaScreen) {
         
-        switcherImage = [NSImage imageNamed:@"Switch@2x.png"];
-        backgroundImage = [NSImage imageNamed:@"SwitchInactive@2x.png"];
+        switcherImage = [NSImage imageNamed:@"SwitchFlat@2x.png"];
+        backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlat@2x.png"];
     } else {
         
-        switcherImage = [NSImage imageNamed:@"Switch.png"];
-        backgroundImage = [NSImage imageNamed:@"SwitchInactive.png"];
+        switcherImage = [NSImage imageNamed:@"SwitchFlat.png"];
+        backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlat.png"];
     }
     
     CGRect rect = CGRectMake(0, 0, switcherImage.size.width, switcherImage.size.height);
@@ -97,17 +97,17 @@
         lastViewFrame.origin.x = self.frame.size.width - lastViewFrame.size.width;
         
         if (retinaScreen) {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive@2x.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActiveFlat@2x.png"];
         } else {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActive.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActiveFlat.png"];
         }
     } else {
         
         lastViewFrame.origin.x = 0;
         if (retinaScreen) {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive@2x.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlat@2x.png"];
         } else {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactive.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlat.png"];
         }
     }
     

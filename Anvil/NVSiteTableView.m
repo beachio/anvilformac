@@ -21,7 +21,7 @@
 - (void)awakeFromNib {
     
     [self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-    [self setRowHeight:32.0];
+    [self setRowHeight:48.0];
 }
 
 - (BOOL)isOpaque {

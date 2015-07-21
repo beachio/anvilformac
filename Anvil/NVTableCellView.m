@@ -33,15 +33,15 @@
     self.restartButton.stringValue = @"";
     
     
-    self.restartButton.image = [NSImage imageNamed:@"Restart"];
-    self.deleteButton.image = [NSImage imageNamed:@"Delete"];
-    self.deleteButton.hoverImage = [NSImage imageNamed:@"DeleteHover"];
-    self.deleteButton.alternateImage = [NSImage imageNamed:@"DeletePushed"];
+    self.restartButton.image = [NSImage imageNamed:@"RestartFlat"];
+    self.deleteButton.image = [NSImage imageNamed:@"deleteFlat"];
+    self.deleteButton.hoverImage = [NSImage imageNamed:@"deleteFlatHover"];
+    self.deleteButton.alternateImage = [NSImage imageNamed:@"deleteFlatPushed"];
     
     // TODO: Hover button. OMG.
-    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushed"];
-    self.restartButton.hoverImage = [NSImage imageNamed:@"RestartHover"];
-    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushed"];
+    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushedFlat"];
+    self.restartButton.hoverImage = [NSImage imageNamed:@"RestartHoverFlat"];
+    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushedFlat"];
     
     [self.restartButton setHidden:YES];
     [self.deleteButton setHidden:YES];
