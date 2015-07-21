@@ -179,7 +179,7 @@
                                 </textFieldCell>
                             </textField>
                             <button id="509">
-                                <rect key="frame" x="216" y="0.0" width="38" height="31"/>
+                                <rect key="frame" x="216" y="2" width="38" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="bevel" bezelStyle="circular" image="addButtonFlatLarge" imagePosition="overlaps" alignment="center" alternateImage="addButtonFlatLargePushed" imageScaling="proportionallyDown" inset="2" id="510">
                                     <behavior key="behavior" lightByContents="YES"/>
@@ -190,7 +190,7 @@
                                 </connections>
                             </button>
                             <button identifier="settingsButton" focusRingType="none" id="513" customClass="NSPopUpButton">
-                                <rect key="frame" x="1" y="0.0" width="36" height="33"/>
+                                <rect key="frame" x="1" y="2" width="36" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="bevel" title="o" bezelStyle="regularSquare" image="settingsButtonFlatLarge" imagePosition="overlaps" alignment="center" alternateImage="settingsButtonFlatLargePushed" focusRingType="none" inset="2" id="514" customClass="NVPopupButtonCell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
