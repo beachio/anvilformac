@@ -96,7 +96,7 @@
                                                         <button id="418" userLabel="Restart Button" customClass="NVSpinnerButton">
                                                             <rect key="frame" x="215" y="7" width="18" height="19"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Restart" imagePosition="overlaps" alignment="center" alternateImage="RestartPushed" inset="2" id="419">
+                                                            <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Restart" imagePosition="overlaps" alignment="center" alternateImage="RestartPushed" sound="Purr" inset="2" id="419">
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -107,7 +107,7 @@
                                                         <button focusRingType="exterior" horizontalHuggingPriority="1000" verticalHuggingPriority="1" id="420" userLabel="Delete Button" customClass="NVStyledButton">
                                                             <rect key="frame" x="234" y="7" width="18" height="19"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Delete" imagePosition="above" alignment="center" alternateImage="DeletePushed" focusRingType="exterior" inset="2" id="421">
+                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Delete" imagePosition="above" alignment="center" alternateImage="DeletePushed" focusRingType="exterior" sound="Frog" inset="2" id="421">
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -169,15 +169,6 @@
                                 <rect key="frame" x="39" y="11" width="19" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </customView>
-                            <textField verticalHuggingPriority="750" id="500" customClass="NVLabel">
-                                <rect key="frame" x="68" y="11" width="24" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ON" id="501">
-                                    <font key="font" size="11" name="HelveticaNeue-Bold"/>
-                                    <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button id="509">
                                 <rect key="frame" x="216" y="2" width="38" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -197,6 +188,15 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <textField verticalHuggingPriority="750" id="500" customClass="NVLabel">
+                                <rect key="frame" x="93" y="9" width="24" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ON" id="501">
+                                    <font key="font" size="11" name="HelveticaNeue-Bold"/>
+                                    <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </customView>
                     <customView id="543" userLabel="Welcome View (not installed)" customClass="NVStyledView">
@@ -298,5 +298,7 @@
         <image name="addButtonFlatLargePushed" width="33" height="33"/>
         <image name="settingsButtonFlatLarge" width="33" height="33"/>
         <image name="settingsButtonFlatLargePushed" width="33" height="33"/>
+        <sound name="Frog"/>
+        <sound name="Purr"/>
     </resources>
 </document>
