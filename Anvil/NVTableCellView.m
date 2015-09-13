@@ -86,7 +86,7 @@
         [self.reallyDeleteButton setTitle:@"Delete"];
         [self.reallyDeleteButton setAlternateTitle:@"Delete"];
         
-        self.reallyDeleteButton.textOffset = 1.0;
+        self.reallyDeleteButton.textOffset = 0.0;
     }
 }
 

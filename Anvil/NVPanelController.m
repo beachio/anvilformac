@@ -24,7 +24,7 @@
 
 #define MENU_ANIMATION_DURATION .1
 
-#define HEADER_HEIGHT 38
+#define HEADER_HEIGHT 34
 
 #pragma mark -
 
@@ -79,10 +79,10 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         [self.switchLabel setAlphaValue:0.9999999];
         [self.headerView makeTransparent];
-        self.headerView.backgroundImage = [NSImage imageNamed:@"Titlebar"];
+        self.headerView.backgroundImage = [NSImage imageNamed:@"titleBar"];
         self.headerIconView.backgroundImage = [NSImage imageNamed:@"TitlebarIcon"];
         
-        self.backgroundView.backgroundColor = [NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1];
+        self.backgroundView.backgroundColor = [NSColor colorWithDeviceRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1];
         
         self.appListTableView.menu = [self menuForTableView];
         self.appListTableView.action = @selector(appListTableViewClicked:);
@@ -113,22 +113,23 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.installPowButton.isBold = NO;
         self.installPowButton.textSize = 12.0;
         
-        self.noSitesAddASiteButton.image = [NSImage imageNamed:@"ButtonAdd"];
-        self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"ButtonAddPushed"];
+        self.noSitesAddASiteButton.image = [NSImage imageNamed:@"buttonAddLong"];
+        self.noSitesAddASiteButton.alternateImage = [NSImage imageNamed:@"buttonAddPushedLong"];
         [self.noSitesAddASiteButton setInsetsWithTop:1.0 right:5.0 bottom:1.0 left:30.0];
         self.noSitesAddASiteButton.textSize = 12.0;
         self.noSitesAddASiteButton.isBold = NO;
         
         CGRect frame = self.welcomeView.frame;
-        self.welcomeView.backgroundColor = [NSColor colorWithDeviceRed:207.0/255.0 green:207.0/255.0 blue:212.0/255.0 alpha:1.0];
+        self.welcomeView.backgroundColor = [NSColor colorWithDeviceRed:245.0/255.0 green:244.0/255.0 blue:245.0/255.0 alpha:1.0];
         [self.welcomeView setFrame:CGRectMake(frame.origin.x,
-                                              self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
+                                              self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT - 5,
                                               frame.size.width,
                                               frame.size.height)];
         
         frame = self.noAppsView.frame;
+        self.noAppsView.backgroundColor = [NSColor colorWithDeviceRed:245.0/255.0 green:244.0/255.0 blue:245.0/255.0 alpha:1.0];
         [self.noAppsView setFrame:CGRectMake(frame.origin.x,
-                                             self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
+                                             self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT - 5,
                                              frame.size.width,
                                              frame.size.height)];
         
@@ -551,6 +552,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.addButton.hidden = YES;
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = NO;
+        self.welcomeLabel.hidden = NO;
         
         // In this case, appListTableView can actually be tall without being visible!
 
@@ -563,7 +565,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.appListTableView.hidden = YES;
         self.appListTableScrollView.hidden = YES;
         self.noAppsView.hidden = NO;
+        self.addButton.hidden = YES;
+        self.switchLabel.hidden = NO;
+        self.switchView.hidden = NO;
         self.welcomeView.hidden = YES;
+        self.welcomeLabel.hidden = YES;
         
         panelHeight = self.noAppsView.frame.size.height + HEADER_HEIGHT + ARROW_HEIGHT;
         NSInteger panelY = bottomOfMenubarViewOffset - panelHeight;
@@ -573,7 +579,11 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.appListTableView.hidden = NO;
         self.appListTableScrollView.hidden = NO;
         self.noAppsView.hidden = YES;
+        self.addButton.hidden = NO;
+        self.switchLabel.hidden = NO;
+        self.switchView.hidden = NO;
         self.welcomeView.hidden = YES;
+        self.welcomeLabel.hidden = YES;
     }
     
     if (panel.alphaValue < 1) {
@@ -1325,7 +1335,17 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSIndexSet *thisIndexSet = [NSIndexSet indexSetWithIndex:clickedRow];
     [self.appListTableView removeRowsAtIndexes:thisIndexSet withAnimation:NSTableViewAnimationEffectFade];
     
+    
+    // If last app is removed, forcing the panel to close before updating height prevents crash
+    
+    if ([[self.dataSource apps] count] == 0 && [[self.dataSource hammerApps] count] == 0) {
+        [self closePanel];
+    }
+    
     [self updatePanelHeightAndAnimate:YES];
+    
+    
+    
 }
 
 - (IBAction)didClickRestartButton:(id)sender {
