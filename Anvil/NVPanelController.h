@@ -40,6 +40,7 @@
 @property (nonatomic, unsafe_unretained) IBOutlet NVLabel *switchLabel;
 @property (weak, nonatomic) IBOutlet NVSwitchView *switchView;
 @property (weak, nonatomic) IBOutlet NSButton *addButton;
+@property (weak) IBOutlet NSTextField *welcomeLabel;
 
 @property (weak, nonatomic) IBOutlet CustomLoadingSpinner *installingPowSpinner;
 

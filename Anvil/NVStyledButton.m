@@ -102,7 +102,7 @@
     [style setLineBreakMode:NSLineBreakByWordWrapping];
     [style setAlignment:NSCenterTextAlignment];
     
-    NSShadow *textShadow = [NSShadow shadowWithColor:[NSColor colorWithDeviceWhite:0 alpha:0.4] offset:NSMakeSize(0.0, 1.0) blurRadius:0.0];
+    NSShadow *textShadow = [NSShadow shadowWithColor:[NSColor colorWithDeviceWhite:0 alpha:0.0] offset:NSMakeSize(0.0, 0.0) blurRadius:0.0];
     
     NSFont *fontToUse = self.isBold ? [NSFont boldSystemFontOfSize:self.textSize] : [NSFont systemFontOfSize:self.textSize];
     att = [[NSDictionary alloc] initWithObjectsAndKeys:

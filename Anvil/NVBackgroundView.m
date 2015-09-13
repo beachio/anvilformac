@@ -35,7 +35,7 @@
 
 - (void)awakeFromNib {
     
-    self.backgroundImage = [NSImage imageNamed:@"Footer.png"];
+    self.backgroundImage = [NSImage imageNamed:@"footer.png"];
     self.titlebarPointImageView.backgroundImage = [NSImage imageNamed:@"TitlebarPoint"];
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9046" systemVersion="15A279b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9046"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NVPanelController">
@@ -20,9 +20,8 @@
                 <outlet property="switchLabel" destination="500" id="503"/>
                 <outlet property="switchView" destination="417" id="504"/>
                 <outlet property="textField" destination="500" id="502"/>
+                <outlet property="welcomeLabel" destination="8Hy-Jp-qmX" id="uuR-gZ-8c6"/>
                 <outlet property="welcomePanelFirstLine" destination="568" id="575"/>
-                <outlet property="welcomePanelHeader" destination="547" id="577"/>
-                <outlet property="welcomePanelSecondLine" destination="570" id="576"/>
                 <outlet property="welcomeView" destination="543" id="552"/>
                 <outlet property="window" destination="5" id="20"/>
             </connections>
@@ -50,6 +49,7 @@
                                 <tableView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="28" rowSizeStyle="automatic" viewBased="YES" id="49" customClass="NVSiteTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -74,6 +74,7 @@
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="72" customClass="NVLabel">
                                                             <rect key="frame" x="32" y="10" width="82" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Site Name" placeholderString="" usesSingleLineMode="YES" id="73">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -83,10 +84,12 @@
                                                         <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" id="93" customClass="NVLayeredImageView">
                                                             <rect key="frame" x="9" y="6" width="20" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <animations/>
                                                         </customView>
                                                         <textField verticalHuggingPriority="750" id="288" customClass="NVLabel">
                                                             <rect key="frame" x="102" y="7" width="31" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <animations/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title=".dev" id="289">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -96,7 +99,8 @@
                                                         <button id="418" userLabel="Restart Button" customClass="NVSpinnerButton">
                                                             <rect key="frame" x="215" y="7" width="18" height="19"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Restart" imagePosition="overlaps" alignment="center" alternateImage="RestartPushed" sound="Purr" inset="2" id="419">
+                                                            <animations/>
+                                                            <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="restart" imagePosition="overlaps" alignment="center" alternateImage="restartPushed" sound="Purr" inset="2" id="419">
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -107,7 +111,8 @@
                                                         <button focusRingType="exterior" horizontalHuggingPriority="1000" verticalHuggingPriority="1" id="420" userLabel="Delete Button" customClass="NVStyledButton">
                                                             <rect key="frame" x="234" y="7" width="18" height="19"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Delete" imagePosition="above" alignment="center" alternateImage="DeletePushed" focusRingType="exterior" sound="Frog" inset="2" id="421">
+                                                            <animations/>
+                                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="delete" imagePosition="above" alignment="center" alternateImage="deletePushed" focusRingType="exterior" sound="Frog" inset="2" id="421">
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -118,6 +123,7 @@
                                                         <button hidden="YES" id="555" userLabel="Really Delete Button" customClass="NVStyledButton">
                                                             <rect key="frame" x="139" y="8" width="54" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <animations/>
                                                             <buttonCell key="cell" type="bevel" title="Delete" bezelStyle="regularSquare" imagePosition="overlaps" alignment="center" inset="2" id="556">
                                                                 <behavior key="behavior" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
@@ -127,6 +133,7 @@
                                                             </connections>
                                                         </button>
                                                     </subviews>
+                                                    <animations/>
                                                     <connections>
                                                         <outlet property="deleteButton" destination="420" id="423"/>
                                                         <outlet property="faviconImageView" destination="93" id="178"/>
@@ -146,33 +153,40 @@
                                     </connections>
                                 </tableView>
                             </subviews>
+                            <animations/>
                             <nil key="backgroundColor"/>
                         </clipView>
+                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="50">
                             <rect key="frame" x="0.0" y="473" width="256" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="52">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                     </scrollView>
                     <customView id="507" userLabel="Arrow" customClass="NVStyledView">
                         <rect key="frame" x="122" y="625" width="12" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <animations/>
                     </customView>
                     <customView verticalCompressionResistancePriority="1" id="412" userLabel="Header" customClass="NVStyledView">
                         <rect key="frame" x="0.0" y="591" width="256" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <customView id="417" customClass="NVSwitchView">
-                                <rect key="frame" x="39" y="11" width="19" height="12"/>
+                                <rect key="frame" x="39" y="4" width="35" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                             </customView>
                             <button id="509">
                                 <rect key="frame" x="216" y="2" width="38" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="bevel" bezelStyle="circular" image="addButtonFlatLarge" imagePosition="overlaps" alignment="center" alternateImage="addButtonFlatLargePushed" imageScaling="proportionallyDown" inset="2" id="510">
+                                <animations/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="circular" image="addButtonInactive" imagePosition="overlaps" alignment="center" alternateImage="addButtonActive" imageScaling="proportionallyDown" inset="2" id="510">
                                     <behavior key="behavior" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -181,58 +195,55 @@
                                 </connections>
                             </button>
                             <button identifier="settingsButton" focusRingType="none" id="513" customClass="NSPopUpButton">
-                                <rect key="frame" x="1" y="2" width="36" height="33"/>
+                                <rect key="frame" x="1" y="2" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="bevel" title="o" bezelStyle="regularSquare" image="settingsButtonFlatLarge" imagePosition="overlaps" alignment="center" alternateImage="settingsButtonFlatLargePushed" focusRingType="none" inset="2" id="514" customClass="NVPopupButtonCell">
+                                <animations/>
+                                <buttonCell key="cell" type="bevel" title="o" bezelStyle="regularSquare" image="settingsButton" imagePosition="overlaps" alignment="center" alternateImage="settingsButtonPushed" focusRingType="none" inset="2" id="514" customClass="NVPopupButtonCell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
                             <textField verticalHuggingPriority="750" id="500" customClass="NVLabel">
-                                <rect key="frame" x="93" y="9" width="24" height="17"/>
+                                <rect key="frame" x="82" y="9" width="24" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ON" id="501">
                                     <font key="font" size="11" name="HelveticaNeue-Bold"/>
                                     <color key="textColor" red="0.50588235290000005" green="0.50588235290000005" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="8Hy-Jp-qmX">
+                                <rect key="frame" x="74" y="9" width="109" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Welcome to Anvil" id="QrB-Xi-Thj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
+                        <animations/>
                     </customView>
                     <customView id="543" userLabel="Welcome View (not installed)" customClass="NVStyledView">
-                        <rect key="frame" x="0.0" y="141" width="256" height="145"/>
+                        <rect key="frame" x="0.0" y="155" width="256" height="131"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" id="547" customClass="NVLabel">
-                                <rect key="frame" x="53" y="106" width="150" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Anvil" id="548">
-                                    <font key="font" metaFont="systemBold" size="12"/>
-                                    <color key="textColor" red="0.1785714286" green="0.1785714286" blue="0.1785714286" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField verticalHuggingPriority="750" id="568" customClass="NVLabel">
-                                <rect key="frame" x="15" y="67" width="226" height="32"/>
+                                <rect key="frame" x="15" y="83" width="226" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Anvil requires Pow (pow.cx) to run." id="569">
                                     <font key="font" metaFont="cellTitle"/>
-                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" id="570" customClass="NVLabel">
-                                <rect key="frame" x="30" y="58" width="197" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Click below to install it." id="571">
-                                    <font key="font" metaFont="cellTitle"/>
-                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button id="549" userLabel="Install Pow Button" customClass="NVStyledButton">
-                                <rect key="frame" x="73" y="19" width="110" height="32"/>
+                                <rect key="frame" x="73" y="52" width="110" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                                 <buttonCell key="cell" type="bevel" title="Install Pow" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="550">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -242,10 +253,22 @@
                                 </connections>
                             </button>
                             <customView hidden="YES" id="573" customClass="CustomLoadingSpinner">
-                                <rect key="frame" x="109" y="58" width="38" height="38"/>
+                                <rect key="frame" x="109" y="44" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                             </customView>
+                            <textField verticalHuggingPriority="750" id="pgW-NW-jZ6" customClass="NVLabel">
+                                <rect key="frame" x="18" y="0.0" width="226" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Authentication will be required" id="7iV-kW-cVK">
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
+                        <animations/>
                     </customView>
                     <customView id="541" userLabel="No Apps View" customClass="NVStyledView">
                         <rect key="frame" x="0.0" y="339" width="256" height="145"/>
@@ -254,6 +277,7 @@
                             <textField verticalHuggingPriority="750" id="545" customClass="NVLabel">
                                 <rect key="frame" x="29" y="84" width="198" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="No sites set up" id="546">
                                     <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -263,6 +287,7 @@
                             <button id="562" customClass="NVStyledButton">
                                 <rect key="frame" x="78" y="39" width="100" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
                                 <buttonCell key="cell" type="bevel" title="      Add a site" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="563">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -272,8 +297,10 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <animations/>
                     </customView>
                 </subviews>
+                <animations/>
                 <connections>
                     <outlet property="titlebarPointImageView" destination="507" id="508"/>
                 </connections>
@@ -290,14 +317,14 @@
         </textFieldCell>
     </objects>
     <resources>
-        <image name="Delete" width="18" height="19"/>
-        <image name="DeletePushed" width="18" height="19"/>
-        <image name="Restart" width="18" height="19"/>
-        <image name="RestartPushed" width="18" height="19"/>
-        <image name="addButtonFlatLarge" width="33" height="33"/>
-        <image name="addButtonFlatLargePushed" width="33" height="33"/>
-        <image name="settingsButtonFlatLarge" width="33" height="33"/>
-        <image name="settingsButtonFlatLargePushed" width="33" height="33"/>
+        <image name="addButtonActive" width="18" height="18"/>
+        <image name="addButtonInactive" width="18" height="18"/>
+        <image name="delete" width="18" height="18"/>
+        <image name="deletePushed" width="18" height="19"/>
+        <image name="restart" width="18" height="18"/>
+        <image name="restartPushed" width="18" height="19"/>
+        <image name="settingsButton" width="16" height="16"/>
+        <image name="settingsButtonPushed" width="16" height="17"/>
         <sound name="Frog"/>
         <sound name="Purr"/>
     </resources>

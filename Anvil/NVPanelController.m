@@ -24,7 +24,7 @@
 
 #define MENU_ANIMATION_DURATION .1
 
-#define HEADER_HEIGHT 34
+#define HEADER_HEIGHT 38
 
 #pragma mark -
 
@@ -86,7 +86,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.appListTableView.menu = [self menuForTableView];
         self.appListTableView.action = @selector(appListTableViewClicked:);
-        self.appListTableView.backgroundColor = [NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1];
+        self.appListTableView.backgroundColor = [NSColor colorWithDeviceRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1];
         self.appListTableView.delegate = self;
         
         self.appListTableScrollView.wantsLayer = YES;
@@ -96,20 +96,20 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         [self.appListTableView setIntercellSpacing:NSMakeSize(0, 0)];
         
         NSShadow *shadow = [[NSShadow alloc] init];
-        shadow.shadowColor = [NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.4];
+        shadow.shadowColor = [NSColor colorWithDeviceRed:1.0 green:1.0 blue:1.0 alpha:0.0];
         shadow.shadowOffset = NSMakeSize(0, -1);
         shadow.shadowBlurRadius = 0.0;
         self.switchLabel.textShadow = shadow;
         
-        self.addButton.image            = [NSImage imageNamed:@"addButtonFlatLarge"];
-        self.addButton.alternateImage   = [NSImage imageNamed:@"addButtonFlatLargePushed"];
+        self.addButton.image            = [NSImage imageNamed:@"addButtonInactive"];
+        self.addButton.alternateImage   = [NSImage imageNamed:@"addButtonActive"];
         
-        self.settingsDivider.backgroundColor = [NSColor colorWithDeviceRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1];
+        self.settingsDivider.backgroundColor = [NSColor colorWithDeviceRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1];
         
         [self setupSettingsButton];
         
-        self.installPowButton.image = [NSImage imageNamed:@"BlueButton"];
-        self.installPowButton.alternateImage = [NSImage imageNamed:@"BlueButtonPushed"];
+        self.installPowButton.image = [NSImage imageNamed:@"blueButton"];
+        self.installPowButton.alternateImage = [NSImage imageNamed:@"blueButtonPushed"];
         self.installPowButton.isBold = NO;
         self.installPowButton.textSize = 12.0;
         
@@ -120,7 +120,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         self.noSitesAddASiteButton.isBold = NO;
         
         CGRect frame = self.welcomeView.frame;
-        self.welcomeView.backgroundColor = [NSColor colorWithDeviceRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1.0];
+        self.welcomeView.backgroundColor = [NSColor colorWithDeviceRed:207.0/255.0 green:207.0/255.0 blue:212.0/255.0 alpha:1.0];
         [self.welcomeView setFrame:CGRectMake(frame.origin.x,
                                               self.backgroundView.frame.size.height - frame.size.height - HEADER_HEIGHT,
                                               frame.size.width,
@@ -190,8 +190,8 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
 
 - (void)setupSettingsButton {
     
-    self.settingsButton.image           = [NSImage imageNamed:@"settingsButtonFlatLarge"];
-    self.settingsButton.alternateImage  = [NSImage imageNamed:@"settingsButtonFlatLargePushed"];
+    self.settingsButton.image           = [NSImage imageNamed:@"settingsButton"];
+    self.settingsButton.alternateImage  = [NSImage imageNamed:@"settingsButtonPushed"];
     
     NSMenu *settingsMenu = [self buildSettingsMenu];
     
@@ -203,7 +203,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@""
                                                   action:NULL
                                            keyEquivalent:@""];
-    item.image = [NSImage imageNamed:@"settingsButtonFlatLarge"];
+    item.image = [NSImage imageNamed:@"settingsButton"];
     item.onStateImage = nil;
     item.mixedStateImage = nil;
     
@@ -213,7 +213,7 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     cell.imagePosition = NSImageOnly;
     cell.arrowPosition = NSPopUpNoArrow;
     cell.usesItemFromMenu = NO;
-    cell.alternateImage = [NSImage imageNamed:@"settingsButtonFlatLargePushed"];
+    cell.alternateImage = [NSImage imageNamed:@"settingsButtonPushed"];
 }
 
 - (NSMenu *)buildSettingsMenu {
@@ -546,6 +546,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
         
         self.appListTableView.hidden = YES;
         self.appListTableScrollView.hidden = YES;
+        self.switchView.hidden = YES;
+        self.switchLabel.hidden = YES;
+        self.addButton.hidden = YES;
         self.noAppsView.hidden = YES;
         self.welcomeView.hidden = NO;
         

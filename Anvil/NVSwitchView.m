@@ -27,20 +27,20 @@
     
     if (retinaScreen) {
         
-        switcherImage = [NSImage imageNamed:@"SwitchFlatLarge@2x.png"];
-        backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlatLarge@2x.png"];
+        switcherImage = [NSImage imageNamed:@"switchButton@2x.png"];
+        backgroundImage = [NSImage imageNamed:@"switchInactive@2x.png"];
     } else {
         
-        switcherImage = [NSImage imageNamed:@"SwitchFlatLarge.png"];
-        backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlatLarge.png"];
+        switcherImage = [NSImage imageNamed:@"switchButton.png"];
+        backgroundImage = [NSImage imageNamed:@"switchInactive.png"];
     }
     
-    CGRect rect = CGRectMake(0, 5, switcherImage.size.width, switcherImage.size.height);
+    CGRect rect = CGRectMake(0, 4, switcherImage.size.width, switcherImage.size.height);
     
     NSInteger x = self.frame.origin.x;
-    NSInteger y = self.frame.origin.y - floor((switcherImage.size.height - self.frame.size.height) - 6);
-    NSInteger width = self.frame.size.width + floor(switcherImage.size.width); // width of background = half of width of switcher
-    NSInteger height = self.frame.size.height + floor(switcherImage.size.height);
+    NSInteger y = self.frame.origin.y - floor((switcherImage.size.height - self.frame.size.height) / 2);
+    NSInteger width = self.frame.size.width + floor(switcherImage.size.width / 2.0); // width of background = half of width of switcher
+    NSInteger height = self.frame.size.height + floor(switcherImage.size.height / 2.0);
     CGRect fullFrame = CGRectMake(x, y, width, height);
     self.frame = fullFrame;
     
@@ -94,20 +94,20 @@
     
     if (position) {
         
-        lastViewFrame.origin.x = self.frame.size.width - lastViewFrame.size.width;
+        lastViewFrame.origin.x = (self.frame.size.width - lastViewFrame.size.width) - 5;
         
         if (retinaScreen) {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActiveFlatLarge@2x.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"switchActive@2x.png"];
         } else {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchActiveFlatLarge.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"switchActive.png"];
         }
     } else {
         
-        lastViewFrame.origin.x = 0;
+        lastViewFrame.origin.x = 5;
         if (retinaScreen) {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlatLarge@2x.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"switchInactive@2x.png"];
         } else {
-            self.backgroundView.backgroundImage = [NSImage imageNamed:@"SwitchInactiveFlatLarge.png"];
+            self.backgroundView.backgroundImage = [NSImage imageNamed:@"switchInactive.png"];
         }
     }
     

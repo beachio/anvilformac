@@ -33,15 +33,15 @@
     self.restartButton.stringValue = @"";
     
     
-    self.restartButton.image = [NSImage imageNamed:@"RestartFlat"];
-    self.deleteButton.image = [NSImage imageNamed:@"deleteFlat"];
-    self.deleteButton.hoverImage = [NSImage imageNamed:@"deleteFlatHover"];
-    self.deleteButton.alternateImage = [NSImage imageNamed:@"deleteFlatPushed"];
+    self.restartButton.image = [NSImage imageNamed:@"restart"];
+    self.deleteButton.image = [NSImage imageNamed:@"delete"];
+    self.deleteButton.hoverImage = [NSImage imageNamed:@"deleteHover"];
+    self.deleteButton.alternateImage = [NSImage imageNamed:@"deletePushed"];
     
     // TODO: Hover button. OMG.
-    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushedFlat"];
-    self.restartButton.hoverImage = [NSImage imageNamed:@"RestartHoverFlat"];
-    self.restartButton.alternateImage = [NSImage imageNamed:@"RestartPushedFlat"];
+    self.restartButton.alternateImage = [NSImage imageNamed:@"restartPushed"];
+    self.restartButton.hoverImage = [NSImage imageNamed:@"restartHover"];
+    self.restartButton.alternateImage = [NSImage imageNamed:@"restartPushed"];
     
     [self.restartButton setHidden:YES];
     [self.deleteButton setHidden:YES];
@@ -75,8 +75,8 @@
 - (void)setupReallyDeleteButton {
     
     if (!self.reallyDeleteButton.image) {
-        NSImage *reallyDeleteButtonImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButton"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
-        NSImage *reallyDeleteButtonAlternateImage = [BFImage imageFrom:[NSImage imageNamed:@"DeleteButtonPushed"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
+        NSImage *reallyDeleteButtonImage = [BFImage imageFrom:[NSImage imageNamed:@"deleteButton"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
+        NSImage *reallyDeleteButtonAlternateImage = [BFImage imageFrom:[NSImage imageNamed:@"deleteButtonPushed"] withDimensions:self.reallyDeleteButton.frame.size andInsets:BFEdgeInsetsMake(1.0, 10.0, 1.0, 10.0)];
         
         [self.reallyDeleteButton.cell setImageScaling:NSImageScaleAxesIndependently];
         
