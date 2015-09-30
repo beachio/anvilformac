@@ -235,6 +235,9 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Check for Updates..." action:@selector(didClickCheckForUpdates:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Support & FAQs" action:@selector(didClickSupportMenuItem:) keyEquivalent:@""]];
     [settingsMenu addItem:[NSMenuItem separatorItem]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"🔨  Try Hammer" action:@selector(didClickTryHammer:) keyEquivalent:@""]];
+    [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"🔥  Try Forge" action:@selector(didClickTryForge:) keyEquivalent:@""]];
+    [settingsMenu addItem:[NSMenuItem separatorItem]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Restart Pow" action:@selector(didClickRestartPow:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Uninstall Pow" action:@selector(uninstallPow:) keyEquivalent:@""]];
     [settingsMenu addItem:[[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(didClickQuit:) keyEquivalent:@""]];
@@ -1371,6 +1374,18 @@ static NSString *const kPowPath = @"/Library/LaunchDaemons/cx.pow.firewall.plist
     
     NSURL *supportURL = [NSURL URLWithString:@"http://anvilformac.com/support"];
     [[NSWorkspace sharedWorkspace] openURL:supportURL];
+}
+
+- (void) didClickTryForge:(id)sender {
+    // handle forge opening
+    NSURL *forgeURL = [NSURL URLWithString:@"https://getforge.com"];
+    [[NSWorkspace sharedWorkspace] openURL:forgeURL];
+}
+
+- (void) didClickTryHammer:(id)sender {
+    // handle Hammer opening
+    NSURL *hammerURL = [NSURL URLWithString:@"http://hammerformac.com"];
+    [[NSWorkspace sharedWorkspace] openURL:hammerURL];
 }
 
 - (void)didClickShowAbout:(id)sender {
