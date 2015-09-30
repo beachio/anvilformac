@@ -103,7 +103,7 @@
         }
     } else {
         
-        lastViewFrame.origin.x = 5;
+        lastViewFrame.origin.x = 4;
         if (retinaScreen) {
             self.backgroundView.backgroundImage = [NSImage imageNamed:@"switchInactive@2x.png"];
         } else {

@@ -240,23 +240,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button id="549" userLabel="Install Pow Button" customClass="NVStyledButton">
-                                <rect key="frame" x="73" y="52" width="110" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <animations/>
-                                <buttonCell key="cell" type="bevel" title="Install Pow" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="550">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="didClickInstallPowButton:" target="-2" id="553"/>
-                                </connections>
-                            </button>
-                            <customView hidden="YES" id="573" customClass="CustomLoadingSpinner">
-                                <rect key="frame" x="109" y="44" width="38" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <animations/>
-                            </customView>
                             <textField verticalHuggingPriority="750" id="pgW-NW-jZ6" customClass="NVLabel">
                                 <rect key="frame" x="18" y="0.0" width="226" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -267,6 +250,23 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <customView hidden="YES" id="573" customClass="CustomLoadingSpinner">
+                                <rect key="frame" x="109" y="46" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                            </customView>
+                            <button id="549" userLabel="Install Pow Button" customClass="NVStyledButton">
+                                <rect key="frame" x="73" y="47" width="110" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <animations/>
+                                <buttonCell key="cell" type="bevel" title="Install Pow" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="550">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="didClickInstallPowButton:" target="-2" id="553"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                     </customView>
@@ -285,7 +285,7 @@
                                 </textFieldCell>
                             </textField>
                             <button id="562" customClass="NVStyledButton">
-                                <rect key="frame" x="78" y="39" width="100" height="32"/>
+                                <rect key="frame" x="78" y="39" width="100" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <animations/>
                                 <buttonCell key="cell" type="bevel" title="      Add a site" bezelStyle="regularSquare" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="563">
