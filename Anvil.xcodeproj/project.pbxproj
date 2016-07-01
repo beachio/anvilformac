@@ -51,6 +51,9 @@
 		0C9175371BA706C000266305 /* buttonAddPushedLong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C91752F1BA706C000266305 /* buttonAddPushedLong@2x.png */; };
 		0C9292341B5EF4D400CF3890 /* HammerHeaderFlat.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292321B5EF4D400CF3890 /* HammerHeaderFlat.png */; };
 		0C9292351B5EF4D400CF3890 /* HammerHeaderFlat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C9292331B5EF4D400CF3890 /* HammerHeaderFlat@2x.png */; };
+		0CC258551C7DD03000305E3F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC258541C7DD03000305E3F /* Sparkle.framework */; };
+		0CC258561C7DD07300305E3F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC258541C7DD03000305E3F /* Sparkle.framework */; };
+		0CC258571C7DD07300305E3F /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 0CC258541C7DD03000305E3F /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F08AF9D1614885600D446C2 /* NVStyledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F08AF9C1614885500D446C2 /* NVStyledButton.m */; };
 		4F0B716216234A82007246F9 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4F0B716116234A82007246F9 /* index.html */; };
 		4F0DA4BA1609CED500D21ABE /* BFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DA4B81609CED500D21ABE /* BFImage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -59,9 +62,7 @@
 		4F361366160C9816008584A0 /* NVPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F361365160C9816008584A0 /* NVPopupButtonCell.m */; };
 		4F4AFFED1778AACF0081BBD3 /* Anvil.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */; };
 		4F619F2119D8FD410036D0E0 /* CDEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F619F1D19D8FD1D0036D0E0 /* CDEvents.framework */; };
-		4F619F2219D8FD410036D0E0 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F619F1E19D8FD1D0036D0E0 /* Sparkle.framework */; };
 		4F619F2319D8FD800036D0E0 /* CDEvents.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4F619F1D19D8FD1D0036D0E0 /* CDEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F619F2419D8FD800036D0E0 /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 4F619F1E19D8FD1D0036D0E0 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6DBFDB160626FB00D2F214 /* NVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6DBFDA160626FA00D2F214 /* NVLabel.m */; };
 		4F78B8941608AD17006B0500 /* NVStyledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8931608AD17006B0500 /* NVStyledView.m */; };
 		4F78B8CE1608ADCD006B0500 /* NSBezierPath+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78B8CD1608ADCD006B0500 /* NSBezierPath+Additions.m */; };
@@ -124,7 +125,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4F619F2319D8FD800036D0E0 /* CDEvents.framework in Copy Files */,
-				4F619F2419D8FD800036D0E0 /* Sparkle.framework in Copy Files */,
+				0CC258571C7DD07300305E3F /* Sparkle.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +177,7 @@
 		0C91752F1BA706C000266305 /* buttonAddPushedLong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonAddPushedLong@2x.png"; sourceTree = "<group>"; };
 		0C9292321B5EF4D400CF3890 /* HammerHeaderFlat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HammerHeaderFlat.png; sourceTree = "<group>"; };
 		0C9292331B5EF4D400CF3890 /* HammerHeaderFlat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HammerHeaderFlat@2x.png"; sourceTree = "<group>"; };
+		0CC258541C7DD03000305E3F /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4F08AF9B1614885500D446C2 /* NVStyledButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStyledButton.h; sourceTree = "<group>"; };
 		4F08AF9C1614885500D446C2 /* NVStyledButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStyledButton.m; sourceTree = "<group>"; };
 		4F0B716116234A82007246F9 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -188,7 +190,6 @@
 		4F361365160C9816008584A0 /* NVPopupButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPopupButtonCell.m; sourceTree = "<group>"; };
 		4F4AFFEC1778AACF0081BBD3 /* Anvil.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Anvil.icns; sourceTree = "<group>"; };
 		4F619F1D19D8FD1D0036D0E0 /* CDEvents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CDEvents.framework; sourceTree = "<group>"; };
-		4F619F1E19D8FD1D0036D0E0 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4F6DBFD9160626FA00D2F214 /* NVLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVLabel.h; sourceTree = "<group>"; };
 		4F6DBFDA160626FA00D2F214 /* NVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVLabel.m; sourceTree = "<group>"; };
 		4F78B8921608AD17006B0500 /* NVStyledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVStyledView.h; sourceTree = "<group>"; };
@@ -285,9 +286,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F619F2119D8FD410036D0E0 /* CDEvents.framework in Frameworks */,
-				4F619F2219D8FD410036D0E0 /* Sparkle.framework in Frameworks */,
 				4FAB52731611D78400BD03F8 /* QuartzCore.framework in Frameworks */,
+				0CC258561C7DD07300305E3F /* Sparkle.framework in Frameworks */,
 				4FBFA35B15C6F85800BA8209 /* Cocoa.framework in Frameworks */,
+				0CC258551C7DD03000305E3F /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,8 +525,8 @@
 		4FBFA35915C6F85800BA8209 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0CC258541C7DD03000305E3F /* Sparkle.framework */,
 				4F619F1D19D8FD1D0036D0E0 /* CDEvents.framework */,
-				4F619F1E19D8FD1D0036D0E0 /* Sparkle.framework */,
 				4FBFA35A15C6F85800BA8209 /* Cocoa.framework */,
 				4FBFA35C15C6F85800BA8209 /* Other Frameworks */,
 			);
@@ -979,7 +981,7 @@
 		4FBFA37515C6F85800BA8209 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: S Schofield (9HNHHQLWA5)";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -989,6 +991,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
@@ -1001,7 +1004,7 @@
 		4FBFA37615C6F85800BA8209 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: S Schofield (9HNHHQLWA5)";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1011,6 +1014,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Anvil/Anvil-Prefix.pch";
 				INFOPLIST_FILE = "Anvil/Anvil-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
