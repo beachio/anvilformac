@@ -323,11 +323,11 @@ static NSString *const kAppsKey = @"apps";
 
 # pragma mark Adding and removing apps
 
-- (NVApp *)addAppWithURL:(NSURL *)url {
+- (NVApp *)addAppWithURL:(NSURL *) url {
     
     NVApp *newApp = [[NVApp alloc] init];
     
-    if ([[url lastPathComponent] isEqualToString:@"Build"]) {
+    if ([[url lastPathComponent].lowercaseString isEqualToString:@"build"]) {
         
         NSString *hammerProjectName = [[url.path stringByDeletingLastPathComponent] lastPathComponent];
         newApp.name = hammerProjectName;
